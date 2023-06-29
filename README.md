@@ -5,5 +5,3 @@ Ahora actualizó Leandro
 Ahora actualizo Eric
 
 Actualizo gustavo
-
-Actualizando David
