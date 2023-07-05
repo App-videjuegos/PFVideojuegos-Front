@@ -49,6 +49,11 @@ const MenuItems=({navigation})=>{
             onPress={()=> navigation.navigate('HomeStack')}
             icon='home'
           />
+          <MenuBottonItem
+            nombre= {'Shopping Cart'}
+            onPress={()=> navigation.navigate('Cart')}
+            icon='cart'
+          />
                    
       </DrawerContentScrollView>
     )

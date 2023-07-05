@@ -7,16 +7,15 @@ import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
 const Drawer = createDrawerNavigator();
 
 //Pantallas a Importar
-import Landing from "./src/components/views/Landing";
-import Home from "./src/components/views/Home/Home";
+import Landing from "./src/components/views/Landing/Landing";
+import Home from "./src/components/views/Home/HomeD";
 import MenuItems from "./src/components/views/MenuApp/MenuItems";
-
+import Cart from "./src/components/forms/Cart/Cart";
 
 export default function App() {
 
   return (
     <>  
-  
             <NavigationContainer>
               <Drawer.Navigator
                 drawerContent={(props) => <MenuItems {...props} />}
@@ -50,29 +49,21 @@ export default function App() {
                       fontWeight: "bold",
                       fontSize: 25,
                     },
-                    headerRight: () => (
-                      <TouchableOpacity onPress={() => alert("trabajando")}>
-                        <MaterialCommunityIcons
-                          name="cart"
-                          // color={color_blanco}
-                          size={30}
-                        />
-                      </TouchableOpacity>
-                    ),
+                   
                   }}
                 />
- {/*
+ 
                 <Drawer.Screen
-                  name="Carrito"
-                  component={Carrito}
+                  name="Cart"
+                  component={Cart}
                   options={{
                     title: "Shopping Car",
-                    headerStyle: { backgroundColor: color_azul },
-                    headerTintColor: color_blanco,
+                    // headerStyle: { backgroundColor: color_azul },
+                    // headerTintColor: color_blanco,
                     headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
                   }}
                 />
-
+{/*
                 <Drawer.Screen
                   name="Dashboard"
                   component={Dashboard}
