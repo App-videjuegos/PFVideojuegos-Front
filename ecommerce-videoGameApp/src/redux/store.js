@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
 import videogamesReducer from "./videogamesSlice";
-import userReducer from "./usersSlices"
+//import userReducer from "./userSlices"
 // import carReducer from "./cartSlice"
 // import salesReducer from "./salesSlice"
 

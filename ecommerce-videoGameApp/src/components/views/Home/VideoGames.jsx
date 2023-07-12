@@ -4,6 +4,11 @@ import { useEffect } from 'react'
 import {useDispatch, useSelector} from "react-redux"
 // import { getAllVideogames } from '../../../redux/videogamesSlice';
 import {getvideoGames, } from "../../../redux/videogamesActions"
+
+//Importamos componentes
+import Card from '../../utils/Card/Card'
+
+
 const videogames=[{
   "id": 3498,
   "name": "Grand Theft Auto V",
@@ -77,7 +82,10 @@ const VideoGames = ({ navigation, route }) => {
   },[])
   return (
     <View>
-      <Text style={styles.enlace1}>Aqui iria el Listado de Videgojuegos .. o Card Containers</Text>
+      <Card style={styles.card}  name='Card 1' />
+      <Card style={styles.card}  name='Card 2' />
+      <Card style={styles.card}  name='Card 3' />
+      <Card style={styles.card}  name='Card 4' />
       
       <TouchableOpacity onPress={() =>navigation.navigate('Detail', {props: videogames[0]  })}> 
                 <Text style={styles.enlace2} >Enlace a ScreenDetalle</Text>
