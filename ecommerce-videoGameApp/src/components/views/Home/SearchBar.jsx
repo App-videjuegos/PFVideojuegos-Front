@@ -36,13 +36,15 @@ const SearchBar = (props) => {
       )
 }
 const styles = StyleSheet.create({
-    Container: {
-      justifyContent: 'center',
-      
-      alignItems: 'center',
-      width: '90%',
-      flexDirection: 'row',
-    },
+  Container: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start', // Agrega esta línea
+    width: '85%',
+    flexDirection: 'row',
+    
+    left: -20
+  },
+  
     Searchbarfondo:{
         marginLeft:'5%', 
         height: 40,

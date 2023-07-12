@@ -3,7 +3,7 @@ import { View, Text,TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
 const CartButton = ({ navigation }) => {
     // const [countBadge, setCountBadge]=useState(0);
-    countBadge=5
+    const countBadge=5
     // console.log("Cantidad den button:", countBadge);
     return (
       <View style={{ marginRight: 10 }}>

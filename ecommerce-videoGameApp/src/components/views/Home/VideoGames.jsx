@@ -1,5 +1,9 @@
 import { View, Text,TouchableOpacity,StyleSheet } from 'react-native'
-import React from 'react'
+
+import { useEffect } from 'react'
+import {useDispatch, useSelector} from "react-redux"
+// import { getAllVideogames } from '../../../redux/videogamesSlice';
+import {getvideoGames, } from "../../../redux/videogamesActions"
 const videogames=[{
   "id": 3498,
   "name": "Grand Theft Auto V",
@@ -61,8 +65,16 @@ const videogames=[{
 }]
 
 const VideoGames = ({ navigation, route }) => {
-  // console.log("Componente VideoGames renderizado");
-  // console.log("arreglo", videogames);
+
+  const dispatch= useDispatch();
+  const vGames=useSelector((state)=>state.videogamesState.videoGames)
+  
+
+  useEffect(()=>{
+
+    dispatch(getvideoGames()) ;
+
+  },[])
   return (
     <View>
       <Text style={styles.enlace1}>Aqui iria el Listado de Videgojuegos .. o Card Containers</Text>

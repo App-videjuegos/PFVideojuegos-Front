@@ -2,20 +2,26 @@ import "react-native-gesture-handler";
 
 import {createDrawerNavigator,} from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet,Image,TouchableOpacity,Text,View,Button,  SectionList,} from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
-const Drawer = createDrawerNavigator();
 
+const Drawer = createDrawerNavigator();
+// variables proveedoras del tema y cambiode lenguaje
+import {  ThemeProvider} from "./src/components/utils/theme/ThemeProvider";
+import {  LanguajeProvider} from "./src/components/utils/languaje/languajeProvider";
+import { color_morado_o, color_morado_c, color_blanco, color_naranja } from "./src/components/utils/theme/stringsColors"
 //Pantallas a Importar
 import Landing from "./src/components/views/Landing/Landing";
 import Home from "./src/components/views/Home/HomeD";
 import MenuItems from "./src/components/views/MenuApp/MenuItems";
 import Cart from "./src/components/forms/Cart/Cart";
-
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
 export default function App() {
 
   return (
     <>  
+    <LanguajeProvider>
+    <ThemeProvider>
+    <Provider store={store}>
             <NavigationContainer>
               <Drawer.Navigator
                 drawerContent={(props) => <MenuItems {...props} />}
@@ -24,12 +30,12 @@ export default function App() {
                   name="Landing"
                   component={Landing}
                   options={{
-                    title: `Bienvenido`,
+                    title: `Bienvenidos`,
                     headerStyle: {
-                      // backgroundColor: blue,
+                       backgroundColor: color_blanco,
                     },
-                    // headerTintColor: white,
-                    headerTitleStyle: {
+                      headerTintColor: color_morado_o,
+                      headerTitleStyle: {
                       fontWeight: "bold",
                       fontSize: 25,
                     },
@@ -41,10 +47,10 @@ export default function App() {
                   initialParams={{ fromChild: "Initial" }}
                   options={{
                     title: "Home",
-                    // headerStyle: {
-                    //   backgroundColor: color_azul,
-                    // },
-                    // headerTintColor: color_blanco,
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                   },
+                     headerTintColor: color_morado_o,
                     headerTitleStyle: {
                       fontWeight: "bold",
                       fontSize: 25,
@@ -58,8 +64,10 @@ export default function App() {
                   component={Cart}
                   options={{
                     title: "Shopping Car",
-                    // headerStyle: { backgroundColor: color_azul },
-                    // headerTintColor: color_blanco,
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                   },
+                     headerTintColor: color_morado_o,
                     headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
                   }}
                 />
@@ -85,7 +93,9 @@ export default function App() {
 
               </Drawer.Navigator>
             </NavigationContainer>
-          
+        </Provider>
+      </ThemeProvider>          
+    </LanguajeProvider>
     </>
   );
 }

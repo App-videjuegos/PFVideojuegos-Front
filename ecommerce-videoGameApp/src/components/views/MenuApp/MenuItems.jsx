@@ -2,19 +2,25 @@ import { View, Text,Image ,TouchableOpacity,StyleSheet} from 'react-native'
 
 import MenuBottonItem from './MenuButton'
 import { DrawerContentScrollView, } from '@react-navigation/drawer';
+import { LanguajeContext } from '../../utils/languaje/languajeProvider';
+import { ThemeContext } from '../../utils/theme/ThemeProvider';
+import { ChangeButtonContext } from '../../utils/changeContextButton/ChangeContextButton';
+import  { useContext} from 'react';
 
 const MenuItems=({navigation})=>{
 
 
-
+ //esta linea debo de llamar en cada componente 
+ const { StringsDark} = useContext(ThemeContext);
+ const {StringsLanguaje }= useContext(LanguajeContext)
 
 
     return(
       <DrawerContentScrollView 
-      // style={{backgroundColor:StringsDark.bktitle}}
+       style={{backgroundColor:StringsDark.menuDrawner_f}}
       >
           <View 
-          // style={{backgroundColor:StringsDark.cabmenu}}
+          style={{backgroundColor:StringsDark.menuDrawner_c}}
           >
 
    
@@ -29,32 +35,35 @@ const MenuItems=({navigation})=>{
             </View> 
             <View style={styles.cabeceraText}>
                   <Text style={[styles.textoUsr,
-                    // {color:StringsDark.bktitle}
+                     {color:StringsDark.menuDrawner_t}
                     ]}>
                   
                   </Text>
                  
             </View>
-            <View style={[styles.separator]}>
+            <View style={[styles.separator,{borderColor:StringsDark.menuDrawner_sep}]}>
   
           </View>
         </View>
           <MenuBottonItem
-            nombre= {'Landing'}
+            nombre= {StringsLanguaje.Landing}
             onPress={()=> navigation.navigate('Landing')}
             icon='airplane'
           />
           <MenuBottonItem
-            nombre= {'Home'}
+            nombre= {StringsLanguaje.Home}
             onPress={()=> navigation.navigate('HomeStack')}
             icon='home'
           />
           <MenuBottonItem
-            nombre= {'Shopping Cart'}
+            nombre= {StringsLanguaje.Shopping_Car}
             onPress={()=> navigation.navigate('Cart')}
             icon='cart'
           />
-                   
+          {/* Botones para cambiar el modoDark o Idioma */}
+          <ChangeButtonContext name={StringsLanguaje.DarkMode} tipo={"theme"}/>
+          <ChangeButtonContext name={StringsLanguaje.Languaje} tipo={"Languaje"}/>
+
       </DrawerContentScrollView>
     )
   }
@@ -113,7 +122,7 @@ const MenuItems=({navigation})=>{
       // height: 0,
     width: '100%',
       marginTop:5,
-      // borderColor:color_negro,
+      //  borderColor:'red',
       borderWidth:2,
       // color: color_negro,
     },
