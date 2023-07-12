@@ -2,7 +2,7 @@ import { View, Text,TouchableOpacity,StyleSheet } from 'react-native'
 
 import { useEffect } from 'react'
 import {useDispatch, useSelector} from "react-redux"
-// import { getAllVideogames } from '../../../redux/videogamesSlice';
+
 import {getvideoGames, } from "../../../redux/videogamesActions"
 
 //Importamos componentes

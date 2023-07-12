@@ -2,18 +2,19 @@ import {getAllVideogames, addUser,setNextPage,setPrevPage,setMaxPage,setErrorMsg
         setFlaPrev,setFirstPage,getVideogamesbyName,setPrevVideoGame,updateVideogames,
      } from "./videogamesSlice";
 
+         
 
-// import axios from "axios";
+import axios from "axios";
 import {videogames} from '../components/utils/dataVideojuegos'
 
 let estado=0
 export const  getvideoGames = () =>(dispatch)=>{
   
 
- dispatch(getAllVideogames(videogames))
-    // axios("/games")
-    // .then(res => dispatch(getAllVideogames(res.data)))
-    // .catch(e=>console.log("error en la ruta" ,e))
+//  dispatch(getAllVideogames(videogames))
+     axios("https://pfvideojuegos-back-production.up.railway.app/games")
+     .then(res => dispatch(getAllVideogames(res.data)))
+     .catch(e=>console.log("error en la ruta" ,e))
 }
 
 export const getvGamebyName =(query)=> (dispatch=>{

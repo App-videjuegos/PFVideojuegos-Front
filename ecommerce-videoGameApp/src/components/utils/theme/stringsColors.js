@@ -21,6 +21,8 @@ export const strings = {
     menuDrawner_c:color_gris_c,
     menuDrawner_ico: color_morado_c,
     menuDrawner_sep: color_morado_o,
+    cartButton:color_morado_c ,
+    cartButton_fondo:color_blanco,
   },
   dark: {//combinacion de colores modo Dark
     Titulo_Screen:color_blanco,
@@ -34,5 +36,7 @@ export const strings = {
     menuDrawner_c:color_morado_sc1,
     menuDrawner_ico: color_blanco,
     menuDrawner_sep: color_blanco,
+    cartButton:color_morado_sc2 ,
+    cartButton_fondo:color_gris_c,
   },
 };
