@@ -8,11 +8,9 @@ import ButtonCart from "./../../forms/Cart/ButtonCart"
 import { useEffect ,useContext, useState} from 'react'
 import { ThemeContext } from '../../utils/theme/ThemeProvider';
 import { LanguajeContext } from '../../utils/languaje/languajeProvider';
-<<<<<<< Updated upstream
+
 import { CreateVideogame } from '../Create/CreateVideoGame'
-=======
 import Filter from "../../utils/Filters/Filter";
->>>>>>> Stashed changes
 
 import {getvideoGames,} from "../../../redux/videogamesActions"
 const Stack = createNativeStackNavigator();
@@ -82,7 +80,6 @@ const handleCloseFilter = () => {
           }}
         >
         </Stack.Screen>
-<<<<<<< Updated upstream
         <Stack.Screen
         name='CreateVideogame'
               component={CreateVideogame} 
@@ -100,20 +97,14 @@ const handleCloseFilter = () => {
               >
         </Stack.Screen>
     </Stack.Navigator>
-    
-    );
-=======
-      </Stack.Navigator>
-      {/* Renderizamos el componente Filter si el estado isFilterOpen es true */}
-      {isFilterOpen && (
+    {/* Renderizamos el componente Filter si el estado isFilterOpen es true */}
+    {isFilterOpen && (
         <View style={{ flex: 1 }}>
           <Filter />
         </View>
       )}
     </View>
-
-  );
->>>>>>> Stashed changes
+    );
 
 }
 
