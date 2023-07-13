@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {getvideoGames, } from "../../../redux/videogamesActions"
 
 //Importamos componentes
+import CardContainer from '../../utils/CardContainer/CardContainer'
 import Card from '../../utils/Card/Card'
 
 
@@ -82,10 +83,19 @@ const VideoGames = ({ navigation, route }) => {
   },[])
   return (
     <View>
-      <Card style={styles.card}  name='Card 1' />
-      <Card style={styles.card}  name='Card 2' />
-      <Card style={styles.card}  name='Card 3' />
-      <Card style={styles.card}  name='Card 4' />
+      <View>
+    {vGames.map((p) => {
+      return (
+        <Card
+          key={p.id}
+          name={p.name}
+          image={p.image}
+          rating={p.rating}
+          released={p.released}
+        />
+      );
+    })}
+  </View>
       
       <TouchableOpacity onPress={() =>navigation.navigate('Detail', {props: videogames[0]  })}> 
                 <Text style={styles.enlace2} >Enlace a ScreenDetalle</Text>

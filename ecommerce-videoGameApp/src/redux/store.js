@@ -7,7 +7,7 @@ import videogamesReducer from "./videogamesSlice";
 export default configureStore({
     reducer:{
         videogamesState: videogamesReducer,
-        usersState: userReducer,
+        //usersState: userReducer,
         // cartState: carReducer,
         // salesState: salesReducer,
     }

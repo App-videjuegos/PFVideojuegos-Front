@@ -1,8 +1,11 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
 import React from 'react';
 import StarRating from 'react-native-star-rating';
+import dataVideojuegos from '../dataVideojuegos'
 
-const Card = ({image, name}) => {
+const Card = (props) => {
+
+  const {image, name, released, rating} = props;
 
   const videogames=[{
     "id": 3498,
@@ -69,14 +72,14 @@ const Card = ({image, name}) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: videogames[0].image }} />
+        <Image style={styles.image} source={{ uri: image }} />
       </View>
       <View style={styles.detailsContainer}>
-        <Text style={styles.name}>{videogames[0].name}</Text>
+        <Text style={styles.name}>{name}</Text>
         <StarRating
           disabled={true}
           maxStars={5}
-          rating={videogames[0].rating}
+          rating={rating}
           starSize={20}
           fullStarColor="gold"
           emptyStarColor="gold"
