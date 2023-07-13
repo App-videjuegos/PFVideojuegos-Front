@@ -7,6 +7,8 @@ export const color_morado_sc1='#6B35E8' //morado super claro 1
 export const color_morado_sc2= '#987BDC' //morado super claro 2
 export const color_blanco='#FFFFFF';
 export const color_gris_c='#FAFAFA' //griss claro
+export const color_rojoNeon='#E94E4E';
+export const color_crema= '#FF8800'; 
 
 export const strings = {
   light: {//combinacion de colores modo Ligth
@@ -23,6 +25,7 @@ export const strings = {
     menuDrawner_sep: color_morado_o,
     cartButton:color_morado_c ,
     cartButton_fondo:color_blanco,
+    price: color_rojoNeon,
   },
   dark: {//combinacion de colores modo Dark
     Titulo_Screen:color_blanco,
@@ -38,5 +41,6 @@ export const strings = {
     menuDrawner_sep: color_blanco,
     cartButton:color_morado_sc2 ,
     cartButton_fondo:color_gris_c,
+    price: color_crema,
   },
 };

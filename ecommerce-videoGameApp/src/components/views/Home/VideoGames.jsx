@@ -81,36 +81,37 @@ const VideoGames = ({ navigation, route }) => {
 
   },[])
   return (
-    <View>
+    <View style={styles.container}>
       <ScrollView>
       <View>
-    {vGames.map((p) => {
+    {vGames.map((videoGame) => {
       return (
         <Card
-          key={p.id}
-          name={p.name}
-          image={p.image}
-          rating={p.rating}
-          released={p.released}
+          key={videoGame.id}
+          videoG={videoGame}
+          // name={p.name}
+          // image={p.image}
+          // rating={p.rating}
+          // released={p.released}
+          nav={navigation}
         />
       );
     })}
   </View>
   </ScrollView>
       
-      <TouchableOpacity onPress={() =>navigation.navigate('Detail', {props: videogames[0]  })}> 
+      {/* <TouchableOpacity onPress={() =>navigation.navigate('Detail', {props: videogames[0]  })}> 
                 <Text style={styles.enlace2} >Enlace a ScreenDetalle</Text>
         </TouchableOpacity>
-
-    </View>
+*/}
+    </View> 
   )
 }
 const styles = StyleSheet.create({
-  enlace1: {
-    justifyContent: 'space-between',
-    // backgroundColor: color_blanco,
-    alignItems: 'center',
-      fontSize:18
+  container: {
+   
+    backgroundColor:'white',
+  
   
   },
   enlace2: {
