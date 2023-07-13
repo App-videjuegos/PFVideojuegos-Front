@@ -1,4 +1,4 @@
-import { View, Text,TouchableOpacity,StyleSheet } from 'react-native'
+import { View, Text,TouchableOpacity,StyleSheet, ScrollView } from 'react-native'
 
 import { useEffect } from 'react'
 import {useDispatch, useSelector} from "react-redux"
@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux"
 import {getvideoGames, } from "../../../redux/videogamesActions"
 
 //Importamos componentes
-import CardContainer from '../../utils/CardContainer/CardContainer'
 import Card from '../../utils/Card/Card'
 
 
@@ -83,6 +82,7 @@ const VideoGames = ({ navigation, route }) => {
   },[])
   return (
     <View>
+      <ScrollView>
       <View>
     {vGames.map((p) => {
       return (
@@ -96,6 +96,7 @@ const VideoGames = ({ navigation, route }) => {
       );
     })}
   </View>
+  </ScrollView>
       
       <TouchableOpacity onPress={() =>navigation.navigate('Detail', {props: videogames[0]  })}> 
                 <Text style={styles.enlace2} >Enlace a ScreenDetalle</Text>
