@@ -8,6 +8,7 @@ import ButtonCart from "./../../forms/Cart/ButtonCart"
 import { useEffect ,useContext} from 'react'
 import { ThemeContext } from '../../utils/theme/ThemeProvider';
 import { LanguajeContext } from '../../utils/languaje/languajeProvider';
+import { CreateVideogame } from '../Create/CreateVideoGame'
 
 import {getvideoGames,} from "../../../redux/videogamesActions"
 const Stack = createNativeStackNavigator();
@@ -54,6 +55,22 @@ const {StringsLanguaje ,locale}= useContext(LanguajeContext)
               component={Detail} 
               options={{ 
                 title: 'Detail',
+                // headerStyle: {
+                //   backgroundColor: StringsDark.backgroundTittle,
+                // },
+                // headerTintColor: StringsDark.titblanco,
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                  fontSize:25
+                }
+              }}
+              >
+        </Stack.Screen>
+        <Stack.Screen
+        name='CreateVideogame'
+              component={CreateVideogame} 
+              options={{ 
+                title: 'Create Videogame',
                 // headerStyle: {
                 //   backgroundColor: StringsDark.backgroundTittle,
                 // },
