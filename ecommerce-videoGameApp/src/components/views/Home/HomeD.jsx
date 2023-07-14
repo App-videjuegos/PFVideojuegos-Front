@@ -9,7 +9,6 @@ import { useEffect ,useContext, useState} from 'react'
 import { ThemeContext } from '../../utils/theme/ThemeProvider';
 import { LanguajeContext } from '../../utils/languaje/languajeProvider';
 
-import { CreateVideogame } from '../Create/CreateVideoGame'
 import Filter from "../../utils/Filters/Filter";
 
 import {getvideoGames,} from "../../../redux/videogamesActions"
@@ -80,22 +79,7 @@ const handleCloseFilter = () => {
           }}
         >
         </Stack.Screen>
-        <Stack.Screen
-        name='CreateVideogame'
-              component={CreateVideogame} 
-              options={{ 
-                title: 'Create Videogame',
-                // headerStyle: {
-                //   backgroundColor: StringsDark.backgroundTittle,
-                // },
-                // headerTintColor: StringsDark.titblanco,
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                  fontSize:25
-                }
-              }}
-              >
-        </Stack.Screen>
+
     </Stack.Navigator>
     {/* Renderizamos el componente Filter si el estado isFilterOpen es true */}
     {isFilterOpen && (

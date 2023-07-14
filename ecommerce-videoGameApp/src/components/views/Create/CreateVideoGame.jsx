@@ -47,7 +47,7 @@ import axios from "axios";
 // import { ThemeContext } from "../../../Theme/ThemeProvider";
 //Dark Mode:
 
-export const CreateVideogame = ({ navigation, route }) => {
+const CreateVideogame = ({ navigation, route }) => {
   const [image, setImage] = useState([]);
 
   const [imageScreen, setImageScreen] = useState([]);
@@ -62,10 +62,6 @@ export const CreateVideogame = ({ navigation, route }) => {
   const [validateSubmit, setValidateSubmit] = useState(true);
   const [showPicker, setShowPicker] = useState(false);
 
-  //Dark Mode:
-  // const { StringsDark, isDarkMode } = useContext(ThemeContext);
-  // const { StringsLanguaje, locale } = useContext(LocalizationContext);
-  //Dark Mode:
 
   const [stackData, setStackData] = useState({
     platforms: allPlatforms,
@@ -453,7 +449,7 @@ export const CreateVideogame = ({ navigation, route }) => {
           >
             <Text
               style={[styles.title]}>
-                {StringsLanguaje.title}
+                Title
             </Text>
             <TextInput
               style={[styles.input]}
@@ -475,7 +471,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.price}
+              Price
             </Text>
             <TextInput
               style={[styles.input]}
@@ -496,7 +492,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.description}
+              Description
             </Text>
             <TextInput
               style={[styles.inputStyle2, inputStyle]}
@@ -519,7 +515,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.systemRequeriments}
+              System Requeriments
             </Text>
             <TextInput
               style={[styles.inputStyle2]}
@@ -544,7 +540,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.releaseDate}
+              releaseDate
             </Text>
             <View>
 
@@ -588,7 +584,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.videogameCover}
+              videogameCover
             </Text>
 
             <View
@@ -608,7 +604,7 @@ export const CreateVideogame = ({ navigation, route }) => {
                 <Text
                   style={[styles.buttonText]}
                 >
-                  {StringsLanguaje.loadFromGallery}
+                  loadFromGallery
                 </Text>
               </TouchableOpacity>
               {validateNvg.image !== "" && !validateSubmit && (
@@ -638,7 +634,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.loadScreens}
+              loadScreens
             </Text>
 
             <View
@@ -653,7 +649,7 @@ export const CreateVideogame = ({ navigation, route }) => {
                 <Text
                   style={[styles.buttonText]}
                 >
-                  {StringsLanguaje.loadFromGallery}
+                  loadFromGallery
                 </Text>
               </TouchableOpacity>
               {validateNvg.screenShots !== "" && !validateSubmit && (
@@ -683,7 +679,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.addGenre}
+              addGenre
             </Text>
             <View>
               <SelectList
@@ -712,7 +708,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.addPlatforms}
+              addPlatforms
             </Text>
             <View>
               <SelectList
@@ -743,7 +739,7 @@ export const CreateVideogame = ({ navigation, route }) => {
             <Text
               style={[styles.title]}
             >
-              {StringsLanguaje.addTags}
+              addTags
             </Text>
             <View>
               <SelectList
@@ -780,7 +776,7 @@ export const CreateVideogame = ({ navigation, route }) => {
                 style={[
                   styles.buttonTextSubmit]}
               >
-                {StringsLanguaje.createPublication}
+                create Publication
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -790,7 +786,7 @@ export const CreateVideogame = ({ navigation, route }) => {
               onPress={() => CancelSubmit()}
             >
               <Text style={styles.buttonTextSubmit}>
-              {StringsLanguaje.cancelPub}
+              CancelPublication
                 </Text>
             </TouchableOpacity>
           </View>
@@ -979,5 +975,7 @@ const styles = StyleSheet.create({
     // backgroundColor: color_azul,
   },
 });
+
+export default CreateVideogame
 
 
