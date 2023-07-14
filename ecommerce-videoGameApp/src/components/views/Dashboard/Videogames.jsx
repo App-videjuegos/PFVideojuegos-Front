@@ -1,3 +1,4 @@
+// array de objetos con los datos de los videojuegos
 const games = [
     {
         id: 1,
