@@ -1,20 +1,34 @@
 import { View, Text,StyleSheet } from 'react-native'
+import { useDispatch } from "react-redux";
 import {useState} from 'react'
 
 import { Searchbar } from 'react-native-paper';
-
+import {getvGamebyName,getvideoGames} from "../../../redux/videogamesActions"
 
 const SearchBar = (props) => {
+
+    const dispatch = useDispatch()
+
     const [searchQuery, setSearchQuery] = useState('');
+
     //funcion de busqueda
+
     const onChangeSearch = (query) => {
           setSearchQuery(query);
           console.log("estas bsucando",query) 
           }
+
+
+
     const onCloseSearch = () => {
         // console.log("limpiando valores de busqueda");
         setSearchQuery("");
-        // dispatch(getvideoGames()) ;
+        dispatch(getvideoGames()) ;
+      }
+
+
+      function handleSubmit() {
+         dispatch(getvGamebyName(searchQuery));
       }
 
 
@@ -25,6 +39,7 @@ const SearchBar = (props) => {
             autoFocus={true}
             placeholder={"Search ..."}
             onChangeText={onChangeSearch}
+            onIconPress={handleSubmit}
             onClearIconPress={onCloseSearch}
             value={searchQuery}
             inputStyle={[styles.SearchbarText, ]}

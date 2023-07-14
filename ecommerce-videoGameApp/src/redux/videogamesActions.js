@@ -19,7 +19,7 @@ export const  getvideoGames = () =>(dispatch)=>{
 
 export const getvGamebyName =(query)=> (dispatch=>{
     // console.log("esto me llega de query",query)
-    fetch(`https://gameshop-production-e844.up.railway.app/games?name=${query}`)
+    fetch(`https://pfvideojuegos-back-production.up.railway.app/games?name=${query}`)
             .then(response =>{
                 estado= response.status
                 return response.json()

@@ -3,7 +3,7 @@ import { View, Text,TouchableOpacity,StyleSheet, ScrollView } from 'react-native
 import { useEffect } from 'react'
 import {useDispatch, useSelector} from "react-redux"
 
-import {getvideoGames, } from "../../../redux/videogamesActions"
+import {getvideoGames } from "../../../redux/videogamesActions"
 
 //Importamos componentes
 import Card from '../../utils/Card/Card'
