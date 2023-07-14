@@ -6,12 +6,11 @@ import dataVideojuegos from '../dataVideojuegos'
 const Card = (props) => {
 //  console.log("propr",props)
   const {videoG, nav} = props;
-  
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-      <TouchableOpacity onPress={() =>nav.navigate('Detail', {props: videogames[0]  })}> 
+      <TouchableOpacity onPress={() =>nav.navigate('Detail', {videoGames: videoG  })}> 
         <Image 
             style={styles.image} 
             source={{ uri: videoG.image }} 

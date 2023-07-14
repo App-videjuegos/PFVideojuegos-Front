@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
 import DetailExtra from './DetailExtra';
 import DetailInfo from './DetailInfo';
-import DetailScreens from './DetailScreens';
+import DetailScreenHots from './DetailScreenHots';
 
 const TabInfo= (props) => {
     // console.log("q recibo por props tab info", props.parametro1)
@@ -18,7 +18,7 @@ const TabInfo= (props) => {
     //  console.log("screnshoots", props.parametro2)
     return (
       <>
-       <DetailScreens propCarrousel= {props.parametro2}  />
+       <DetailScreenHots propCarrousel= {props.screenShots}  />
       </>
     )  
   }
@@ -31,7 +31,7 @@ const TabInfo= (props) => {
     )
   }
 const Detail = ({route,navigation}) => {
-    // console.log("params de detail-->",route.params.props)
+    
     const Tab = createBottomTabNavigator();
   return (
         <Tab.Navigator
@@ -63,7 +63,7 @@ const Detail = ({route,navigation}) => {
                 )
             })}
         >
-            {props => <TabInfo {...props} parametro1= {route.params.props.name } />}
+            {props => <TabInfo {...props} parametro1= {route.params.videoGames} />}
         </Tab.Screen>
 
         <Tab.Screen 
@@ -78,7 +78,7 @@ const Detail = ({route,navigation}) => {
                 )
             }}>
 
-            {props => <TabCarrousel {...props}  parametro2= {route.params.props.screenShots} />}
+            {props => <TabCarrousel {...props}  screenShots= {route.params.videoGames.screenShots} />}
         </Tab.Screen>
         <Tab.Screen 
             name="Extra" 
@@ -91,7 +91,7 @@ const Detail = ({route,navigation}) => {
                 )
             }}
             >
-                {props => <TabExtra {...props}  parametro3= {route.params.props.tiendas[0]} />}
+                {props => <TabExtra {...props}  parametro3= {route.params.videoGames} />}
         </Tab.Screen>
         
     </Tab.Navigator>

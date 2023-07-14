@@ -7,7 +7,7 @@ const DetailInfo = (props) => {
     <View>
       <Text>Screen DetailInfo</Text>
       <Text>Loq recibo por props</Text>
-      <Text>{props.propInfo}</Text>
+      <Text>{props.propInfo.name}</Text>
     </View>
   )
 }

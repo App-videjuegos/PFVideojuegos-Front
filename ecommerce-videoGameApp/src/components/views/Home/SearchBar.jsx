@@ -37,7 +37,7 @@ const SearchBar = (props) => {
           <View style={[styles.Container,]}>
           <Searchbar
             autoFocus={true}
-            placeholder={"Search ..."}
+            placeholder={"Search"}
             onChangeText={onChangeSearch}
             onIconPress={handleSubmit}
             onClearIconPress={onCloseSearch}

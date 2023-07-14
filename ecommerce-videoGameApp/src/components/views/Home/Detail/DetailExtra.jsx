@@ -7,7 +7,7 @@ const DetailExtra = (props) => {
     <View>
       <Text>Screen Detail Extra</Text>
       <Text>Loq recibo por props</Text>
-      <Text>{props.propExtra}</Text>
+      <Text>{props.propExtra.platforms}</Text>
     </View>
   )
 }
