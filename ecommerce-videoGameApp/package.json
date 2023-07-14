@@ -43,7 +43,16 @@
     "react-native-star-rating": "^1.0.9",
     "react-native-web": "~0.18.11",
     "react-redux": "^8.1.1",
-    "run-ios": "^0.4.0"
+    
+    "react-native-dropdown-select-list": "^2.0.4",
+    "react-native-element-dropdown": "^2.9.0",
+    "run-ios": "^0.4.0",
+    "formik": "^2.2.9",
+    "expo-image-picker": "~14.1.1",
+    "expo-checkbox": "~2.3.1",
+    "@react-native-community/datetimepicker": "6.7.3",
+    "@expo/webpack-config": "^18.0.1"
+    
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

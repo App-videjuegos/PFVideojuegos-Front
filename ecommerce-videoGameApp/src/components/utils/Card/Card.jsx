@@ -4,22 +4,19 @@ import StarRating from 'react-native-star-rating';
 import dataVideojuegos from '../dataVideojuegos';
 
   
-class Card extends PureComponent {
-  render() {
-    const { videoG, nav } = this.props;
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <TouchableOpacity onPress={() => nav.navigate('Detail', { videoGames: videoG })}>
-            <Image
-              style={styles.image}
-              source={{ uri: videoG.image }}
-              PlaceholderContent={<ActivityIndicator color={'#FFFFFF'} size={'large'} />}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.detailsContainer}>
+ 
+  return (
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+      <TouchableOpacity onPress={() =>nav.navigate('Detail', {videoGames: videoG  })}> 
+        <Image 
+            style={styles.image} 
+            source={{ uri: videoG.image }} 
+            PlaceholderContent={<ActivityIndicator color={'#FFFFFF'} size={"large"}/>}
+        />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.detailsContainer}>
           <Text style={styles.name}>{videoG.name}</Text>
           <StarRating
             disabled={true}
