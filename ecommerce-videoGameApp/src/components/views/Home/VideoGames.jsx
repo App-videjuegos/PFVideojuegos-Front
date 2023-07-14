@@ -72,8 +72,9 @@ const videogames=[{
 const VideoGames = ({ navigation, route }) => {
 
   const dispatch= useDispatch();
-  const vGames=useSelector((state)=>state.videogamesState.videoGames)
-  
+  const videoGames = useSelector((state) => state.videogamesState.videoGames);
+  const filteredVideoGames = useSelector((state) => state.videogamesState.filteredVideoGames);
+
 
   useEffect(()=>{
 
@@ -84,19 +85,13 @@ const VideoGames = ({ navigation, route }) => {
     <View style={styles.container}>
       <ScrollView>
       <View>
-    {vGames.map((videoGame) => {
-      return (
-        <Card
-          key={videoGame.id}
-          videoG={videoGame}
-          // name={p.name}
-          // image={p.image}
-          // rating={p.rating}
-          // released={p.released}
-          nav={navigation}
-        />
-      );
-    })}
+      {filteredVideoGames.length > 0
+            ? filteredVideoGames.map((videoGame) => (
+                <Card key={videoGame.id} videoG={videoGame} nav={navigation} />
+              ))
+            : videoGames.map((videoGame) => (
+                <Card key={videoGame.id} videoG={videoGame} nav={navigation} />
+              ))}
   </View>
   </ScrollView>
       

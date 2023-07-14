@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
-    videoGames:[],//280   -> action = ->80  -> rpg = 60 -> prev  =280
+    videoGames: [],//280   -> action = ->80  -> rpg = 60 -> prev  =280
+    filteredVideoGames: [],
     videoGames_Prev:[],//280 -> 280 = ->80
     videoGame:[],
     msgerror:"NULL",
@@ -15,10 +16,10 @@ const initialState={
     input:1,
     maximo:0,
 }
-export const videogamesSlice= createSlice({
+export const videogamesSlice = createSlice({
     name: "videogames",
     initialState,
-    reducers:{//noc xq pero aqui es plural
+    reducers: {//noc xq pero aqui es plural
         getAllVideogames: (state,action)=>{
             
             state.videoGames= action.payload;
@@ -61,11 +62,86 @@ export const videogamesSlice= createSlice({
         AllGenresVideoGame:(state,action)=>{
             state.allGenres=action.payload
         },
+        /////////////////////////////////////////////////////////////////////////////////
+        filterByPlatform: (state, action) => {
+            const platform = action.payload;
+            state.filteredVideoGames = state.videoGames.filter(
+              (game) => game.platforms.includes(platform)
+            );
+          },
+      
+          filterByGenre: (state, action) => {
+            const genre = action.payload;
+            state.filteredVideoGames = state.videoGames.filter(
+              (game) => game.genre.includes(genre)
+            );
+          },
+      
+          filterByPriceRange: (state, action) => {
+            const { minPrice, maxPrice } = action.payload;
+            state.filteredVideoGames = state.videoGames.filter(
+              (game) => game.price >= minPrice && game.price <= maxPrice
+            );
+          },
+      
+          filterByRating: (state, action) => {
+            const rating = action.payload;
+            state.filteredVideoGames = state.videoGames.filter(
+              (game) => game.rating >= rating
+            );
+          },
+      
+          filterByReleaseDate: (state, action) => {
+            const releaseDate = action.payload;
+            state.filteredVideoGames = state.videoGames.filter(
+              (game) => game.releaseDate === releaseDate
+            );
+          },
+      
+          sortByRatingAsc: (state) => {
+            state.filteredVideoGames.sort((a, b) => a.rating - b.rating);
+          },
+      
+          sortByRatingDesc: (state) => {
+            state.filteredVideoGames.sort((a, b) => b.rating - a.rating);
+          },
+      
+          sortByPriceAsc: (state) => {
+            state.filteredVideoGames.sort((a, b) => a.price - b.price);
+          },
+      
+          sortByPriceDesc: (state) => {
+            state.filteredVideoGames.sort((a, b) => b.price - a.price);
+          },
+      
+          sortByReleaseDateAsc: (state) => {
+            state.filteredVideoGames.sort((a, b) => new Date(a.releaseDate) - new Date(b.releaseDate));
+          },
+      
+          sortByReleaseDateDesc: (state) => {
+            state.filteredVideoGames.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+          },
+      
+          clearFilters: (state) => {
+            state.filteredVideoGames = [];
+          },
         
     }
 })
 
 export const {getAllVideogames,getVideogamebyId,addUser,setNextPage,setFirstPage,setFlaPrev,setErrorMsg,
-              setPrevPage,setMaxPage,getVideogamesbyName,setPrevVideoGame,updateVideogames
+              setPrevPage,setMaxPage,getVideogamesbyName,setPrevVideoGame,updateVideogames,
+              filterByPlatform,
+  filterByGenre,
+  filterByPriceRange,
+  filterByRating,
+  filterByReleaseDate,
+  sortByRatingAsc,
+  sortByRatingDesc,
+  sortByPriceAsc,
+  sortByPriceDesc,
+  sortByReleaseDateAsc,
+  sortByReleaseDateDesc,
+  clearFilters,
             }=videogamesSlice.actions
 export default videogamesSlice.reducer

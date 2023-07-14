@@ -1,77 +1,148 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
 import {
-  filterRatingAsc,
-  filterRatingDesc,
-  filterPriceAsc,
-  filterPriceDesc,
-  filterByPlatform,
-  GetallGenres,
-  filterByPlatformDOS,
-  filterByGenre,
-  filterByAtoZDOS,
-  filterByZtoADOS,
-  filterByRatingAscDOS,
-  filterByRatingDescDOS,
-  filterByPriceAscDOS,
-  filterByPriceDescDOS,
-  emptyFilteredvideogames,
+  applyPlatformFilter,
+  applyGenreFilter,
+  applyPriceRangeFilter,
+  applyRatingFilter,
+  applyReleaseDateFilter,
+  applyRatingSortAsc,
+  applyRatingSortDesc,
+  applyPriceSortAsc,
+  applyPriceSortDesc,
+  applyReleaseDateSortAsc,
+  applyReleaseDateSortDesc,
 } from "../../../redux/videogamesActions";
+import { clearFilters } from "../../../redux/videogamesSlice";
 
-const Filter = () => {
+const Filter = ({ handleResetFilter, handleCloseFilter }) => {
   const dispatch = useDispatch();
   const [selectedPlatform, setSelectedPlatform] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState(null);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [selectedRating, setSelectedRating] = useState(null);
+  const [selectedReleaseDate, setSelectedReleaseDate] = useState(null);
 
   const handleFilter = () => {
     if (selectedPlatform) {
-      dispatch(filterByPlatform(selectedPlatform));
+      dispatch(applyPlatformFilter(selectedPlatform));
     }
     if (selectedGenre) {
-      dispatch(filterByGenre(selectedGenre));
+      dispatch(applyGenreFilter(selectedGenre));
     }
-    // ... Resto de los filtros
+    if (minPrice !== 0 || maxPrice !== 0) {
+      dispatch(applyPriceRangeFilter(minPrice, maxPrice));
+    }
+    if (selectedRating) {
+      dispatch(applyRatingFilter(selectedRating));
+    }
+    if (selectedReleaseDate) {
+      dispatch(applyReleaseDateFilter(selectedReleaseDate));
+    }
   };
 
-  const handleResetFilter = () => {
-    dispatch(emptyFilteredvideogames());
+  const handleSort = (sortType) => {
+    switch (sortType) {
+      case "ratingAsc":
+        dispatch(applyRatingSortAsc());
+        break;
+      case "ratingDesc":
+        dispatch(applyRatingSortDesc());
+        break;
+      case "priceAsc":
+        dispatch(applyPriceSortAsc());
+        break;
+      case "priceDesc":
+        dispatch(applyPriceSortDesc());
+        break;
+      case "releaseDateAsc":
+        dispatch(applyReleaseDateSortAsc());
+        break;
+      case "releaseDateDesc":
+        dispatch(applyReleaseDateSortDesc());
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleClearFilters = () => {
     setSelectedPlatform(null);
     setSelectedGenre(null);
-    // ... Resto de los filtros
+    setMinPrice(0);
+    setMaxPrice(0);
+    setSelectedRating(null);
+    setSelectedReleaseDate(null);
+    dispatch(clearFilters());
+    handleResetFilter();
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Filtros:</Text>
-      <Text style={styles.subtitle}>Plataforma:</Text>
-      <TouchableOpacity onPress={() => setSelectedPlatform('PlayStation 5')}>
-        <Text
-          style={[
-            styles.filterOption,
-            selectedPlatform === 'PlayStation 5' && styles.selectedFilterOption,
-          ]}
-        >
-          PlayStation 5
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setSelectedPlatform('Xbox Series S/X')}>
-        <Text
-          style={[
-            styles.filterOption,
-            selectedPlatform === 'Xbox Series S/X' && styles.selectedFilterOption,
-          ]}
-        >
-          Xbox Series S/X
-        </Text>
-      </TouchableOpacity>
-      {/* Resto de filtros... */}
-      <TouchableOpacity onPress={handleFilter}>
-        <Text style={styles.applyButton}>Aplicar filtros</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleResetFilter}>
-        <Text style={styles.resetButton}>Limpiar filtros</Text>
-      </TouchableOpacity>
+      <ScrollView>
+        <Text style={styles.title}>Filtros:</Text>
+        <View style={styles.filterSection}>
+          <Text style={styles.subtitle}>Plataforma:</Text>
+          <TouchableOpacity onPress={() => setSelectedPlatform('PlayStation 5')}>
+            <Text
+              style={[
+                styles.filterOption,
+                selectedPlatform === 'PlayStation 5' && styles.selectedFilterOption,
+              ]}
+            >
+              PlayStation 5
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setSelectedPlatform('Xbox Series S/X')}>
+            <Text
+              style={[
+                styles.filterOption,
+                selectedPlatform === 'Xbox Series S/X' && styles.selectedFilterOption,
+              ]}
+            >
+              Xbox Series S/X
+            </Text>
+          </TouchableOpacity>
+          {/* Agregar más opciones de plataforma aquí */}
+        </View>
+        <View style={styles.filterSection}>
+          <Text style={styles.subtitle}>Género:</Text>
+          {/* Agregar opciones de género aquí */}
+        </View>
+        <View style={styles.filterSection}>
+          <Text style={styles.subtitle}>Rango de precio:</Text>
+          {/* Agregar campos de entrada de rango de precio aquí */}
+        </View>
+        <View style={styles.filterSection}>
+          <Text style={styles.subtitle}>Rating:</Text>
+          {/* Agregar opciones de rating aquí */}
+        </View>
+        <View style={styles.filterSection}>
+          <Text style={styles.subtitle}>Fecha de lanzamiento:</Text>
+          {/* Agregar opciones de fecha de lanzamiento aquí */}
+        </View>
+        <Text style={styles.title}>Ordenamientos:</Text>
+        <View style={styles.sortSection}>
+          <TouchableOpacity onPress={() => handleSort("ratingAsc")}>
+            <Text style={styles.sortOption}>Rating Ascendente</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleSort("ratingDesc")}>
+            <Text style={styles.sortOption}>Rating Descendente</Text>
+          </TouchableOpacity>
+          {/* Agregar más opciones de ordenamiento aquí */}
+        </View>
+        <View style={styles.buttonsSection}>
+          <TouchableOpacity onPress={handleClearFilters} style={styles.button}>
+            <Text style={styles.buttonText}>Limpiar filtros</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleFilter} style={styles.button}>
+            <Text style={styles.buttonText}>Aplicar filtros</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+      <Button title="Cerrar" onPress={handleCloseFilter} />
     </View>
   );
 };
@@ -86,6 +157,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  filterSection: {
+    marginBottom: 20,
+  },
+  sortSection: {
+    marginBottom: 20,
+  },
+  buttonsSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   subtitle: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -99,17 +180,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'blue',
   },
-  applyButton: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'green',
-    marginTop: 20,
+  sortOption: {
+    fontSize: 16,
+    marginBottom: 5,
   },
-  resetButton: {
-    fontSize: 18,
+  button: {
+    padding: 10,
+    backgroundColor: 'green',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
     fontWeight: 'bold',
-    color: 'red',
-    marginTop: 10,
+    textAlign: 'center',
   },
 });
 

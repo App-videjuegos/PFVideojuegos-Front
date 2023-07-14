@@ -8,15 +8,16 @@ import ButtonCart from "./../../forms/Cart/ButtonCart"
 import { useEffect ,useContext, useState} from 'react'
 import { ThemeContext } from '../../utils/theme/ThemeProvider';
 import { LanguajeContext } from '../../utils/languaje/languajeProvider';
+import { useDispatch } from 'react-redux';
 
 import Filter from "../../utils/Filters/Filter";
 
-import {getvideoGames,} from "../../../redux/videogamesActions"
+import {clearAllFilters,} from "../../../redux/videogamesActions"
 const Stack = createNativeStackNavigator();
 
 const HomeD =({ navigation, route})=>{
   const [isFilterOpen, setIsFilterOpen] = useState(false); // Estado para controlar si el filtro está abierto
-
+  const dispatch = useDispatch();
 //linea para setear el modo dark
 const { isDarkMode, StringsDark } = useContext(ThemeContext);
 //linea para setear el lenguaje /obtener palabras de lenguaje
@@ -28,6 +29,13 @@ const handleOpenFilter = () => {
 
 const handleCloseFilter = () => {
   setIsFilterOpen(false);
+};
+
+const handleResetFilter = () => {
+  // Lógica para restablecer los filtros
+
+  // Por ejemplo, puedes llamar a dispatch(clearAllFilters())
+  dispatch(clearAllFilters());
 };
   
   useEffect(()=>{
@@ -84,7 +92,11 @@ const handleCloseFilter = () => {
     {/* Renderizamos el componente Filter si el estado isFilterOpen es true */}
     {isFilterOpen && (
         <View style={{ flex: 1 }}>
-          <Filter />
+          {/* Pasar la función handleResetFilter y handleCloseFilter como props al componente Filter */}
+          <Filter
+            handleResetFilter={handleResetFilter}
+            handleCloseFilter={handleCloseFilter}
+          />
         </View>
       )}
     </View>

@@ -1,5 +1,17 @@
 import {getAllVideogames, addUser,setNextPage,setPrevPage,setMaxPage,setErrorMsg,
         setFlaPrev,setFirstPage,getVideogamesbyName,setPrevVideoGame,updateVideogames,
+  filterByPlatform,
+  filterByGenre,
+  filterByPriceRange,
+  filterByRating,
+  filterByReleaseDate,
+  sortByRatingAsc,
+  sortByRatingDesc,
+  sortByPriceAsc,
+  sortByPriceDesc,
+  sortByReleaseDateAsc,
+  sortByReleaseDateDesc,
+  clearFilters,
      } from "./videogamesSlice";
 
          
@@ -126,11 +138,11 @@ export const filterPriceDesc=()=>(dispatch)=>{
         .then((data)=>dispatch(FilterByPriceDesc(data)))
 }
 
-export const filterByPlatform = (platform)=>(dispatch)=>{
-    fetch(`https://gameshopback-pf-ek5y.onrender.com/games/plataforms/${platform}`)
-        .then((res)=>res.json())
-        .then((data)=>dispatch(FilterBYPlataform(data)))
-}
+//export const filterByPlatform = (platform)=>(dispatch)=>{
+//    fetch(`https://gameshopback-pf-ek5y.onrender.com/games/plataforms/${platform}`)
+//        .then((res)=>res.json())
+//        .then((data)=>dispatch(FilterBYPlataform(data)))
+//}
 
 export const GetallGenres=()=>(dispatch)=>{
     fetch('https://gameshopback-pf-ek5y.onrender.com/genres')
@@ -145,11 +157,11 @@ export const filterByPlatformDOS=(data)=>{
     }
 }
 
-export const filterByGenre=(data)=>{
-    return function(dispatch){
-        dispatch(FilterByGenre(data))
-    }
-}
+//export const filterByGenre=(data)=>{
+//    return function(dispatch){
+//        dispatch(FilterByGenre(data))
+//    }
+//}
 
 
 
@@ -222,3 +234,51 @@ export const getVGameByID = (id) => {
     };
   };
 
+// Acciones para filtros y ordenamientos
+export const applyPlatformFilter = (platform) => (dispatch) => {
+    dispatch(filterByPlatform(platform));
+  };
+  
+  export const applyGenreFilter = (genre) => (dispatch) => {
+    dispatch(filterByGenre(genre));
+  };
+  
+  export const applyPriceRangeFilter = (minPrice, maxPrice) => (dispatch) => {
+    dispatch(filterByPriceRange({ minPrice, maxPrice }));
+  };
+  
+  export const applyRatingFilter = (rating) => (dispatch) => {
+    dispatch(filterByRating(rating));
+  };
+  
+  export const applyReleaseDateFilter = (releaseDate) => (dispatch) => {
+    dispatch(filterByReleaseDate(releaseDate));
+  };
+  
+  export const applyRatingSortAsc = () => (dispatch) => {
+    dispatch(sortByRatingAsc());
+  };
+  
+  export const applyRatingSortDesc = () => (dispatch) => {
+    dispatch(sortByRatingDesc());
+  };
+  
+  export const applyPriceSortAsc = () => (dispatch) => {
+    dispatch(sortByPriceAsc());
+  };
+  
+  export const applyPriceSortDesc = () => (dispatch) => {
+    dispatch(sortByPriceDesc());
+  };
+  
+  export const applyReleaseDateSortAsc = () => (dispatch) => {
+    dispatch(sortByReleaseDateAsc());
+  };
+  
+  export const applyReleaseDateSortDesc = () => (dispatch) => {
+    dispatch(sortByReleaseDateDesc());
+  };
+  
+  export const clearAllFilters = () => (dispatch) => {
+    dispatch(clearFilters());
+  };
