@@ -72,7 +72,7 @@ const CreateVideogame = ({ navigation, route }) => {
     id: 1 + Math.floor(Math.random() * 999),
     name: "",
     description: "",
-    releaseDate: "",
+    releaseDate: `${convertirFecha(date)}`,
     image: "",
     screenShots: [],
     platforms: [],
@@ -82,21 +82,7 @@ const CreateVideogame = ({ navigation, route }) => {
     requeriments_en: "",
   });
 
-  // console.log(allplatformss)
-  // console.log(allgenre)
 
-  console.log(newVideoGame);
-
-  //Dark Mode:
-  // useEffect(() => {
-  //   navigation.setOptions({
-  //     headerTitle: `${(StringsLanguaje.CreateVideogame, "Create Videogame")}`,
-  //     headerStyle: {
-  //       backgroundColor: StringsDark.backgroundContainer,
-  //     },
-  //   });
-  // }, [isDarkMode, locale]);
-  //Dark Mode:
 
   useEffect(() => {
     validate(newVideoGame);
@@ -159,7 +145,7 @@ const CreateVideogame = ({ navigation, route }) => {
         setValidateSubmit(false);
       } else {
         const res = await axios.post(
-          "https://gameshop-production-e844.up.railway.app/games",
+          "https://pfvideojuegos-back-production.up.railway.app/games",
           {
             id: newVideoGame.id,
             name: newVideoGame.name,
@@ -550,7 +536,8 @@ const CreateVideogame = ({ navigation, route }) => {
                   style={[styles.dateButton]}
                 >
                   <Text style={styles.buttonTextDate}>
-                    {!date ? "Intesert date of birth " : convertirFecha(date)}
+                    {!date ? "Intesert date of birth " : convertirFecha(date) }
+                    
                   </Text>
                 </TouchableOpacity>
                 {showPicker && (
@@ -564,6 +551,7 @@ const CreateVideogame = ({ navigation, route }) => {
                   />
                 )}
               </View>
+              {console.log(date)}
               {validateNvg.releaseDate !== "" && !inputFocusedDate && (
               <Text style={styles.error}>{validateNvg.releaseDate}</Text>
             )}

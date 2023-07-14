@@ -53,7 +53,7 @@ export const getvGamebyName =(query)=> (dispatch=>{
 
 
 export const getUser = () =>(dispatch)=>{
-fetch("https://gameshop-production-e844.up.railway.app/user")
+fetch("https://pfvideojuegos-back-production.up.railway.app/user")
     .then((res) =>res.json())
     .then((data)=> dispatch(addUser(data)))
     .catch((error)=> console.log(error))
@@ -115,25 +115,25 @@ export const updateVgames=(data)=>{
 // }
 
 export const filterRatingAsc=()=>(dispatch)=>{
-    fetch('https://gameshopback-pf-ek5y.onrender.com/games/order/ratmin')
+    fetch('https://pfvideojuegos-back-production.up.railway.app/games/order/ratmin')
         .then((res)=>res.json())
         .then((data)=>dispatch(FilterByRatingAsc(data)))
 }
 
 export const filterRatingDesc=()=>(dispatch)=>{
-    fetch('https://gameshopback-pf-ek5y.onrender.com/games/order/ratmax')
+    fetch('https://pfvideojuegos-back-production.up.railway.app/games/order/ratmax')
         .then((res)=>res.json())
         .then((data)=>dispatch(FilterByRatingDesc(data)))
 }
 
 export const filterPriceAsc=()=>(dispatch)=>{
-    fetch('https://gameshopback-pf-ek5y.onrender.com/games/order/pricemin')
+    fetch('https://pfvideojuegos-back-production.up.railway.app/games/order/pricemin')
         .then((res)=>res.json())
         .then((data)=>dispatch(FilterByPriceAsc(data)))
 }
 
 export const filterPriceDesc=()=>(dispatch)=>{
-    fetch('https://gameshopback-pf-ek5y.onrender.com/games/order/pricemax')
+    fetch('https://pfvideojuegos-back-production.up.railway.app/games/order/pricemax')
         .then((res)=>res.json())
         .then((data)=>dispatch(FilterByPriceDesc(data)))
 }
@@ -145,7 +145,7 @@ export const filterPriceDesc=()=>(dispatch)=>{
 //}
 
 export const GetallGenres=()=>(dispatch)=>{
-    fetch('https://gameshopback-pf-ek5y.onrender.com/genres')
+    fetch('https://pfvideojuegos-back-production.up.railway.app/genres')
         .then((res)=>res.json())
         .then((data)=>dispatch(AllGenresVideoGame(data)))
         
@@ -217,7 +217,7 @@ export const getVGameByID = (id) => {
     return async (dispatch) => {
       try {
         const response = await axios.get(
-          `https://gameshop-production-e844.up.railway.app/games/${id}`
+          `https://pfvideojuegos-back-production.up.railway.app/games/${id}`
         );
   
         const dataVg = response.data;
