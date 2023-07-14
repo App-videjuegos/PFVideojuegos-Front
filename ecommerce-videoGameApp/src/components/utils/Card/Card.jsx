@@ -4,8 +4,11 @@ import StarRating from 'react-native-star-rating';
 import dataVideojuegos from '../dataVideojuegos';
 
   
- 
-  return (
+class Card extends PureComponent {
+  render() {
+    const { videoG, nav } = this.props;
+
+    return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
       <TouchableOpacity onPress={() =>nav.navigate('Detail', {videoGames: videoG  })}> 
