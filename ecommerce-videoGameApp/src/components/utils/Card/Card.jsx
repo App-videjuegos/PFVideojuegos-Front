@@ -4,11 +4,6 @@ import StarRating from 'react-native-star-rating';
 import dataVideojuegos from '../dataVideojuegos';
 
   
-
-
-
-
-
 class Card extends PureComponent {
   render() {
     const { videoG, nav } = this.props;
