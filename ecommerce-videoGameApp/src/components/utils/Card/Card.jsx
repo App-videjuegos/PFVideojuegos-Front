@@ -16,7 +16,7 @@ class Card extends PureComponent {
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <TouchableOpacity onPress={() => nav.navigate('Detail', { props: videoG })}>
+          <TouchableOpacity onPress={() => nav.navigate('Detail', { videoGames: videoG })}>
             <Image
               style={styles.image}
               source={{ uri: videoG.image }}
@@ -35,7 +35,7 @@ class Card extends PureComponent {
             emptyStarColor="gold"
           />
           <Text style={styles.price}>{videoG.price}</Text>
-          <TouchableOpacity onPress={() => nav.navigate('Detail', { props: videoG })}>
+          <TouchableOpacity onPress={() => nav.navigate('Detail', { videoGames: videoG })}>
             <Text style={styles.detail}>Ver Detalle</Text>
           </TouchableOpacity>
         </View>

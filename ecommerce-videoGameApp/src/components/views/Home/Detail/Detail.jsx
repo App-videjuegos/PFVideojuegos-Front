@@ -15,7 +15,7 @@ const TabInfo= (props) => {
     )
   }
   const TabCarrousel= (props) => {
-    //  console.log("screnshoots", props.parametro2)
+      console.log("screnshoots", props.screenShots)
     return (
       <>
        <DetailScreenHots propCarrousel= {props.screenShots}  />
