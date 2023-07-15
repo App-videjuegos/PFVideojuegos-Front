@@ -81,8 +81,10 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     alignItems: "center",
+    alignContent:'center',
+    
     backgroundColor: "#fff",
-    padding: 10,
+    padding: 5,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {
@@ -94,10 +96,15 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   image: {
-    width: 200,
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 10,
+    width: 380,
+    height: 250,
+    // borderRadius: 10,
+    marginLeft: -7,
+    position: 'relative',
+    alignContent:'center',
+    resizeMode: "cover",
+    alignSelf:'center',
+    
   },
   gameName: {
     fontSize: 20,

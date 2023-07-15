@@ -88,8 +88,9 @@ const styles = StyleSheet.create({
   detailsContainer: {
     width: "50%",
     // height:'100%',
-    // alignContent:'center',
+    alignContent:'space-between',
     alignItems: "center",
+    padding:5,
   },
   name: {
     fontSize: 15,
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   detail: {
-    fontSize: 15,
+    fontSize: 18,
     textAlign: "center",
   },
 });
