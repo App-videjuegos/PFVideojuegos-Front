@@ -108,7 +108,7 @@ export const strings = {
     Checkout : 'Pago',
     MsgUserNoRegister: 'Usuario no registrado acceder a su cuenta',
     Search: 'Buscar',
-    Information: 'Informacion',
+    Information: 'Información',
     Ranking: 'Clasificación',
     Release: 'Fecha de Lanzamiento',
     DarkMode: 'Modo Oscuro',

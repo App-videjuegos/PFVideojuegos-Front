@@ -17,6 +17,7 @@ const VideoGames = ({ navigation, route }) => {
 
 
   useEffect(() => {
+    
     dispatch(getvideoGames());
   }, []);
 

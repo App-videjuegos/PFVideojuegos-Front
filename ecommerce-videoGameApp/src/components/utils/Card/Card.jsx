@@ -49,8 +49,8 @@ class Card extends PureComponent {
       </View>
     );
   }
-}
 
+}
 const styles = StyleSheet.create({
   container: {
     padding: 3,

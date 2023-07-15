@@ -3,8 +3,11 @@
 import {View,Text,StyleSheet, Image,Dimensions,SafeAreaView,Animated} from 'react-native'
 
 import {LinearGradient} from "expo-linear-gradient";
+import React,{ useContext} from 'react'
 
-import React from 'react';
+import { ThemeContext } from '../../../utils/theme/ThemeProvider';
+import { LanguajeContext } from '../../../utils/languaje/languajeProvider';
+
 
 const width= Dimensions.get("window").width;
 const height= Dimensions.get("window").height;
@@ -62,7 +65,10 @@ function BackDrop(scrollX){
 
 export default function Carrousel(data) {
 // console.log("Data-->",data.propCarrousel)
-
+//linea para setear el modo dark
+const { StringsDark } = useContext(ThemeContext);
+//linea para setear el lenguaje /obtener palabras de lenguaje
+const {StringsLanguaje }= useContext(LanguajeContext)
 
   const scrollX= React.useRef(new Animated.Value(0)).current;
 
@@ -120,7 +126,7 @@ export default function Carrousel(data) {
                 <Image source={{uri:item.img}} 
                         style={styles.posterImage}
                         />
-                <Text style={[styles.name,{color:'orange'}]}>Captura({Number(item.key)+1})</Text>
+                <Text style={[styles.name,{color:'#3F13A4'}]}>{StringsLanguaje.Screenshot}({Number(item.key)+1})</Text>
                </Animated.View> 
             </View> 
             )
