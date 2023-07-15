@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import Detail from "./Detail/Detail";
 import VideoGames from "./VideoGames";
 import SearchBar from "./SearchBar";
@@ -34,7 +34,6 @@ const handleCloseFilter = () => {
 const handleResetFilter = () => {
   // Lógica para restablecer los filtros
 
-  // Por ejemplo, puedes llamar a dispatch(clearAllFilters())
   dispatch(clearAllFilters());
 };
   
@@ -63,8 +62,8 @@ const handleResetFilter = () => {
             },
             headerLeft: () => (<SearchBar />),
             headerRight: () => (
-              <TouchableOpacity onPress={handleOpenFilter}>
-                <Text>Filtros</Text>
+              <TouchableOpacity onPress={handleOpenFilter} style={styles.filterButton}>
+                <Text style={styles.filterButtonText}>Filters</Text>
               </TouchableOpacity>
             ),
 
@@ -103,5 +102,29 @@ const handleResetFilter = () => {
     );
 
 }
+
+const styles = StyleSheet.create({
+  
+  filterButton: {
+    backgroundColor: "#987BDC",
+    paddingHorizontal: 30,
+    paddingVertical: 13, // Aumentar el valor aquí según tus necesidades
+    borderRadius: 5,
+  },
+  filterButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: "#622EDA",
+  },
+  // ...
+});
+
+
+
 
 export default HomeD

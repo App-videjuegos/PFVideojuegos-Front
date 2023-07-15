@@ -13,6 +13,7 @@
     "@expo/webpack-config": "^18.0.1",
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-picker/picker": "^2.4.10",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/drawer": "^6.6.3",
     "@react-navigation/native": "^6.1.7",
@@ -23,7 +24,10 @@
     "expo": "~48.0.18",
     "expo-checkbox": "~2.3.1",
     "expo-image-picker": "~14.1.1",
+<<<<<<< Updated upstream
     "expo-linear-gradient": "~12.1.2",
+=======
+>>>>>>> Stashed changes
     "expo-localization": "~14.1.1",
     "expo-location": "~15.1.1",
     "expo-status-bar": "~1.4.4",
@@ -43,16 +47,7 @@
     "react-native-star-rating": "^1.0.9",
     "react-native-web": "~0.18.11",
     "react-redux": "^8.1.1",
-    
-    "react-native-dropdown-select-list": "^2.0.4",
-    "react-native-element-dropdown": "^2.9.0",
-    "run-ios": "^0.4.0",
-    "formik": "^2.2.9",
-    "expo-image-picker": "~14.1.1",
-    "expo-checkbox": "~2.3.1",
-    "@react-native-community/datetimepicker": "6.7.3",
-    "@expo/webpack-config": "^18.0.1"
-    
+    "run-ios": "^0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -62,7 +62,7 @@ export const videogamesSlice = createSlice({
         AllGenresVideoGame:(state,action)=>{
             state.allGenres=action.payload
         },
-        /////////////////////////////////////////////////////////////////////////////////
+        //////Filtros ------- Adrián
         filterByPlatform: (state, action) => {
             const platform = action.payload;
             state.filteredVideoGames = state.videoGames.filter(
@@ -100,32 +100,58 @@ export const videogamesSlice = createSlice({
       
           sortByRatingAsc: (state) => {
             state.filteredVideoGames.sort((a, b) => a.rating - b.rating);
+            state.videoGames.sort((a, b) => a.rating - b.rating);
           },
       
           sortByRatingDesc: (state) => {
             state.filteredVideoGames.sort((a, b) => b.rating - a.rating);
+            state.videoGames.sort((a, b) => b.rating - a.rating);
           },
       
           sortByPriceAsc: (state) => {
             state.filteredVideoGames.sort((a, b) => a.price - b.price);
+            state.videoGames.sort((a, b) => a.price - b.price);
           },
       
           sortByPriceDesc: (state) => {
             state.filteredVideoGames.sort((a, b) => b.price - a.price);
+            state.videoGames.sort((a, b) => b.price - a.price);
           },
       
           sortByReleaseDateAsc: (state) => {
-            state.filteredVideoGames.sort((a, b) => new Date(a.releaseDate) - new Date(b.releaseDate));
+            state.filteredVideoGames.sort(
+              (a, b) => new Date(a.releaseDate) - new Date(b.releaseDate)
+            );
+            state.videoGames.sort(
+              (a, b) => new Date(a.releaseDate) - new Date(b.releaseDate)
+            );
           },
       
           sortByReleaseDateDesc: (state) => {
-            state.filteredVideoGames.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+            state.filteredVideoGames.sort(
+              (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
+            );
+            state.videoGames.sort(
+              (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
+            );
+          },
+
+          sortByAlphabeticalAsc: (state) => {
+            state.filteredVideoGames.sort((a, b) => a.name.localeCompare(b.name));
+            state.videoGames.sort((a, b) => a.name.localeCompare(b.name));
           },
       
+          sortByAlphabeticalDesc: (state) => {
+            state.filteredVideoGames.sort((a, b) => b.name.localeCompare(a.name));
+            state.videoGames.sort((a, b) => b.name.localeCompare(a.name));
+          },
+
+
+
           clearFilters: (state) => {
             state.filteredVideoGames = [];
           },
-        
+        //////Filtros ------- Adrián
     }
 })
 
@@ -143,5 +169,6 @@ export const {getAllVideogames,getVideogamebyId,addUser,setNextPage,setFirstPage
   sortByReleaseDateAsc,
   sortByReleaseDateDesc,
   clearFilters,
+  sortByAlphabeticalAsc, sortByAlphabeticalDesc
             }=videogamesSlice.actions
 export default videogamesSlice.reducer

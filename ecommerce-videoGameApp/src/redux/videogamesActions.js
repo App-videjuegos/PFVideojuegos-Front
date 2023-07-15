@@ -12,13 +12,15 @@ import {getAllVideogames, addUser,setNextPage,setPrevPage,setMaxPage,setErrorMsg
   sortByReleaseDateAsc,
   sortByReleaseDateDesc,
   clearFilters,
+  sortByAlphabeticalAsc,
+  sortByAlphabeticalDesc,
      } from "./videogamesSlice";
 
          
 
 import axios from "axios";
 import {videogames} from '../components/utils/dataVideojuegos'
-
+import { createAsyncThunk } from "@reduxjs/toolkit";
 let estado=0
 export const  getvideoGames = () =>(dispatch)=>{
   
@@ -234,7 +236,7 @@ export const getVGameByID = (id) => {
     };
   };
 
-// Acciones para filtros y ordenamientos
+// Acciones para filtros y ordenamientos ----> Adrián
 export const applyPlatformFilter = (platform) => (dispatch) => {
     dispatch(filterByPlatform(platform));
   };
@@ -282,3 +284,21 @@ export const applyPlatformFilter = (platform) => (dispatch) => {
   export const clearAllFilters = () => (dispatch) => {
     dispatch(clearFilters());
   };
+
+  export const applyAlphabeticalSortAsc = createAsyncThunk(
+    "videogames/applyAlphabeticalSortAsc",
+    async (_, { dispatch }) => {
+      dispatch(sortByAlphabeticalAsc());
+    }
+  );
+  
+  export const applyAlphabeticalSortDesc = createAsyncThunk(
+    "videogames/applyAlphabeticalSortDesc",
+    async (_, { dispatch }) => {
+      dispatch(sortByAlphabeticalDesc());
+    }
+  );
+  //////Filtros ------- Adrián
+
+
+  
