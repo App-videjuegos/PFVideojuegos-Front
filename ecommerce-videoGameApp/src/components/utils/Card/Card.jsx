@@ -8,11 +8,10 @@ import {
 } from "react-native";
 import React, { PureComponent } from "react";
 import StarRating from "react-native-star-rating";
-import dataVideojuegos from "../dataVideojuegos";
 
-class Card extends PureComponent {
-  render() {
-    const { videoG, nav } = this.props;
+const Card = (props) => {
+
+    const { videoG, nav } = props;
 
     return (
       <View style={styles.container}>
@@ -39,7 +38,7 @@ class Card extends PureComponent {
             fullStarColor="gold"
             emptyStarColor="gold"
           />
-          <Text style={styles.price}>${videoG.price}</Text>
+          <Text style={styles.price}>$ {videoG.price}</Text>
           <TouchableOpacity
             onPress={() => nav.navigate("Detail", { videoGames: videoG })}
           >
@@ -50,7 +49,6 @@ class Card extends PureComponent {
     );
   }
 
-}
 const styles = StyleSheet.create({
   container: {
     padding: 3,
@@ -80,7 +78,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     // marginLeft: -10,
-    width: 120,
+    width: 150,
     height: 140,
     borderRadius: 8,
     // alignSelf:'center',
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   price: {
-    fontSize: 20,
+    fontSize: 22,
     textAlign: "center",
     fontWeight: "bold",
     height: 25,
