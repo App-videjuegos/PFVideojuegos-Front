@@ -7,57 +7,84 @@ import {
   Image,
   Button,
 } from "react-native";
-
+import { AirbnbRating } from 'react-native-ratings';
 const DetailInfo = (props) => {
-  const { name, description, price, stock, image } = props.propInfo;
+
+  const [ratingV, setRating] = useState(0);
+  const { name, description, price, rating, image } = props.propInfo;
   const [showFullDescription, setShowFullDescription] = useState(false);
 
-  const RatingStars = ({ rating }) => {
-    const filledStars = Math.floor(rating);
-    const hasHalfStar = rating - filledStars >= 0.5;
-
-    const renderStars = () => {
-      const stars = [];
-
-      // Render estrellas llenas
-      for (let i = 0; i < filledStars; i++) {
-        stars.push(<Star key={i} filled />);
-      }
-
-      // Render media estrella
-      if (hasHalfStar) {
-        stars.push(<Star key="half" half />);
-      }
-
-      // Render estrellas vacías restantes
-      for (let i = filledStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
-        stars.push(<Star key={i} />);
-      }
-
-      return stars;
-    };
-
-    return <View style={styles.ratingContainer}>{renderStars()}</View>;
+  const handleRating = (value) => {
+    setRating(value);
+    // console.log('Valor puntuado:', value);
   };
-
-  const Star = ({ filled, half }) => (
-    <View style={styles.starContainer}>
-      <Text>{half ? "★" : filled ? "★" : "☆"}</Text>
-    </View>
-  );
+  const putRating = () => {
+    
+    alert(`el valor puntuado ${ratingV} se guardara`)
+  };
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
+
+  // const RatingStars = ({ rating }) => {
+  //   const filledStars = Math.floor(rating);
+  //   const hasHalfStar = rating - filledStars >= 0.5;
+
+  //   const renderStars = () => {
+  //     const stars = [];
+
+  //     // Render estrellas llenas
+  //     for (let i = 0; i < filledStars; i++) {
+  //       stars.push(<Star key={i} filled />);
+  //     }
+
+  //     // Render media estrella
+  //     if (hasHalfStar) {
+  //       stars.push(<Star key="half" half />);
+  //     }
+
+  //     // Render estrellas vacías restantes
+  //     for (let i = filledStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
+  //       stars.push(<Star key={i} />);
+  //     }
+
+  //     return stars;
+  //   };
+
+  //   return <View style={styles.ratingContainer}>{renderStars()}</View>;
+  // };
+
+  // const Star = ({ filled, half }) => (
+  //   <View style={styles.starContainer}>
+  //     <Text>{half ? "★" : filled ? "★" : "☆"}</Text>
+  //   </View>
+  // );
+
+
+  // onFinishRating={handleRating}
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image style={styles.image} source={{ uri: image }} />
       <Text style={styles.gameName}>{name}</Text>
       <View style={styles.ratingContainer}>
-        <RatingStars rating={4.5} />
+        {/* <RatingStars rating={4.5} /> */}
+        <AirbnbRating
+            count={5} // Cantidad de íconos de clasificación a mostrar
+            defaultRating={rating} // Valor de clasificación predeterminado
+            size={20} // Tamaño de los íconos de clasificación
+            showRating={false}
+            selectedColor="gold"
+            onFinishRating={handleRating}
+            // isDisabled={true}
+          />
+          <Text style={styles.textRating} onPress={() => putRating()}>Puntuar </Text>
+          <Text>Valor puntuado: {ratingV}</Text>
+          {/* <Text style={styles.textRating}>Save Rating</Text> */}
       </View>
-      <Text style={styles.gamePrice}>${price}</Text>
+      <Text style={styles.gamePrice}>$ {price}</Text>
       <Button
         title="Add to Car"
         onPress={() => console.log("Añadir al carrito")}
@@ -114,7 +141,9 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flexDirection: "row",
     alignItems: "center",
+    // alignContent:'space-around',
     marginBottom: 10,
+    padding:5,
   },
   starContainer: {
     marginRight: 2,
@@ -133,6 +162,12 @@ const styles = StyleSheet.create({
   commentsContainer: {
     // Estilos para la sección de comentarios
   },
+  textRating:{
+    fontSize:20,
+    fontWeight:'bold',
+    color:'#496BFF',
+    paddingLeft:20,
+  }
 });
 
 export default DetailInfo;

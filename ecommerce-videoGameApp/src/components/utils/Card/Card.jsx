@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import React, { PureComponent } from "react";
-import StarRating from "react-native-star-rating";
+import React from "react";
+// import StarRating from "react-native-star-rating";
+import { AirbnbRating } from 'react-native-ratings';
 
 const Card = (props) => {
 
@@ -30,14 +31,16 @@ const Card = (props) => {
         </View>
         <View style={styles.detailsContainer}>
           <Text style={styles.name}>{videoG.name}</Text>
-          <StarRating
-            disabled={true}
-            maxStars={5}
-            rating={videoG.rating}
-            starSize={20}
-            fullStarColor="gold"
-            emptyStarColor="gold"
+
+          <AirbnbRating
+            count={5} // Cantidad de íconos de clasificación a mostrar
+            defaultRating={videoG.rating} // Valor de clasificación predeterminado
+            size={20} // Tamaño de los íconos de clasificación
+            showRating={false}
+            selectedColor="gold"
+            isDisabled={true}
           />
+
           <Text style={styles.price}>$ {videoG.price}</Text>
           <TouchableOpacity
             onPress={() => nav.navigate("Detail", { videoGames: videoG })}

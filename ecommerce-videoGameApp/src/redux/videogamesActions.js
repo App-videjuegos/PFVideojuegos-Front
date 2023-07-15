@@ -54,13 +54,6 @@ export const getvGamebyName =(query)=> (dispatch=>{
 })
 
 
-export const getUser = () =>(dispatch)=>{
-fetch("https://pfvideojuegos-back-production.up.railway.app/user")
-    .then((res) =>res.json())
-    .then((data)=> dispatch(addUser(data)))
-    .catch((error)=> console.log(error))
-}
-
 export const setNxtPage=()=>{
     return  function(dispatch){
            dispatch(setNextPage())
@@ -104,116 +97,7 @@ export const updateVgames=(data)=>{
 
 
 
-// export const filterByAtoZ=()=>(dispatch)=>{
-//     fetch('https://gameshopback-pf-ek5y.onrender.com/games/order/asc')
-//         .then((res)=>res.json())
-//         .then((data)=>dispatch(FilterAtoZ(data)))
-// }
 
-// export const filterByZtoA=()=>(dispatch)=>{
-//     fetch('https://gameshopback-pf-ek5y.onrender.com/games/order/desc')
-//         .then((res)=>res.json())
-//         .then((data)=>dispatch(FilterZtoA(data)))
-// }
-
-export const filterRatingAsc=()=>(dispatch)=>{
-    fetch('https://pfvideojuegos-back-production.up.railway.app/games/order/ratmin')
-        .then((res)=>res.json())
-        .then((data)=>dispatch(FilterByRatingAsc(data)))
-}
-
-export const filterRatingDesc=()=>(dispatch)=>{
-    fetch('https://pfvideojuegos-back-production.up.railway.app/games/order/ratmax')
-        .then((res)=>res.json())
-        .then((data)=>dispatch(FilterByRatingDesc(data)))
-}
-
-export const filterPriceAsc=()=>(dispatch)=>{
-    fetch('https://pfvideojuegos-back-production.up.railway.app/games/order/pricemin')
-        .then((res)=>res.json())
-        .then((data)=>dispatch(FilterByPriceAsc(data)))
-}
-
-export const filterPriceDesc=()=>(dispatch)=>{
-    fetch('https://pfvideojuegos-back-production.up.railway.app/games/order/pricemax')
-        .then((res)=>res.json())
-        .then((data)=>dispatch(FilterByPriceDesc(data)))
-}
-
-//export const filterByPlatform = (platform)=>(dispatch)=>{
-//    fetch(`https://gameshopback-pf-ek5y.onrender.com/games/plataforms/${platform}`)
-//        .then((res)=>res.json())
-//        .then((data)=>dispatch(FilterBYPlataform(data)))
-//}
-
-export const GetallGenres=()=>(dispatch)=>{
-    fetch('https://pfvideojuegos-back-production.up.railway.app/genres')
-        .then((res)=>res.json())
-        .then((data)=>dispatch(AllGenresVideoGame(data)))
-        
-}
-
-export const filterByPlatformDOS=(data)=>{
-    return function(dispatch){
-        dispatch(FilterByPlatformDOS(data))
-    }
-}
-
-//export const filterByGenre=(data)=>{
-//    return function(dispatch){
-//        dispatch(FilterByGenre(data))
-//    }
-//}
-
-
-
-export const filterByAtoZDOS=(data)=>{
-    return function(dispatch){
-        dispatch(FilterByAtoZDos(data))
-    }
-}
-
-export const filterByZtoADOS=(data)=>{
-    return function(dispatch){
-        dispatch(FilterByZtoADOS(data))
-    }
-}
-
-export const filterByRatingAscDOS=()=>{
-    return function(dispatch){
-        dispatch(FilterByRatingAscDOS())
-    }
-}
-
-
-export const filterByRatingDescDOS=()=>{
-    return function(dispatch){
-        dispatch(FilterByRatingDescDOS())
-    }
-}
-
-
-
-export const filterByPriceAscDOS=()=>{
-    return function(dispatch){
-        dispatch(FilterByPriceAscDOS())
-    }
-}
-
-
-export const filterByPriceDescDOS=()=>{
-    return function(dispatch){
-        dispatch(FilterByPriceDescDOS())
-    }
-}
-
-
-
-export const emptyFilteredvideogames=()=>{
-    return function(dispatch){
-        dispatch(EmptyFilteredvideogames())
-    }
-}
 
 export const getVGameByID = (id) => {
     return async (dispatch) => {
