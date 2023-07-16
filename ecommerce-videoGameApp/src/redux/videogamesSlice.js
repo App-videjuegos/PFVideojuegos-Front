@@ -7,7 +7,6 @@ const initialState={
     videoGame:[],
     msgerror:"NULL",
     flag_prev:false,
-    filteredVideoGames: [],
     allGenres: [],
 
     vGameId:[],
@@ -25,7 +24,7 @@ export const videogamesSlice = createSlice({
             state.videoGames= action.payload;
         },
         getVideogamesbyName: (state,action)=>{
-            state.videoGames= action.payload;
+            state.filteredVideoGames= action.payload;
         },
         setPrevVideoGame: (state,action)=>{
             state.videoGames_Prev= action.payload;
