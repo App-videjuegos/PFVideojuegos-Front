@@ -24,7 +24,7 @@ const DetailInfo = (props) => {
   };
 
   const putRating = () => {
-    alert(`El valor puntuado ${ratingV} se guardará`);
+    alert(`Score ${ratingV} has been set successfully`);
   };
 
   const toggleDescription = () => {
@@ -62,11 +62,19 @@ const DetailInfo = (props) => {
             onFinishRating={handleRating}
           />
           <Text style={styles.textRating} onPress={putRating}>
-            Puntuar
+            Set
           </Text>
-          <Text>Valor puntuado: {ratingV}</Text>
+          <Text> Score: {ratingV}</Text>
         </View>
         <Text style={[styles.gamePrice, { color: "#1B063E" }]}>$ {price}</Text>
+        <TouchableOpacity onPress={() => console.log("Añadir al carrito")}>
+          <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
+            <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
+              Add to Car
+            </Text>
+          </View>
+        </TouchableOpacity>
+
         <Text style={styles.gameDescription}>
           {showFullDescription
             ? description
