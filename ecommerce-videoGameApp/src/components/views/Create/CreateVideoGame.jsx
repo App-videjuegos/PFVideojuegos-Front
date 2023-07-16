@@ -23,12 +23,12 @@ import { convertirFecha } from "../../helpers/InvertDate";
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-import {color_gris_c, color_morado_o} from '../../utils/theme/stringsColors'
+import {color_gris_c, color_morado_o, color_celeste, color_morado_c2, color_gris_595959, color_gris_cdcdcd} from '../../utils/theme/stringsColors'
+
 
 import {
   allGenres,
   allPlatforms,
-  allTags,
 } from "./components/dataFilteredgames";
 import { useState, useRef, useEffect, useContext } from "react";
 // import {
@@ -66,7 +66,6 @@ const CreateVideogame = ({ navigation, route }) => {
   const [stackData, setStackData] = useState({
     platforms: allPlatforms,
     genre: allGenres,
-    tags: allTags,
   });
   const [newVideoGame, setNewVideoGame] = useState({
     id: 1 + Math.floor(Math.random() * 999),
@@ -77,7 +76,6 @@ const CreateVideogame = ({ navigation, route }) => {
     screenShots: [],
     platforms: [],
     genre: [],
-    tags: [],
     price: "",
     requeriments_en: "",
   });
@@ -135,7 +133,6 @@ const CreateVideogame = ({ navigation, route }) => {
         newVideoGame.description === "" ||
         date === "" ||
         !newVideoGame.platforms.length ||
-        !newVideoGame.tags.length ||
         !newVideoGame.genre.length ||
         newVideoGame.image === "" ||
         !newVideoGame.screenShots.length ||
@@ -155,7 +152,6 @@ const CreateVideogame = ({ navigation, route }) => {
             screenShots: newVideoGame.screenShots,
             platforms: newVideoGame.platforms,
             genre: newVideoGame.genre,
-            tags: newVideoGame.tags,
             price: newVideoGame.price,
             requeriments_en: newVideoGame.requeriments_en,
           }
@@ -172,7 +168,6 @@ const CreateVideogame = ({ navigation, route }) => {
                 screenShots: [],
                 platforms: [],
                 genre: [],
-                tags: [],
                 price: "",
                 requeriments_en: "",
               }),
@@ -290,35 +285,7 @@ const CreateVideogame = ({ navigation, route }) => {
     }, 1200);
   };
 
-  ///////
 
-  const pushItemTag = (value) => {
-    setTimeout(() => {
-      setNewVideoGame((prevState) => ({
-        ...prevState,
-        tags: [...prevState.tags, value],
-      }));
-
-      setStackData((prevState) => ({
-        ...prevState,
-        tags: prevState.tags.filter((p) => p !== value),
-      }));
-    }, 1200);
-  };
-
-  const removeItemTag = (value) => {
-    setTimeout(() => {
-      setNewVideoGame((prevState) => ({
-        ...prevState,
-        tags: prevState.tags.filter((p) => p !== value),
-      }));
-
-      setStackData((prevState) => ({
-        ...prevState,
-        tags: [...prevState.tags, value],
-      }));
-    }, 1200);
-  };
 
   ///////
 
@@ -429,6 +396,9 @@ const CreateVideogame = ({ navigation, route }) => {
           style={[
             styles.containerLogin]}
         >
+          <Text style={
+            styles.TitlePage
+          }>Load Videogame</Text>
           <View
             style={[
               styles.containerInput]}
@@ -571,8 +541,7 @@ const CreateVideogame = ({ navigation, route }) => {
           >
             <Text
               style={[styles.title]}
-            >
-              videogameCover
+            >Load videogame cover
             </Text>
 
             <View
@@ -591,8 +560,7 @@ const CreateVideogame = ({ navigation, route }) => {
               >
                 <Text
                   style={[styles.buttonText]}
-                >
-                  loadFromGallery
+                >Load Image
                 </Text>
               </TouchableOpacity>
               {validateNvg.image !== "" && !validateSubmit && (
@@ -621,8 +589,7 @@ const CreateVideogame = ({ navigation, route }) => {
           >
             <Text
               style={[styles.title]}
-            >
-              loadScreens
+            >Load screenshots
             </Text>
 
             <View
@@ -636,8 +603,7 @@ const CreateVideogame = ({ navigation, route }) => {
               >
                 <Text
                   style={[styles.buttonText]}
-                >
-                  loadFromGallery
+                >Load Images
                 </Text>
               </TouchableOpacity>
               {validateNvg.screenShots !== "" && !validateSubmit && (
@@ -666,8 +632,7 @@ const CreateVideogame = ({ navigation, route }) => {
           >
             <Text
               style={[styles.title]}
-            >
-              addGenre
+            >Select genre
             </Text>
             <View>
               <SelectList
@@ -695,8 +660,7 @@ const CreateVideogame = ({ navigation, route }) => {
           >
             <Text
               style={[styles.title]}
-            >
-              addPlatforms
+            >Select platform
             </Text>
             <View>
               <SelectList
@@ -719,36 +683,7 @@ const CreateVideogame = ({ navigation, route }) => {
             )}
           </View>
 
-          <View
-            style={[
-              styles.containerInput
-            ]}
-          >
-            <Text
-              style={[styles.title]}
-            >
-              addTags
-            </Text>
-            <View>
-              <SelectList
-                placeholder="Add tag"
-                setSelected={(val) => pushItemTag(val)}
-                data={stackData.tags}
-                search={false}
-              />
-            </View>
-            <View>
-              <SelectList
-                placeholder="Remove tag"
-                setSelected={(val) => removeItemplatforms(val)}
-                data={newVideoGame.tags}
-                search={false}
-              />
-            </View>
-            {validateNvg.tags !== "" && !validateSubmit && (
-              <Text style={styles.error}>{validateNvg.tags}</Text>
-            )}
-          </View>
+
           <View></View>
           <View
             style={[
@@ -763,8 +698,7 @@ const CreateVideogame = ({ navigation, route }) => {
               <Text
                 style={[
                   styles.buttonTextSubmit]}
-              >
-                create Publication
+              >Load videogame
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -773,8 +707,8 @@ const CreateVideogame = ({ navigation, route }) => {
               ]}
               onPress={() => CancelSubmit()}
             >
-              <Text style={styles.buttonTextSubmit}>
-              CancelPublication
+              <Text style={styles.buttonTextCancel}>
+              Cancel
                 </Text>
             </TouchableOpacity>
           </View>
@@ -786,50 +720,41 @@ const CreateVideogame = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: color_azul,
     height: "100%",
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    padding: 8,
+
   },
-  containerLogin: {
-    margin: "auto",
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    width: 320,
-    height: "100%",
-    // borderColor: color_negro,
-    // backgroundColor: color_blanco,
-    padding: 10,
+  TitlePage: {
+    fontSize: 24,
+    fontWeight: "bold", 
+
   },
+
+
   dateButton: {
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    backgroundColor:  color_gris_c,
-    borderColor: color_morado_o,
-    borderWidth:2,
-    marginBottom: "5%",
-    marginTop:-2,
-    height: 45,
-    width: 300,
+    backgroundColor:  color_gris_cdcdcd,
+    height: 42,
+    width: 315,
     padding: 0,
     // backgroundColor: color_azul,
     borderRadius: 8,
   },
   buttonTextDate: {
-    textAlign: "center",
-    padding: 10,
-    fontSize: 15,
+    textAlign: "left",
+    fontSize: 16,
     fontWeight: "bold",
     color: "gray",
   },
   title: {
-    margin: 24,
-    fontSize: 19,
+    margin: 8,
+    fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center",
+
   },
 
   boxButtons: {
@@ -839,21 +764,16 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   miniButton: {
-    marginTop: 5,
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    marginBottom: "8%",
-    height: 60,
-    width: "70%",
-    padding: 0,
-    // backgroundColor: color_azul,
-    borderRadius: 8,
-    // borderBottomColor: color_gris,
-    borderBottomWidth: 1,
-    borderRightWidth: 2,
-    // borderColor: color_gris,
-    borderWidth: 1,
+    marginBottom: 8,
+    marginTop: 8,
+    height: 42,
+    width: 315,
+    backgroundColor: color_celeste,
+    borderRadius: 5,
+
   },
   buttonText: {
     textAlign: "center",
@@ -868,30 +788,36 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     marginBottom: "8%",
-    height: 60,
-    width: "70%",
+    height: 42,
+    width: 315,
     padding: 0,
-    // backgroundColor: color_azul,
+    backgroundColor: color_morado_c2,
     borderRadius: 8,
   },
   miniButtonCancel: {
-    marginTop: 5,
+
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
     marginBottom: "8%",
-    height: 60,
-    width: "70%",
-    padding: 0,
-    // backgroundColor: color_rojoClaro,
-    borderRadius: 8,
+    height: 20,
+    width: 315,
+
+    borderRadius: 5,
   },
   buttonTextSubmit: {
     textAlign: "center",
     padding: 10,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "bold",
-    // color: color_blanco,
+    color: color_gris_c,
+  },
+
+  buttonTextCancel:{
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+    color: color_gris_595959,
   },
   error: {
     margin: 8,
@@ -903,14 +829,10 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     fontSize: 16,
-    
     textAlign: "center",
     height: 50,
-    borderWidth: 2,
-    // borderColor: color_azul,
     marginHorizontal: "auto",
-    // borderColor: "#ddd",
-    // backgroundColor: "#fff",
+    backgroundColor: color_gris_cdcdcd,
     marginBottom: 15,
     borderRadius: 8,
   },
@@ -931,21 +853,19 @@ const styles = StyleSheet.create({
 
   containerInput: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
     padding: 10,
   },
 
   inputStyle2: {
-    width: "100%",
+    width: 315,
     padding: 10,
     fontSize: 16,
     textAlign: "center",
-    borderWidth: 2,
     // borderColor: color_azul,
     marginHorizontal: "auto",
     // borderColor: "#ddd",
-    // backgroundColor: "#fff",
+    backgroundColor: color_gris_cdcdcd,
     marginBottom: 15,
     borderRadius: 8,
   },
