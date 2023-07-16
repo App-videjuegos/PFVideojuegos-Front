@@ -9,7 +9,8 @@ export const color_blanco='#FFFFFF';
 export const color_gris_c='#FAFAFA' //griss claro
 export const color_rojoNeon='#E94E4E';
 export const color_crema= '#FF8800'; 
-export const color_celeste='#496BFF'
+export const color_celeste= '#496BFF';
+export const color_morado_c2= "#622EDA";
 
 export const strings = {
   light: {//combinacion de colores modo Ligth

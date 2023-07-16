@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -6,10 +6,11 @@ import {
   Text,
   Image,
   Button,
-} from "react-native";
+  TouchableOpacity,
+} from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
-const DetailInfo = (props) => {
 
+const DetailInfo = (props) => {
   const [ratingV, setRating] = useState(0);
   const { name, description, price, rating, image } = props.propInfo;
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -19,8 +20,7 @@ const DetailInfo = (props) => {
     // console.log('Valor puntuado:', value);
   };
   const putRating = () => {
-    
-    alert(`el valor puntuado ${ratingV} se guardara`)
+    alert(`el valor puntuado ${ratingV} se guardara`);
   };
 
   const toggleDescription = () => {
@@ -61,17 +61,16 @@ const DetailInfo = (props) => {
   //   </View>
   // );
 
-
   // onFinishRating={handleRating}
-
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image style={styles.image} source={{ uri: image }} />
-      <Text style={styles.gameName}>{name}</Text>
-      <View style={styles.ratingContainer}>
-        {/* <RatingStars rating={4.5} /> */}
-        <AirbnbRating
+      <View style={styles.infoContainer}>
+        <Text style={styles.gameName}>{name}</Text>
+        <View style={styles.ratingContainer}>
+          {/* <RatingStars rating={4.5} /> */}
+          <AirbnbRating
             count={5} // Cantidad de íconos de clasificación a mostrar
             defaultRating={rating} // Valor de clasificación predeterminado
             size={20} // Tamaño de los íconos de clasificación
@@ -80,25 +79,38 @@ const DetailInfo = (props) => {
             onFinishRating={handleRating}
             // isDisabled={true}
           />
-          <Text style={styles.textRating} onPress={() => putRating()}>Puntuar </Text>
-          <Text>Valor puntuado: {ratingV}</Text>
+          <Text style={styles.textRating} onPress={() => putRating()}>
+            Puntuar{' '}
+          </Text>
+          <Text>Valor puntuado:{ratingV}</Text>
           {/* <Text style={styles.textRating}>Save Rating</Text> */}
-      </View>
-      <Text style={styles.gamePrice}>$ {price}</Text>
-      <Button
-        title="Add to Car"
-        onPress={() => console.log("Añadir al carrito")}
-      />
-      <Text style={styles.gameDescription}>
-        {showFullDescription
-          ? description
-          : `${description.substring(0, 300)}...`}
-      </Text>
-      {!showFullDescription && (
-        <Button title="Read More" onPress={toggleDescription} />
-      )}
-      <View style={styles.commentsContainer}>
-        {/* Aca van los comentarios */}
+        </View>
+        <Text style={[styles.gamePrice, { color: '#1B063E' }]}>$ {price}</Text>
+        <TouchableOpacity onPress={() => console.log('Añadir al carrito')}>
+          <View style={[styles.button, { backgroundColor: '#622EDA' }]}>
+            <Text style={[styles.buttonText, { color: '#FFFFFF' }]}>
+              Add to Cart
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.gameDescription}>
+          {showFullDescription
+            ? description
+            : `${description.substring(0, 300)}...`}
+        </Text>
+        {!showFullDescription && (
+          // <Button title="Read More" onPress={toggleDescription} />
+          <TouchableOpacity onPress={toggleDescription}>
+            <View style={[styles.button, { backgroundColor: '#622EDA' }]}>
+              <Text style={[styles.buttonText, { color: '#FFFFFF' }]}>
+                Read More
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        <View style={styles.commentsContainer}>
+          {/* Aca van los comentarios */}
+        </View>
       </View>
     </ScrollView>
   );
@@ -107,13 +119,13 @@ const DetailInfo = (props) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: "center",
-    alignContent:'center',
-    
-    backgroundColor: "#fff",
+    alignItems: 'center',
+    alignContent: 'center',
+
+    backgroundColor: '#fff',
     padding: 5,
     borderRadius: 10,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -122,52 +134,71 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  infoContainer: {
+    width: '90%',
+    alignContent: 'center',
+  },
   image: {
     width: 380,
     height: 250,
     // borderRadius: 10,
     marginLeft: -7,
     position: 'relative',
-    alignContent:'center',
-    resizeMode: "cover",
-    alignSelf:'center',
-    
+    alignContent: 'center',
+    resizeMode: 'cover',
+    alignSelf: 'center',
   },
   gameName: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
+    alignSelf: 'center',
   },
   ratingContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    // alignContent:'space-around',
-    marginBottom: 10,
-    padding:5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    // width:'100%',
+    alignSelf: 'center',
+    marginBottom: 5,
+    padding: 5,
   },
   starContainer: {
     marginRight: 2,
   },
   gamePrice: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 22,
+    fontWeight: 'bold',
     marginBottom: 10,
+    alignSelf: 'center',
   },
   gameDescription: {
     fontSize: 15,
-    fontWeight: "normal",
-    textAlign: "justify",
+    fontWeight: 'normal',
+    textAlign: 'justify',
     marginBottom: 10,
   },
   commentsContainer: {
     // Estilos para la sección de comentarios
   },
-  textRating:{
-    fontSize:20,
-    fontWeight:'bold',
-    color:'#496BFF',
-    paddingLeft:20,
-  }
+  textRating: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#496BFF',
+    paddingLeft: 20,
+  },
+  button: {
+    marginBottom: 30,
+    width: '100%',
+    // height: '49%',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+  buttonText: {
+    textAlign: 'center',
+    padding: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 });
 
 export default DetailInfo;
