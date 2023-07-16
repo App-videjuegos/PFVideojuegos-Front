@@ -44,7 +44,7 @@ const SearchBar = (props) => {
             value={searchQuery}
             inputStyle={[styles.SearchbarText, ]}
             style={[styles.Searchbarfondo,]}
-            iconColor={'#0000ff'}
+            iconColor={'#FFFFFF'}
             placeholderTextColor={'#000000'}
           />
         </View>
@@ -57,20 +57,22 @@ const styles = StyleSheet.create({
     width: '85%',
     flexDirection: 'row',
     
-    left: -20
+    left: -46
   },
-  
+
     Searchbarfondo:{
         marginLeft:'5%', 
-        height: 40,
+        height: 46,
         width:'90%',
-        borderWidth:3,
         // backgroundColor: color_azul,
         // borderColor: color_blanco,
-        alignContent:'center'
+        borderRadius: 5,
+        alignContent:'center',
+        backgroundColor: '#987BDC',
         
+
     }
-    
+
     ,SearchbarText:{
         fontSize:25,
         // color:color_blanco,
@@ -79,4 +81,4 @@ const styles = StyleSheet.create({
 
     },
 })
-export default SearchBar
+export default SearchBar;
