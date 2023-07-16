@@ -18,8 +18,6 @@ const SearchBar = (props) => {
           console.log("estas bsucando",query) 
           }
 
-
-
     const onCloseSearch = () => {
         // console.log("limpiando valores de busqueda");
         setSearchQuery("");
