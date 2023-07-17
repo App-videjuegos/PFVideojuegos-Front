@@ -126,7 +126,10 @@ const {StringsLanguaje }= useContext(LanguajeContext)
                 <Image source={{uri:item.img}} 
                         style={styles.posterImage}
                         />
-                <Text style={[styles.name,{color:'#3F13A4'}]}>{StringsLanguaje.Screenshot}({Number(item.key)+1})</Text>
+                <Text style={[styles.name,{color:'#3F13A4'}]}>
+                  {"Screenshot"}
+                  {/* {StringsLanguaje.Screenshot} */}
+                  ({Number(item.key)+1})</Text>
                </Animated.View> 
             </View> 
             )

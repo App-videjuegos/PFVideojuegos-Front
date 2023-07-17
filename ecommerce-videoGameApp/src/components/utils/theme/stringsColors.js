@@ -7,6 +7,10 @@ export const color_morado_sc1='#6B35E8' //morado super claro 1
 export const color_morado_sc2= '#987BDC' //morado super claro 2
 export const color_blanco='#FFFFFF';
 export const color_gris_c='#FAFAFA' //griss claro
+export const color_gris_595959= '#595959'
+export const color_gris_cdcdcd= '#cdcdcd'
+
+
 export const color_rojoNeon='#E94E4E';
 export const color_crema= '#FF8800'; 
 export const color_celeste= '#496BFF';
@@ -29,6 +33,7 @@ export const strings = {
     cartButton_fondo:color_blanco,
     price: color_rojoNeon,
     viñeta:color_morado_sc2,
+    icoVieñeta:color_morado_c,
     tit_det_extra:color_morado_c,
     link: color_morado_c,
     tabBarback:color_morado_sc2,
@@ -51,6 +56,7 @@ export const strings = {
     cartButton_fondo:color_gris_c,
     price: color_crema,
     viñeta:color_blanco,
+    icoVieñeta:color_morado_sc1,
     tit_det_extra:color_morado_sc2,
     link: color_blanco,
     tabBarback:color_morado_c,

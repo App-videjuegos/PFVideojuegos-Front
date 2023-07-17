@@ -47,11 +47,6 @@ export const validate = (val) => {
     errors.genre = "";
   }
 
-  if (!val.tags.length) {
-    errors.tags = "Need to add an tag";
-  } else {
-    errors.tags = "";
-  }
 
   if (!val.price) {
     errors.price = "Missing enter Price";

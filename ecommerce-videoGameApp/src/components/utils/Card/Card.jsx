@@ -10,8 +10,9 @@ import React from "react";
 // import StarRating from "react-native-star-rating";
 import { AirbnbRating } from 'react-native-ratings';
 
-const Card = (props) => {
 
+  const Card = (props) => {
+   
     const { videoG, nav } = props;
 
     return (
@@ -45,7 +46,7 @@ const Card = (props) => {
           <TouchableOpacity
             onPress={() => nav.navigate("Detail", { videoGames: videoG })}
           >
-            <Text style={styles.detail}>Ver Detalle</Text>
+            <Text style={styles.detail}>See Detail</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -57,8 +58,8 @@ const styles = StyleSheet.create({
     padding: 3,
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "93%",
-    marginHorizontal: 10,
+    width: "100%",
+    // marginHorizontal: 10,
     marginVertical: 5,
     borderRadius: 10,
     // shadowColor: 'black',
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     // marginLeft: -10,
-    width: 150,
+    width: 140,
     height: 140,
     borderRadius: 8,
     // alignSelf:'center',
