@@ -23,7 +23,8 @@ export const ChangeButtonContext = (props) => {
   };
 
   return (
-    <TouchableOpacity onPress={handleSwitchToggle} activeOpacity={0.8} style={{flexDirection:'row'}}>
+    <TouchableOpacity  activeOpacity={0.8} style={{flexDirection:'row'}} >
+    {/* <TouchableOpacity onPress={handleSwitchToggle} activeOpacity={0.8} style={{flexDirection:'row'}} ></TouchableOpacity> */}
       <View style={styles.separador}>
         <Text style={[styles.texto,{color:StringsDark.text}]}>{props.name}</Text>
         <View style={[styles.switchContainer, isOn ? styles.switchOn : styles.switchOff]}>

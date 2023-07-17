@@ -85,7 +85,9 @@ const CardExtra = (videogame) => {
       >
         {Req.length > 0 && (
           <Text style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}>
-            {StringsLanguaje.systemRequeriments}
+            {/* {StringsLanguaje.systemRequeriments} */}
+            {"System Requeriments"}
+
           </Text>
         )}
 
@@ -115,7 +117,8 @@ const CardExtra = (videogame) => {
             <Text
               style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}
             >
-              {StringsLanguaje.Plataformas}
+              {/* {StringsLanguaje.Plataformas} */}
+              {"Platforms"}
             </Text>
           )}
 
@@ -136,7 +139,8 @@ const CardExtra = (videogame) => {
             <Text
               style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}
             >
-              {StringsLanguaje.Genres}
+              {/* {StringsLanguaje.Genres} */}
+              {"Genres"}
             </Text>
           )}
           {videogame.propExtra.genre.length > 0 &&

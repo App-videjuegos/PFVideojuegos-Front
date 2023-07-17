@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity,StyleSheet } from 'react-native'
 import React from 'react'
 import { color_gris,color_negro,color_blanco, color_azul } from '../../utils/theme/stringsColors'
-import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 //linea para llamar a modo DARK
 
 

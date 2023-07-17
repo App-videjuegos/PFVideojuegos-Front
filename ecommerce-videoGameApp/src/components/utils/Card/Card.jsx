@@ -46,7 +46,7 @@ import { AirbnbRating } from 'react-native-ratings';
           <TouchableOpacity
             onPress={() => nav.navigate("Detail", { videoGames: videoG })}
           >
-            <Text style={styles.detail}>Ver Detalle</Text>
+            <Text style={styles.detail}>See Detail</Text>
           </TouchableOpacity>
         </View>
       </View>

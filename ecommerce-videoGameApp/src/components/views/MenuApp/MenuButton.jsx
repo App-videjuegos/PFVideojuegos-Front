@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity,StyleSheet } from 'react-native'
 
  
-import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../../utils/theme/ThemeProvider';
 import  { useContext} from 'react';
 //linea para llamar a modo DARK

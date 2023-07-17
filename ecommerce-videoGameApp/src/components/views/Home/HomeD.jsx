@@ -40,7 +40,8 @@ const handleResetFilter = () => {
   useEffect(()=>{
     // console.log("rellamando a cabecera en home x redux");
     navigation.setOptions({
-        headerTitle: `${ StringsLanguaje.Home}`,
+        // headerTitle: `${ StringsLanguaje.Home}`,
+        headerTitle: `Home`,
         headerStyle: {
         backgroundColor: StringsDark.Titulo_Screen_fondo,
       },

@@ -44,8 +44,8 @@ const Detail = ({route,navigation}) => {
 useEffect(()=>{
 
   navigation.setOptions({
-      
-      headerTitle: `${StringsLanguaje.Detail}`,
+      headerTitle: `Back`,
+      // headerTitle: `${StringsLanguaje.back}`,
       headerTintColor:  StringsDark.Titulo_Screen,
       headerStyle: {
         backgroundColor: StringsDark.Titulo_Screen_fondo,
@@ -75,7 +75,8 @@ useEffect(()=>{
         <Tab.Screen 
             name={`information`} //detalle de CARD
             options={({ route }) => ({
-                title: `${StringsLanguaje.Information}`,
+                // title: `${StringsLanguaje.Information}`,
+                title: `Information`,
                 tabBarIcon: ({  size }) => (
                 <MaterialCommunityIcons name="information-circle-outline" 
                 color={`${StringsDark.tabBarIcono}`}
@@ -90,7 +91,8 @@ useEffect(()=>{
         <Tab.Screen 
             name="Capturas de Pantalla" 
             options={{
-                title: `${StringsLanguaje.Screenshot}`,
+                // title: `${StringsLanguaje.Screenshot}`,
+                title: `Screenshot`,
                 tabBarIcon: ({  size }) => (
                 <MaterialCommunityIcons name="images-outline" 
                 color={`${StringsDark.tabBarIcono}`}
@@ -104,7 +106,8 @@ useEffect(()=>{
         <Tab.Screen 
             name="Extra" 
             options={{
-                title: `${StringsLanguaje.Extra}`,
+                // title: `${StringsLanguaje.Extra}`,
+                title: `Extra`,
                 tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="file-tray-stacked-outline" 
                 color={`${StringsDark.tabBarIcono}`}

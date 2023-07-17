@@ -27,7 +27,8 @@ const Landing = ({ navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: `${StringsLanguaje.Welcome}`,
+      // headerTitle: `${StringsLanguaje.Welcome}`,
+      headerTitle: `Welcome`,
       headerTintColor: StringsDark.Titulo_Screen,
       headerStyle: {
         backgroundColor: StringsDark.Titulo_Screen_fondo,
