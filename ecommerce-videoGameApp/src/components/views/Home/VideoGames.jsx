@@ -41,6 +41,8 @@ const VideoGames = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
+    width:'93%',
+    marginLeft:10,
   },
   enlace2: {
     justifyContent: 'space-between',

@@ -219,10 +219,11 @@ const styles = StyleSheet.create({
     fontSize: 27,
   },
   cardContainer: {
-    marginHorizontal: 2,
+    marginHorizontal: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    width:'100%',
   },
 });
 
