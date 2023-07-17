@@ -7,20 +7,49 @@ import {
 } from 'react-native';
 
 import HTML from 'react-native-render-html';
-import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
+// import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useEffect, useContext } from 'react';
+
+import { ThemeContext } from '../../../utils/theme/ThemeProvider';
+import { LanguajeContext } from '../../../utils/languaje/languajeProvider';
 
 const CardExtra = (videogame) => {
   // const {requeriments_en}=videogame.propExtra;
   const windowWidth = useWindowDimensions().width;
- 
-  // console.log("extra requerimientos", videogame.videogame);
+
+  //linea para setear el modo dark
+  const { StringsDark } = useContext(ThemeContext);
+  //linea para setear el lenguaje /obtener palabras de lenguaje
+  const { StringsLanguaje } = useContext(LanguajeContext);
+
+  // useEffect(()=>{
+
+  //  navigation.setOptions({
+
+  //      headerTitle: `${StringsLanguaje.Welcome}`,
+  //      headerTintColor:  StringsDark.Titulo_Screen,
+  //      headerStyle: {
+  //        backgroundColor: StringsDark.Titulo_Screen_fondo,
+  //      },
+  //    })
+  // },[isDarkMode,locale])
+
   let Req = videogame.propExtra.requeriments_en;
   const tagsStyles = {
-    p: { color: 'red', fontSize: 16 ,},
-    strong: { fontWeight: 'bold' ,color:`#FFFFFF`},
-    a: { color: 'blue', textDecorationLine: 'underline', },
-    li:{color: `#7d7f7d`},
-    ul:{color: `#7d7f7d`},
+    p: { color: StringsDark.text, fontSize: 30 },
+    strong: { fontWeight: 'bold', color: StringsDark.tit_det_extra },
+    a: {
+      color: StringsDark.link,
+      fontSize: 15,
+      textDecorationLine: 'underline',
+    },
+    li: { color: StringsDark.text, fontSize: 13 }, //textp viñeta
+    ul: { color: StringsDark.viñeta, fontSize: 20 }, //viñeta
+  };
+
+  const getIconName = (item) => {
+    let iconName = 'help-circle-outline'; // Icono por defecto
 
     if (item.length >= 3) {
       const platformPrefix = item.substring(0, 2).toLowerCase();
@@ -48,56 +77,82 @@ const CardExtra = (videogame) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={[styles.cardContainer, { backgroundColor: '#FFFFFF' }]}>
-          { Req.length>0 && (
-              <Text style={[styles.reqtitle, { color: '#FF8800' }]}>
-              Requerimientos
-              </Text>
-          )}
-          
-         { Req.length>0 && (
+      <View
+        style={[
+          styles.Container,
+          { backgroundColor: StringsDark.Titulo_Screen_fondo },
+        ]}
+      >
+        {Req.length > 0 && (
+          <Text style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}>
+            {StringsLanguaje.systemRequeriments}
+          </Text>
+        )}
+
+        {Req.length > 0 && (
           <View>
             {Req.map((item, index) => (
               <View key={index} style={styles.htmlContainer}>
-                <HTML source={{ html: item.minimum }} contentWidth={windowWidth} tagsStyles={tagsStyles} />
-                <HTML source={{ html: item.recommended }} contentWidth={windowWidth} tagsStyles={tagsStyles} />
+                <HTML
+                  source={{ html: item.minimum }}
+                  contentWidth={windowWidth}
+                  tagsStyles={tagsStyles}
+                />
+
+                {item.recommended && (
+                  <HTML
+                    source={{ html: item.recommended }}
+                    contentWidth={windowWidth}
+                    tagsStyles={tagsStyles}
+                  />
+                )}
               </View>
             ))}
           </View>
-            )
-          }
-        {/* <View>
-          {videogame.videogame.plataformas.length>0 && ( 
-            <Text style={[styles.title, { color: StringsDark.txtClaro }]}>
-            {StringsLanguaje.Plataformas}
-            </Text> 
+        )}
+        <View>
+          {videogame.propExtra.platforms.length > 0 && (
+            <Text
+              style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}
+            >
+              {StringsLanguaje.Plataformas}
+            </Text>
           )}
-          {videogame.videogame.plataformas.length>0 && ( videogame.videogame.plataformas.map((item, index) => (
-              <View>
-              <Text  key={index}style={[styles.text, { color: StringsDark.text }]}>
-                <MaterialCommunityIcons name="pricetag-outline" />
-                {item}
-              </Text>
-            </View>
-            )))
-          }
-          {videogame.videogame.generos.length>0 && (
-            <Text style={[styles.title, { color: StringsDark.txtClaro }]}>
+
+          {videogame.propExtra.platforms.length > 0 &&
+            videogame.propExtra.platforms.map((item, index) => (
+              <View key={index}>
+                <Text style={[styles.text, { color: StringsDark.text }]}>
+                  <MaterialCommunityIcons
+                    name={getIconName(item)}
+                    size={20}
+                    color={StringsDark.cartButton}
+                  />
+                  &nbsp;{item}
+                </Text>
+              </View>
+            ))}
+          {videogame.propExtra.genre.length > 0 && (
+            <Text
+              style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}
+            >
               {StringsLanguaje.Genres}
             </Text>
           )}
-          {videogame.videogame.generos.length>0 && (videogame.videogame.generos.map((item, index) => (
-            <View>
-            <Text  key={index} style={[styles.text, { color: StringsDark.text }]}>
-              <MaterialCommunityIcons name="pricetag-outline" />
-              {item}
-            </Text>
-          </View>
-          ))
-          )
-        }
-        </View> */}
-        
+          {videogame.propExtra.genre.length > 0 &&
+            videogame.propExtra.genre.map((item, index) => (
+              <View key={index}>
+                <Text style={[styles.text, { color: StringsDark.text }]}>
+                  <MaterialCommunityIcons
+                    name="tag-text"
+                    size={20}
+                    color={StringsDark.cartButton}
+                  />
+                  &nbsp;{item}
+                </Text>
+              </View>
+            ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -109,8 +164,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cardContainer: {
-    margin:40,
+  Container: {
+    margin: 40,
     // marginLeft:50,
     // marginRight: 50,
     // flex: 1,
@@ -143,14 +198,14 @@ const styles = StyleSheet.create({
   req: {
     fontSize: 20,
   },
-  htmlContainer:{
-    color:'white',
-    marginLeft:10,
+  htmlContainer: {
+    
+    marginLeft: 10,
+    textAlign: 'right',
   },
+  iconos: {
+    flexDirection: 'row',
+  },
+});
 
- 
-
-   
-  });
-  
-  export default CardExtra;
+export default CardExtra;
