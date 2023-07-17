@@ -11,6 +11,7 @@ const VideoGames = ({ navigation, route }) => {
   const filteredVideoGames = useSelector((state) => state.videogamesState.filteredVideoGames);
 
   useEffect(() => {
+    
     dispatch(getvideoGames());
   }, []);
 

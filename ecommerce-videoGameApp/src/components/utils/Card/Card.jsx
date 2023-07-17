@@ -10,8 +10,9 @@ import React from "react";
 // import StarRating from "react-native-star-rating";
 import { AirbnbRating } from 'react-native-ratings';
 
-const Card = (props) => {
 
+  const Card = (props) => {
+   
     const { videoG, nav } = props;
 
     return (
