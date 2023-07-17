@@ -55,6 +55,11 @@ const MenuItems = ({ navigation }) => {
         onPress={() => navigation.navigate("CreateVideogame")}
         icon="cart"
       />
+      <MenuBottonItem
+        nombre={StringsLanguaje.Login}
+        onPress={() => navigation.navigate("Login")}
+        icon="cart"
+      />
       {/* Botones para cambiar el modoDark o Idioma */}
       <ChangeButtonContext name={StringsLanguaje.DarkMode} tipo={"theme"} />
       <ChangeButtonContext name={StringsLanguaje.Languaje} tipo={"Languaje"} />

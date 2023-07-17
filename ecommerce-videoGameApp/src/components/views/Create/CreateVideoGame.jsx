@@ -31,21 +31,8 @@ import {
   allPlatforms,
 } from "./components/dataFilteredgames";
 import { useState, useRef, useEffect, useContext } from "react";
-// import {
-//   color_azul,
-//   color_blanco,
-//   color_crema,
-//   color_gris,
-//   color_negro,
-//   color_rojoClaro,
-// } from "../../../../constants/Colors";
 
 import axios from "axios";
-
-//Dark Mode:
-// import { LocalizationContext } from "../../../Languaje/LocalizationContext";
-// import { ThemeContext } from "../../../Theme/ThemeProvider";
-//Dark Mode:
 
 const CreateVideogame = ({ navigation, route }) => {
   const [image, setImage] = useState([]);
