@@ -28,7 +28,7 @@ const VideoGames = ({ navigation, route }) => {
         renderItem={({ item }) => <Card key={item.id} videoG={item} nav={navigation} />}
         onEndReached={fetchMoreVideoGames} // Función a llamar cuando se alcanza el final de la lista
         onEndReachedThreshold={0.1} // Umbral para activar la carga de más videojuegos (valor entre 0 y 1)
-        ListFooterComponent={<Text>Loading...</Text>} // Componente de carga mientras se obtienen más videojuegos
+        // ListFooterComponent={<Text>Loading...</Text>} // Componente de carga mientras se obtienen más videojuegos
       />
 
       {/* <TouchableOpacity onPress={() =>navigation.navigate('Detail', {props: videogames[0]  })}> 

@@ -8,7 +8,6 @@ const initialState={
     msgerror:"NULL",
     flag_prev:false,
     allGenres: [],
-
     vGameId:[],
     pagina:1,
     porPagina:12,
@@ -20,7 +19,6 @@ export const videogamesSlice = createSlice({
     initialState,
     reducers: {//noc xq pero aqui es plural
         getAllVideogames: (state,action)=>{
-            
             state.videoGames= action.payload;
         },
         getVideogamesbyName: (state,action)=>{
