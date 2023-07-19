@@ -19,7 +19,7 @@ import  {validate}  from './components/Validate/CreateGameValidate';
 
 import { SelectList } from "react-native-dropdown-select-list";
 
-import { convertirFecha } from "../../helpers/InvertDate";
+import { convertirFecha, convertirFechaDiasCruzados } from "../../helpers/InvertDate";
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -40,6 +40,8 @@ const CreateVideogame = ({ navigation, route }) => {
   const [imageScreen, setImageScreen] = useState([]);
 
   const [date, setDate] = useState(new Date());
+
+  console.log(`-------------------->>-->>>> ${date}`)
   const [inputFocusedName, setInputFocusedName] = useState(true);
   const [inputFocusedDesc, setInputFocusedDesc] = useState(true);
   const [inputFocusedDate, setInputFocusedDate] = useState(true);
@@ -58,16 +60,17 @@ const CreateVideogame = ({ navigation, route }) => {
     id: 1 + Math.floor(Math.random() * 999),
     name: "",
     description: "",
-    releaseDate: `${convertirFecha(date)}`,
     image: "",
     screenShots: [],
     platforms: [],
     genre: [],
     price: "",
     requeriments_en: "",
+    releaseDate: "10-12-2022",
   });
 
 
+  console.log(`------------------------------------------ ${newVideoGame}`)
 
   useEffect(() => {
     validate(newVideoGame);
@@ -133,8 +136,8 @@ const CreateVideogame = ({ navigation, route }) => {
           {
             id: newVideoGame.id,
             name: newVideoGame.name,
+            releaseDate: newVideoGame.releaseDate ,
             description: newVideoGame.description,
-            releaseDate: date,
             image: newVideoGame.image,
             screenShots: newVideoGame.screenShots,
             platforms: newVideoGame.platforms,
@@ -142,7 +145,7 @@ const CreateVideogame = ({ navigation, route }) => {
             price: newVideoGame.price,
             requeriments_en: newVideoGame.requeriments_en,
           }
-        );
+          );
         Alert.alert("Publication Create!", "", [
           {
             onPress: () =>
@@ -150,24 +153,24 @@ const CreateVideogame = ({ navigation, route }) => {
                 id: 1 + Math.floor(Math.random() * 999),
                 name: "",
                 description: "",
-                releaseDate: date,
+                releaseDate: "",
                 image: "",
                 screenShots: [],
                 platforms: [],
                 genre: [],
                 price: "",
                 requeriments_en: "",
+                
               }),
             text: "Continue loading games",
           },
           {
             text: "Back to dashboard",
             onPress: () =>
-              navigation.navigate("Dashboard", { name: "Dashboard" }),
+              navigation.navigate("Landing", { name: "Home" }),
           },
         ]);
 
-        console.log("Respuesta del servidor:", res.data);
       }
     } catch (error) {
       Alert.alert("Auch...Something went wrong", "");
@@ -184,13 +187,13 @@ const CreateVideogame = ({ navigation, route }) => {
           text: "Cancel",
           onPress: () =>
             Alert.alert(
-              "Return to Dashboard",
-              "Are you sure you want to return to Dashboard?",
+              "Return to Home",
+              "Are you sure you want to return to Home?",
               [
                 {
                   text: "Yes",
                   onPress: () =>
-                    navigation.navigate("Dashboard", { name: "Dashboard" }),
+                    navigation.navigate("HomeStack", { name: "Home" }),
                 },
                 { text: "No", onPress: () => console.log("No pressed") },
               ]
@@ -508,7 +511,6 @@ const CreateVideogame = ({ navigation, route }) => {
                   />
                 )}
               </View>
-              {console.log(date)}
               {validateNvg.releaseDate !== "" && !inputFocusedDate && (
               <Text style={styles.error}>{validateNvg.releaseDate}</Text>
             )}
@@ -580,8 +582,8 @@ const CreateVideogame = ({ navigation, route }) => {
             </Text>
 
             <View
-              style={[
-                styles.viewContx1]}
+              style={
+                styles.viewContx1}
             >
               <TouchableOpacity
                 onPress={pickImageScreen}
@@ -589,9 +591,8 @@ const CreateVideogame = ({ navigation, route }) => {
                   styles.miniButton]}
               >
                 <Text
-                  style={[styles.buttonText]}
-                >Load Images
-                </Text>
+                  style={styles.buttonText}
+                >Load Images</Text>
               </TouchableOpacity>
               {validateNvg.screenShots !== "" && !validateSubmit && (
                 <Text style={styles.error}>{validateNvg.screenShots}</Text>
@@ -614,8 +615,7 @@ const CreateVideogame = ({ navigation, route }) => {
             </View>
           </View>
           <View
-            style={[
-              styles.containerInput]}
+            style={styles.containerInput}
           >
             <Text
               style={[styles.title]}
