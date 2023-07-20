@@ -15,15 +15,19 @@ const SearchBar = (props) => {
 
     const onChangeSearch = (query) => {
           setSearchQuery(query);
-          console.log("estas bsucando",query) 
-          }
+          console.log("estas bsucando",query)
+          
+            dispatch(getvGamebyName(query))
+          
+    }
+
 
     const onCloseSearch = () => {
         // console.log("limpiando valores de busqueda");
         setSearchQuery("");
         dispatch(clearAllFilters()) 
         
-      }
+    }
 
 
       function handleSubmit() {
