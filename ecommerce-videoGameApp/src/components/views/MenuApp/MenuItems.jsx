@@ -49,8 +49,13 @@ const MenuItems = ({ navigation }) => {
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Shopping_Car}
+<<<<<<< Updated upstream
         nombre={"Shopping_Car"}
         onPress={() => navigation.navigate("Cart")}
+=======
+        nombre={'Shopping Cart'}
+        onPress={() => navigation.navigate('Cart')}
+>>>>>>> Stashed changes
         icon="cart-variant"
       />
       <MenuBottonItem

@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 400,
     marginBottom: 10,
-    justifySelf: "start",
+    // justifySelf: "start", salio error x esta propiedad
   },
   gameDescription: {
     fontSize: 15,
