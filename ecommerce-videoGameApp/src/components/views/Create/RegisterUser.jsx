@@ -110,6 +110,16 @@ const Register = ({ navigation }) => {
       );
       console.log(`Respuesta del servidor:`, response.data);
 
+      const emailResponse = await axios.post(
+        "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
+
+        {
+          correo: userData.email,
+        }
+      );
+
+      console.log(`Respuesta del servidor:`, emailResponse.data);
+
       Alert.alert("User Created!", "", [
         {
           text: "Go to login",
@@ -170,7 +180,7 @@ const Register = ({ navigation }) => {
           }
 
           if (!values.phone) {
-            errors.phone = "Please enter your phone phone";
+            errors.phone = "Please enter your phone number";
           }
 
           return errors;
@@ -376,7 +386,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 
-
   ImageButton: {
     marginTop: 16,
     alignItems: "center",
@@ -413,7 +422,7 @@ const styles = StyleSheet.create({
   error: {
     textAlign: "center",
     fontSize: 14,
-    color:color_rojo,
+    color: color_rojo,
     fontWeight: "bold",
   },
   buttonText: {
@@ -426,7 +435,7 @@ const styles = StyleSheet.create({
 
   boxcontainercheckbox: {
     flex: 1,
-    marginTop:16,
+    marginTop: 16,
     alignItems: "flex-start",
   },
 
