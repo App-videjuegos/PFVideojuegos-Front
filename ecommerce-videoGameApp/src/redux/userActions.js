@@ -16,7 +16,7 @@ export const getUserByID = (id) => {
     return async (dispatch) => {
       try {
         const response = await axios.get(
-          `https://gameshop-production-e844.up.railway.app/user/${id}`
+          `https://pfvideojuegos-back-production.up.railway.app/user/${id}`
         );
   
         const dataUser = response.data;
@@ -37,7 +37,7 @@ export const getUserByID = (id) => {
     return async (dispatch) => {
       try {
         const response = await axios.get(
-          `https://gameshop-production-e844.up.railway.app/user?user=${name}`
+          `https://pfvideojuegos-back-production.up.railway.app/user?user=${name}`
         );
   
         const dataUser = response.data;
@@ -58,7 +58,7 @@ export const getAllUsers = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `https://gameshop-production-e844.up.railway.app/user`
+        `https://pfvideojuegos-back-production.up.railway.app/user`
       );
 
       const dataUsers = response.data;
@@ -75,13 +75,33 @@ export const getAllUsers = () => {
   };
 };
 
+export const postUser = (data) => {
+  if(data.user,data.password,data.fullname,data.email,data.date,data.image,data.number,data.tac === true,data.newsLetter)
+  axios.post("https://pfvideojuegos-back-production.up.railway.app/user", 
+  {
+   id: 1 + Math.floor(Math.random() * 999),
+   user: data.user,
+   password: data.password,
+   fullname: data.fullname,
+   userAdmin: false,
+   email: data.email,
+   date:data.date,
+   image: data.image,
+   phone:data.number,
+   tac:data.tac,
+   tac:data.newsLetter, 
+
+  });
+};
+
+
 
 
   export const updateUser = async (newData) => {
     const oldData = { ...newData };
     try {
       const response = await axios.put(
-        'https://gameshop-production-e844.up.railway.app/user/update',
+        'https://pfvideojuegos-back-production.up.railway.app/user/update',
         newData
       );
   

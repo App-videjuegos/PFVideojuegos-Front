@@ -21,6 +21,7 @@ import Cart from "./src/components/forms/Cart/Cart";
 import { Provider } from "react-redux";
 import store from "./src/redux/store";
 import CreateVideogame from "./src/components/views/Create/CreateVideoGame";
+import Register from "./src/components/views/Create/RegisterUser";
 import { Login } from "./src/components/views/Login/Login";
 export default function App() {
   return (
@@ -95,6 +96,19 @@ export default function App() {
                   component={Login}
                   options={{
                     title: "Login",
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                    },
+                    headerTintColor: color_morado_o,
+                    headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
+                  }}
+                />
+
+                <Drawer.Screen
+                  name="Register"
+                  component={Register}
+                  options={{
+                    title: "Register",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
