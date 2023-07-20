@@ -1,11 +1,11 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 
-import MenuBottonItem from './MenuButton';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { LanguajeContext } from '../../utils/languaje/languajeProvider';
-import { ThemeContext } from '../../utils/theme/ThemeProvider';
-import { ChangeButtonContext } from '../../utils/changeContextButton/ChangeContextButton';
-import { useContext } from 'react';
+import MenuBottonItem from "./MenuButton";
+import { DrawerContentScrollView } from "@react-navigation/drawer";
+import { LanguajeContext } from "../../utils/languaje/languajeProvider";
+import { ThemeContext } from "../../utils/theme/ThemeProvider";
+import { ChangeButtonContext } from "../../utils/changeContextButton/ChangeContextButton";
+import { useContext } from "react";
 
 const MenuItems = ({ navigation }) => {
   //esta linea debo de llamar en cada componente
@@ -19,7 +19,7 @@ const MenuItems = ({ navigation }) => {
       <View style={{ backgroundColor: StringsDark.menuDrawner_c }}>
         <View style={styles.cabeceraimg}>
           <Image
-            source={require('../../../../assets/icon.png')}
+            source={require("../../../../assets/icon.png")}
             style={styles.imgmenu}
           />
         </View>
@@ -37,48 +37,54 @@ const MenuItems = ({ navigation }) => {
       </View>
       <MenuBottonItem
         // nombre={StringsLanguaje.Landing}
-        nombre={'Landing'}
-        onPress={() => navigation.navigate('Landing')}
+        nombre={"Landing"}
+        onPress={() => navigation.navigate("Landing")}
         icon="airplane-landing"
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Home}
-        nombre={'Home'}
-        onPress={() => navigation.navigate('HomeStack')}
+        nombre={"Home"}
+        onPress={() => navigation.navigate("HomeStack")}
         icon="home-circle-outline"
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Shopping_Car}
-        nombre={'Shopping_Car'}
-        onPress={() => navigation.navigate('Cart')}
+       nombre={"Shopping Cart"}
+        onPress={() => navigation.navigate("Cart")}
         icon="cart-variant"
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.CreateVideogame}
-        nombre={'Game Creation'}
-        onPress={() => navigation.navigate('CreateVideogame')}
+        nombre={"Game Creation"}
+        onPress={() => navigation.navigate("CreateVideogame")}
         icon="gamepad-variant-outline"
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Login}
-        nombre={'Login'}
-        onPress={() => navigation.navigate('Login')}
+        nombre={"Login"}
+        onPress={() => navigation.navigate("Login")}
         icon="login"
+      />
+      <MenuBottonItem
+        // nombre={StringsLanguaje.Login}
+        nombre={"Register"}
+        onPress={() => navigation.navigate("Register")}
+        icon="account-plus"
       />
       {/* Botones para cambiar el modoDark o Idioma */}
       <ChangeButtonContext
         name={
-          'DarkMode'
+          "DarkMode"
           // StringsLanguaje.DarkMode
         }
-        tipo={'theme'}
+        tipo={"theme"}
       />
       <ChangeButtonContext
         name={
-          'Language Change'
+          "Language Change"
           // StringsLanguaje.Languaje
         }
-        tipo={'Languaje'}
+        tipo={"Languaje"}
       />
     </DrawerContentScrollView>
   );
@@ -86,10 +92,10 @@ const MenuItems = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   cabeceraimg: {
-    flexDirection: 'row',
+    flexDirection: "row",
     // alignContent: 'space-between',
-    alignItems: 'center',
-    alignContent: 'space-around',
+    alignItems: "center",
+    alignContent: "space-around",
   },
   imgmenu: {
     marginLeft: 20,
@@ -98,7 +104,7 @@ const styles = StyleSheet.create({
     height: 80,
     // justifyContent: '',
 
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   icon: {
     marginLeft: 70,
@@ -106,12 +112,12 @@ const styles = StyleSheet.create({
     height: 50,
     // alignContent: 'flex-end',
     // alignItems: '',
-    resizeMode: 'contain',
+    resizeMode: "contain",
     borderRadius: 100,
   },
   cabeceraText: {
-    alignContent: 'center',
-    alignItems: 'center',
+    alignContent: "center",
+    alignItems: "center",
   },
   btnIngresa: {
     margin: 3,
@@ -120,9 +126,9 @@ const styles = StyleSheet.create({
     // backgroundColor: color_blanco,
     borderRadius: 10,
     // color: color_crema,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 22,
-    textAlign: 'center',
+    textAlign: "center",
   },
   textoUsr: {
     fontSize: 13,
@@ -132,7 +138,7 @@ const styles = StyleSheet.create({
   separator: {
     // marginVertical: 30,
     // height: 0,
-    width: '100%',
+    width: "100%",
     marginTop: 5,
     //  borderColor:'red',
     borderWidth: 2,

@@ -8,8 +8,8 @@ const initialState={
     msgerror:"NULL",
     flag_prev:false,
     allGenres: [],
-
     vGameId:[],
+    notFoundGames: false,
     pagina:1,
     porPagina:12,
     input:1,
@@ -20,11 +20,11 @@ export const videogamesSlice = createSlice({
     initialState,
     reducers: {//noc xq pero aqui es plural
         getAllVideogames: (state,action)=>{
-            
             state.videoGames= action.payload;
         },
         getVideogamesbyName: (state,action)=>{
             state.filteredVideoGames= action.payload;
+            state.notFoundGames = false           
         },
         setPrevVideoGame: (state,action)=>{
             state.videoGames_Prev= action.payload;
@@ -61,6 +61,11 @@ export const videogamesSlice = createSlice({
         AllGenresVideoGame:(state,action)=>{
             state.allGenres=action.payload
         },
+
+        notFoundGamesError: (state,action) => {
+          state.notFoundGames = true
+        },
+
         //////Filtros ------- Adrián
         filterByPlatform: (state, action) => {
             const platform = action.payload;
@@ -168,6 +173,7 @@ export const {getAllVideogames,getVideogamebyId,addUser,setNextPage,setFirstPage
   sortByReleaseDateAsc,
   sortByReleaseDateDesc,
   clearFilters,
-  sortByAlphabeticalAsc, sortByAlphabeticalDesc
+  sortByAlphabeticalAsc, sortByAlphabeticalDesc,
+  notFoundGamesError
             }=videogamesSlice.actions
 export default videogamesSlice.reducer

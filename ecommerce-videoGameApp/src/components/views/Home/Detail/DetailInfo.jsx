@@ -62,7 +62,7 @@ const DetailInfo = (props) => {
             onFinishRating={handleRating}
           />
           <Text style={styles.textRating} onPress={putRating}>
-            Set
+            Add your rating
           </Text>
           <Text> Score: {ratingV}</Text>
         </View>
@@ -70,7 +70,7 @@ const DetailInfo = (props) => {
         <TouchableOpacity onPress={() => console.log("Añadir al carrito")}>
           <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
             <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
-              Add to Car
+              Add to Cart
             </Text>
           </View>
         </TouchableOpacity>
@@ -144,8 +144,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   image: {
-    width: 380,
-    height: 250,
+    width: 375,
+    height: 361,
     marginLeft: -7,
     position: "relative",
     alignContent: "center",
@@ -153,8 +153,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   gameName: {
-    fontSize: 20,
-    fontWeight: "bold",
+    color: "#1B063E",
+    fontSize: 32,
+    fontStyle: "normal",
+    fontWeight: 700,
+    lineHeight: 48,
     marginBottom: 10,
     alignSelf: "center",
   },
@@ -166,10 +169,12 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   gamePrice: {
-    fontSize: 22,
-    fontWeight: "bold",
+    color: "#1B063E",
+    fontStyle: "normal",
+    fontSize: 32,
+    fontWeight: 400,
     marginBottom: 10,
-    alignSelf: "center",
+    // justifySelf: "start", salio error x esta propiedad
   },
   gameDescription: {
     fontSize: 15,
@@ -192,16 +197,20 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   button: {
-    marginBottom: 30,
-    width: "100%",
-    alignItems: "center",
+    width: 315.337,
+    height: 41.945,
+    alignSelf: "stretch",
     borderRadius: 8,
   },
   buttonText: {
-    textAlign: "center",
-    padding: 20,
-    fontSize: 20,
-    fontWeight: "bold",
+    width: 86.279,
+    color: "#FFF",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: 600,
+    lineHeight: 40,
+    textAlign: "justify",
+    alignSelf: "center",
   },
   comment: {
     backgroundColor: "#EEE",

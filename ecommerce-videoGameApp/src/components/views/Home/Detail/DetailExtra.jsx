@@ -36,6 +36,7 @@ const CardExtra = (videogame) => {
   // },[isDarkMode,locale])
 
   let Req = videogame.propExtra.requeriments_en;
+  
   const tagsStyles = {
     p: { color: StringsDark.text, fontSize: 30 },
     strong: { fontWeight: 'bold', color: StringsDark.tit_det_extra },
@@ -83,6 +84,7 @@ const CardExtra = (videogame) => {
           { backgroundColor: StringsDark.Titulo_Screen_fondo },
         ]}
       >
+
         {Req.length > 0 && (
           <Text style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}>
             {/* {StringsLanguaje.systemRequeriments} */}
@@ -90,8 +92,16 @@ const CardExtra = (videogame) => {
 
           </Text>
         )}
-
-        {Req.length > 0 && (
+      {typeof(Req)==='string' &&
+        <View style={styles.htmlContainer}>
+        <HTML
+          source={{ html: Req }}
+          contentWidth={windowWidth}
+          tagsStyles={tagsStyles}
+        />
+      </View>
+      }
+        {Req.length > 0 && typeof(Req)==='object' && (
           <View>
             {Req.map((item, index) => (
               <View key={index} style={styles.htmlContainer}>
