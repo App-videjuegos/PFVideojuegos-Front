@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ecommerce-videoGameApp",
+    "name": "GameStack",
     "slug": "ecommerce-videoGameApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,16 +18,19 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "package": "com.gameStack.gamsestack",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "845def10-19e5-4fb3-a4bf-402d9abcdfd0"
+      }
+    }
   }
 }
