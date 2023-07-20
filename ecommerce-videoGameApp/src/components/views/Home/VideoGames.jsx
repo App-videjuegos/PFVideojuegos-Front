@@ -25,8 +25,8 @@ const VideoGames = ({ navigation, route }) => {
     <View style={styles.container}>
       {console.log(notFoundGames)}
       {notFoundGames ? <View style={styles.notFoundContainer}>
-        <Text style={styles.notFoundText1}>¡Lo sentimos!</Text>
-          <Text style={styles.notFoundText}>No se encontraron juegos con ese nombre.</Text>
+        <Text style={styles.notFoundText1}>We're sorry!</Text>
+          <Text style={styles.notFoundText}>No games found with that name.</Text>
         </View> : <FlatList
         data={filteredVideoGames.length > 0 ? filteredVideoGames : videoGames}
         keyExtractor={(item) => item.id.toString()}
@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
     
   },
   notFoundText1: {
-    fontSize: 19,
+    fontSize: 24,
     fontWeight: "bold",
     color:"#987BDC"
   }, 
   notFoundText: {
-    fontSize: 16,
+    fontSize: 21,
     fontWeight: "bold",
   },
 
