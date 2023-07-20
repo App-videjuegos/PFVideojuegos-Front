@@ -23,7 +23,7 @@ import { convertirFecha, convertirFechaDiasCruzados } from "../../helpers/Invert
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-import {color_gris_c, color_morado_o, color_celeste, color_morado_c2, color_gris_595959, color_gris_cdcdcd} from '../../utils/theme/stringsColors'
+import {color_gris_c, color_morado_o, color_celeste, color_morado_c2, color_gris_595959, color_gris_cdcdcd, color_gris_dadada} from '../../utils/theme/stringsColors'
 
 
 import {
@@ -485,8 +485,7 @@ const CreateVideogame = ({ navigation, route }) => {
           >
             <Text
               style={[styles.title]}
-            >
-              releaseDate
+            >Release date
             </Text>
             <View>
 
@@ -715,7 +714,8 @@ const styles = StyleSheet.create({
   },
   TitlePage: {
     fontSize: 24,
-    fontWeight: "bold", 
+    fontWeight: "900", 
+    color: color_morado_o
 
   },
 
@@ -724,7 +724,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    backgroundColor:  color_gris_cdcdcd,
+    backgroundColor:  color_gris_dadada,
     height: 42,
     width: 315,
     padding: 0,
@@ -754,7 +754,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    marginBottom: 8,
+
     marginTop: 8,
     height: 42,
     width: 315,
@@ -819,8 +819,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     height: 50,
     marginHorizontal: "auto",
-    backgroundColor: color_gris_cdcdcd,
-    marginBottom: 15,
+    backgroundColor: color_gris_dadada,
     borderRadius: 8,
   },
 
@@ -849,12 +848,9 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     textAlign: "center",
-    // borderColor: color_azul,
     marginHorizontal: "auto",
-    // borderColor: "#ddd",
-    backgroundColor: color_gris_cdcdcd,
-    marginBottom: 15,
-    borderRadius: 8,
+    backgroundColor: color_gris_dadada,
+    borderRadius: 5,
   },
 
   viewContx1: {

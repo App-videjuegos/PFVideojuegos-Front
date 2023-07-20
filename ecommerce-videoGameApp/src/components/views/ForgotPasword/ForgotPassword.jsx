@@ -28,7 +28,7 @@ import { useState, useEffect } from "react";
 // import { useFocusEffect } from '@react-navigation/native';
 import { setUserLogging } from "../../../redux/userSlices";
 import { useDispatch } from "react-redux";
-export const Login = ({ navigation }) => {
+export const ForgotPassword = ({ navigation }) => {
   const dispatch = useDispatch();
   const [token, setToken] = useState();
 
@@ -115,23 +115,14 @@ export const Login = ({ navigation }) => {
   return (
     <Formik
       initialValues={{
-        user: "",
-        password: "",
+        user: "", // Should be "user" instead of "email" based on the input field below
       }}
-      validate={(val) => {
+      validate={(values) => {
         let errors = {};
 
-        if (!val.user) {
-          errors.user = "Enter Username";
+        if (!values.user) {
+          errors.user = "Please enter your email address"; // Should be "Please enter your username"
         }
-        // else if (!persons.some((e) => e.user.includes(val.user))) {
-        //   errors.user = "Username invalid";
-        // }
-
-        if (!val.password) {
-          errors.password = "Enter password";
-        }
-        // else if (user ? ){ errors.user = "Username invalid"}
 
         return errors;
       }}
@@ -141,115 +132,42 @@ export const Login = ({ navigation }) => {
         handleChange,
         handleBlur,
         handleSubmit,
-        handdleLogin,
         values,
         errors,
         touched,
-        onSubmit,
-      }) => {
-        return (
-          <View style={[styles.container]}>
-            <View style={[styles.header]}>
-              <Image
-                style={styles.logo}
-                source={require("../../../../assets/logoLigth.png")}
-              ></Image>
-            </View>
-            <View style={[styles.containerLogin]}>
-              <View>
-                <TextInput
-                  placeholder="Username"
-                  value={values.user}
-                  onChangeText={handleChange("user")}
-                  onBlur={handleBlur("user")}
-                  style={styles.input}
-                />
-                {errors.user && touched.user && (
-                  <Text style={styles.error}>{errors.user}</Text>
-                  )}
-              </View>
-
-              <View>
-                <TextInput
-                  placeholder="Password"
-                  value={values.password}
-                  onChangeText={handleChange("password")}
-                  secureTextEntry={true}
-                  onBlur={handleBlur("password")}
-                  style={styles.input}
-                />
-                {/* <TouchableOpacity title={isPasswordVisible ? 'Hide Password' : 'Show Password'} onPress={() => setIsPasswordVisible(!isPasswordVisible)} /> */}
-                {errors.password && touched.password && (
-                  <Text style={styles.error}>{errors.password}</Text>
-                  )}
-              </View>
-
-              {errorMsg && <Text>Incorrect user or password</Text>}
-
-                  <TouchableOpacity
-                    style={[styles.miniButton]}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={[styles.buttonText]}>Login</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={[styles.miniButtonRegister]}
-                    onPress={() =>
-                      navigation.navigate("ForgotPassword", { name: "ForgotPassword" })
-                    }
-                  >
-                    <Text style={[styles.buttonTextRegister]}>Forgot Password?</Text>
-                  </TouchableOpacity>
-    
-
-              <View>
-                <View>
-                  <Text style={{ textAlign: "center", fontSize:16, marginTop:8, color: color_morado_c2, fontWeight:"bold"}}>or</Text>
-                </View>
-                <View>
-                  <Text style={{ textAlign: "center", fontSize:16, marginTop:8, color: color_morado_c2, fontWeight:"bold"}}>
-                    -------- sing in --------
-                  </Text>
-                </View>
-                <TouchableOpacity style={styles.buttonGoogle}>
-                  <Image
-                    style={styles.imageGoogle}
-                    source={require("../../../../assets/singinwhitgoogle.png")}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.containerLogin}>
-                {/* <Text style={[{ fontSize: 45 }]}>Welcome</Text>
-                <Text style={[{ fontSize: 20 }, { fontWeight: "bold" }]}>
-                Fullname
-                </Text>
-                <Image
-                style={styles.perfil}
-                  source={{ uri: logginUser.image }}
-                ></Image> */}
-                {/* <TouchableOpacity
-                  onPress={() => {
-                    handdleLogout();
-                  }}
-                  style={[styles.miniButtonLogout]}
-                  >
-                  <Text style={[styles.buttonText]}>Logout</Text>
-                </TouchableOpacity> */}
-                <TouchableOpacity
-                  style={[styles.miniButtonRegister]}
-                  onPress={() =>
-                    navigation.navigate("Register", { name: "Register" })
-                  }
-                >
-                  <Text style={[styles.buttonTextRegister]}>Register</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+      }) => (
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Image
+              style={styles.logo}
+              source={require('../../../../assets/logoLigth.png')}
+            />
           </View>
-        );
-      }}
+          <View style={styles.containerLogin}>
+            <Text style={styles.title1} >Recover password</Text>
+            <Text>Enter your email</Text>
+
+            <View>
+              <TextInput
+                placeholder="    Email"
+                value={values.user}
+                onChangeText={handleChange('user')}
+                onBlur={handleBlur('user')}
+                style={styles.input}
+              />
+              {errors.user && touched.user && (
+                <Text style={styles.error}>{errors.user}</Text>
+              )}
+            </View>
+            <TouchableOpacity
+              style={styles.miniButton}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Recover my password</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </Formik>
   );
 };
@@ -262,6 +180,25 @@ const styles = StyleSheet.create({
     backgroundColor: color_gris_c,
     width: "100%",
   },
+
+  title1:{
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    color: color_morado_c2,
+    fontSize:24,
+    fontWeight:"900",
+    marginBottom: 16,
+  },
+
+  title: {
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    color: color_morado_o,
+    width: "100%",
+  },
+
 
   logo: {
     marginTop: 42,
@@ -294,30 +231,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
-
-  title: {
-    margin: 24,
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
   input: {
-    textAlign: "center",
+    textAlign:"left",
     height: 42,
     width: 315,
-    marginTop:8,
-    borderColor: color_morado_c2,
-    paddingHorizontal: 70,
-
     borderRadius: 5,
     backgroundColor: color_gris_dadada,
+    marginTop:16
   },
   miniButton: {
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    marginTop: 16,
+    marginTop: 24,
     height: 42,
     width: 315,
     padding: 0,

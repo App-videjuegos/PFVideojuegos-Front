@@ -23,6 +23,7 @@ import store from "./src/redux/store";
 import CreateVideogame from "./src/components/views/Create/CreateVideoGame";
 import Register from "./src/components/views/Create/RegisterUser";
 import { Login } from "./src/components/views/Login/Login";
+import { ForgotPassword } from "./src/components/views/ForgotPasword/ForgotPassword";
 export default function App() {
   return (
     <>
@@ -82,7 +83,7 @@ export default function App() {
                   name="CreateVideogame"
                   component={CreateVideogame}
                   options={{
-                    title: "Create Videogame",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -95,7 +96,7 @@ export default function App() {
                   name="Login"
                   component={Login}
                   options={{
-                    title: "Login",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -108,7 +109,7 @@ export default function App() {
                   name="Register"
                   component={Register}
                   options={{
-                    title: "Register",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -116,6 +117,20 @@ export default function App() {
                     headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
                   }}
                 />
+
+<Drawer.Screen
+                  name="ForgotPassword"
+                  component={ForgotPassword}
+                  options={{
+                    title: "",
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                    },
+                    headerTintColor: color_morado_o,
+                    headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
+                  }}
+                />
+
 
                 {/*
                 <Drawer.Screen
