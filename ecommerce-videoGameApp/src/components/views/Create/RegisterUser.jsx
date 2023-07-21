@@ -115,6 +115,8 @@ const Register = ({ navigation }) => {
 
         {
           correo: userData.email,
+          user: userData.user,
+          fullname: userData.fullname,
         }
       );
 
