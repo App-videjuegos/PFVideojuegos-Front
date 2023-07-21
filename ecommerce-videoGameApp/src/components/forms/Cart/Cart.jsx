@@ -121,40 +121,44 @@ const Cart = ({ navigation }) => {
   };
   // console.log("logginUser",Carrito)
 
-  // const handlePasarellaPress = () => {
-  //   const proceedWithPurchase = () => {
-  //     if (isLogged) {
-  //       const itemsCart=Carrito.map(el=>{
-  //         return { videogameId:   el.value.id,
-  //                  videogameName: el.value.title,
-  //                  unitPrice: el.value.price,
-  //                  quantity:  el.value.amount.toFixed(2)}
-  //       })
-  //       // const items = [{ videogameId: 3498, videogameName: "Grand Theft Auto V", unitPrice: 20, quantity: 2 }]
-  //       navigation.navigate('Pasarella', { Cart: itemsCart, tot:total ,userid:logginUser.id});
-  //     } else {
-  //       alert("Es necesario Regisrar inicio de Sesión")
-  //       navigation.navigate('Login');
-  //     }
-  //   };
+  const handlePasarellaPress = () => {
+    const proceedWithPurchase = () => {
+      // if (isLogged) {
+        const itemsCart=Carrito.map(el=>{
+          return { videogameId:   el.value.id,
+                   videogameName: el.value.title,
+                   unitPrice: el.value.price,
+                   quantity:  el.value.amount.toFixed(2)}
+        })
+        // const items = [{ videogameId: 3498, videogameName: "Grand Theft Auto V", unitPrice: 20, quantity: 2 }]
+        navigation.navigate('Pasarella', { Cart: itemsCart, tot:total ,
+          userid:'940'
+          // userid:logginUser.id
+        }
+          );
+      // } else {
+      //   alert("Es necesario Regisrar inicio de Sesión")
+      //   navigation.navigate('Login');
+      // }
+    };
 
-  //   Alert.alert(
-  //     'Proceder con la compra',
-  //     '',
-  //     [
-  //       {
-  //         text: StringsLanguaje.optCancel,
-  //         onPress: () => console.log('Cancel Pressed'),
-  //         style: 'cancel',
-  //       },
-  //       {
-  //         text: 'OK',
-  //         onPress: proceedWithPurchase,
-  //       },
-  //     ],
-  //     { cancelable: false }
-  //   );
-  // };
+    Alert.alert(
+      'Proceder con la compra',
+      '',
+      [
+        {
+          text: StringsLanguaje.optCancel,
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: proceedWithPurchase,
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   const getAllItems = () => {
     AsyncStorage.getAllKeys((error, keys) => {
@@ -256,7 +260,7 @@ const Cart = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        // onPress={handlePasarellaPress}
+        onPress={handlePasarellaPress}
         style={[styles.chkOutCart, { backgroundColor: '#496BFF' }]}
       >
         <Text style={[styles.clearCartText, { color: '#ffffff' }]}>

@@ -18,6 +18,7 @@ import { ThemeContext } from '../../utils/theme/ThemeProvider';
 //linea para modificar el contexto de localizacion para el lenaguje
 import { LanguajeContext } from '../../utils/languaje/languajeProvider';
 import React, { useEffect, useState, useContext, useRef } from 'react';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Pasarella = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -98,12 +99,13 @@ const Pasarella = ({ navigation, route }) => {
           );
           const data = await response.json();
           // console.log('aqui q hay', data.message);
-          
+
           if (data.message === 'ok') {
-            cleanCart();
-            dispatch(updateCart());
-            navigation.navigate('HomeStack');
-            alert("la compra fue aceptada")
+            // cleanCart();
+            // dispatch(updateCart());
+            setModalVisible(true);
+            // navigation.navigate('HomeStack');
+            alert('la compra fue aceptada');
             //aqui quiero un modal para mostrar el resumen de la compra y su confirmacion ")
           } else {
             alert(
@@ -155,6 +157,45 @@ const Pasarella = ({ navigation, route }) => {
         title={StringsLanguaje.chkOut}
         disabled={loading}
       />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <MaterialCommunityIcons
+              name={'credit-card-check-outline'}
+              size={40}
+              color={'#3F13A4'}
+            />
+
+            <Text style={styles.modalText}>
+              Congratulations Payment Accepted!!!
+            </Text>
+            <Text>info</Text>
+            <Text>info</Text>
+            <Text>info</Text>
+            <Text>info</Text>
+            <Text>info</Text>
+
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text
+                style={[
+                  styles.closeButton,
+                  { backgroundColor: '#3F13A4' },
+                  { color: '#ffffff' },
+                ]}
+              >
+                Salir
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -195,6 +236,41 @@ const styles = StyleSheet.create({
     height: '40%',
     top: 50,
     left: 150,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+
+  closeButton: {
+    marginTop: 10,
+    width: 150,
+    height: 41,
+    borderRadius: 10,
+    alignItems: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
   },
 });
 

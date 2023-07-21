@@ -18,6 +18,8 @@ import Landing from "./src/components/views/Landing/Landing";
 import Home from "./src/components/views/Home/HomeD";
 import MenuItems from "./src/components/views/MenuApp/MenuItems";
 import Cart from "./src/components/forms/Cart/Cart";
+import Pasarella from "./src/components/forms/Cart/Pasarella";
+import { StripeProvider } from "@stripe/stripe-react-native";
 import { Provider } from "react-redux";
 import store from "./src/redux/store";
 import CreateVideogame from "./src/components/views/Create/CreateVideoGame";
@@ -29,6 +31,7 @@ export default function App() {
     <>
       <LanguajeProvider>
         <ThemeProvider>
+        <StripeProvider publishableKey="pk_test_51N7eXtIEe9GBUqtLHqAuwlTor3giWSzd60ooicGwoYQysemKeOM288y3908V2pTq2KCwBkYotvhMnRRPQ2WStRLZ00SfULJJhC"/>
           <Provider store={store}>
             <NavigationContainer>
               <Drawer.Navigator
@@ -128,6 +131,21 @@ export default function App() {
                     },
                     headerTintColor: color_morado_o,
                     headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
+                  }}
+                />
+                  <Drawer.Screen
+                  name="Pasarella"
+                  component={Pasarella}
+                  options={{
+                    title: "Pasarella  Pagos",
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                    },
+                    headerTintColor: color_morado_o,
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                      fontSize: 25,
+                    },
                   }}
                 />
 
