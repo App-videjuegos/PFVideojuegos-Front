@@ -10,6 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
+import GameRating from "./GameRating";
 
 const DetailInfo = (props) => {
   const [ratingV, setRating] = useState(0);
@@ -144,6 +145,7 @@ const DetailInfo = (props) => {
       <Image style={styles.image} source={{ uri: image }} />
       <View style={styles.infoContainer}>
         <Text style={styles.gameName}>{name}</Text>
+        <GameRating rating={rating} />
         <View style={styles.ratingContainer}>
           <AirbnbRating
             count={5}
