@@ -28,6 +28,16 @@ const Pasarella = ({ navigation, route }) => {
   const { Cart, tot, userid } = route.params;
   const cardFieldRef = useRef(null);
 
+
+  const closeModalAndPerformActions = () => {
+    // Cerrar el modal
+    setModalVisible(false);
+  
+    // Realizar las acciones necesarias
+    cleanCart(); // Limpia el carrito
+    dispatch(updateCart()); // Actualiza el estado del carrito en el Redux store
+    navigation.navigate('HomeStack'); // Navega a la pantalla 'HomeStack'
+  };
   useEffect(() => {
     // console.log("esta entrando ?")
     navigation.setOptions({
@@ -105,8 +115,7 @@ const Pasarella = ({ navigation, route }) => {
             // dispatch(updateCart());
             setModalVisible(true);
             // navigation.navigate('HomeStack');
-            alert('la compra fue aceptada');
-            //aqui quiero un modal para mostrar el resumen de la compra y su confirmacion ")
+      
           } else {
             alert(
               'It was not possible to complete the purchase, the payment has been refunded.'
@@ -166,7 +175,7 @@ const Pasarella = ({ navigation, route }) => {
         }}
       >
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+          <View style={[styles.modalView,{ shadowColor: '#3F13A4'}]}>
             <MaterialCommunityIcons
               name={'credit-card-check-outline'}
               size={40}
@@ -182,7 +191,7 @@ const Pasarella = ({ navigation, route }) => {
             <Text>info</Text>
             <Text>info</Text>
 
-            <TouchableOpacity onPress={() => setModalVisible(false)}>
+            <TouchableOpacity onPress={() => closeModalAndPerformActions()}>
               <Text
                 style={[
                   styles.closeButton,
@@ -249,7 +258,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
-    shadowColor: '#000',
+   
     shadowOffset: {
       width: 0,
       height: 2,
