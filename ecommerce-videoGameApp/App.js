@@ -19,7 +19,7 @@ import Home from "./src/components/views/Home/HomeD";
 import MenuItems from "./src/components/views/MenuApp/MenuItems";
 import Cart from "./src/components/forms/Cart/Cart";
 import Pasarella from "./src/components/forms/Cart/Pasarella";
-import UserProfile from "./src/components/views/DashBoard/UserProfile";
+import UserProfile from "./src/components/views/Dashboard/UserProfile";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { Provider } from "react-redux";
 import store from "./src/redux/store";
