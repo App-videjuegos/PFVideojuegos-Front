@@ -6,6 +6,7 @@ import { LanguajeContext } from "../../utils/languaje/languajeProvider";
 import { ThemeContext } from "../../utils/theme/ThemeProvider";
 import { ChangeButtonContext } from "../../utils/changeContextButton/ChangeContextButton";
 import { useContext } from "react";
+import MenuButtonSubItem from "./MenuButtonSubItem";
 
 const MenuItems = ({ navigation }) => {
   //esta linea debo de llamar en cada componente
@@ -65,6 +66,17 @@ const MenuItems = ({ navigation }) => {
         onPress={() => navigation.navigate("Login")}
         icon="login"
       />
+      <MenuBottonItem
+        // nombre={StringsLanguaje.Login}
+        nombre={"DashBoard"}
+        // onPress={() => navigation.navigate("Login")}
+        icon="view-dashboard"
+      />
+      <MenuButtonSubItem
+              nombre= {'User Profile'}
+              onPress={()=> navigation.navigate('UserProfile')}
+              icon="account-eye-outline"
+            />
       <MenuBottonItem
         // nombre={StringsLanguaje.Login}
         nombre={"Register"}

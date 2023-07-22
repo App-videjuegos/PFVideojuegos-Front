@@ -1,22 +1,22 @@
 import { View, Text, TouchableOpacity,StyleSheet } from 'react-native'
 import React from 'react'
-import { color_gris,color_negro,color_blanco, color_azul } from '../../utils/theme/stringsColors'
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 //linea para llamar a modo DARK
-
-
+import { ThemeContext } from '../../utils/theme/ThemeProvider';
+import  { useContext} from 'react';
 
 const MenuButtonSubItem = ({nombre, onPress,icon}) => {
 
-    //esta linea debo de llamar en cada componente 
-
+  //linea para setear el modo dark
+  const { StringsDark } = useContext(ThemeContext);
   return (
     <TouchableOpacity 
         style={styles.buttonContainer}
         onPress={onPress}>
-      <MaterialCommunityIcons name={icon} color={ color_blanco }  size={20}/> 
+      <MaterialCommunityIcons name={icon} color={ StringsDark.menuDrawner_ico }  size={20}/> 
      <View style={styles.ItemContainer}>
-        <Text style={[styles.text, ]}>{nombre}</Text>
+     <Text style={[styles.text,{color:StringsDark.menuDrawner_ico}]}>{nombre}</Text>
         <View style={styles.separator}/>
      </View>
      
@@ -54,14 +54,12 @@ const styles=StyleSheet.create({
       height: 0,
       width: '100%',
       marginLeft:20,
-      borderColor:color_negro,
+      borderColor:'#6B35E8',
       borderWidth:1,
       borderBottomWidth:0,
       opacity: .31,
       
     },
-    darkModetext:{
-      color: color_blanco
-    }
+  
 })
 export default MenuButtonSubItem

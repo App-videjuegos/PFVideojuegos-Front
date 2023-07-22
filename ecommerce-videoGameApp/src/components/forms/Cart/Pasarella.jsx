@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+
 import { CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 import { removeItem, cleanCart } from './CardCartController';
 import { useDispatch } from 'react-redux';
@@ -19,7 +20,6 @@ import { ThemeContext } from '../../utils/theme/ThemeProvider';
 import { LanguajeContext } from '../../utils/languaje/languajeProvider';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 const Pasarella = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
@@ -28,16 +28,18 @@ const Pasarella = ({ navigation, route }) => {
   const { Cart, tot, userid } = route.params;
   const cardFieldRef = useRef(null);
 
-
   const closeModalAndPerformActions = () => {
     // Cerrar el modal
     setModalVisible(false);
-  
+
     // Realizar las acciones necesarias
     cleanCart(); // Limpia el carrito
     dispatch(updateCart()); // Actualiza el estado del carrito en el Redux store
     navigation.navigate('HomeStack'); // Navega a la pantalla 'HomeStack'
   };
+
+  const currentDate = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleTimeString();
   useEffect(() => {
     // console.log("esta entrando ?")
     navigation.setOptions({
@@ -64,6 +66,17 @@ const Pasarella = ({ navigation, route }) => {
   }
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
+
+  // Función para formatear el número de tarjeta
+  // const formatCardNumber = (cardNumber) => {
+  //   // Si no hay detalles de la tarjeta, no se muestra nada
+  //   if (!cardNumber) return '';
+
+  //   const visibleDigits = cardNumber.number.slice(0, -4);
+  //   const hiddenDigits = '****';
+
+  //   return `${visibleDigits}${hiddenDigits}`;
+  // };
 
   const subscribe = async () => {
     try {
@@ -113,9 +126,9 @@ const Pasarella = ({ navigation, route }) => {
           if (data.message === 'ok') {
             // cleanCart();
             // dispatch(updateCart());
+            // console.log("esto hay en este estado",cardDetails)
             setModalVisible(true);
             // navigation.navigate('HomeStack');
-      
           } else {
             alert(
               'It was not possible to complete the purchase, the payment has been refunded.'
@@ -166,6 +179,7 @@ const Pasarella = ({ navigation, route }) => {
         title={StringsLanguaje.chkOut}
         disabled={loading}
       />
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -175,22 +189,75 @@ const Pasarella = ({ navigation, route }) => {
         }}
       >
         <View style={styles.centeredView}>
-          <View style={[styles.modalView,{ shadowColor: '#3F13A4'}]}>
-            <MaterialCommunityIcons
-              name={'credit-card-check-outline'}
-              size={40}
-              color={'#3F13A4'}
-            />
+          <View
+            style={[
+              styles.modalView,
+              { shadowColor: '#3F13A4' },
+              { backgroundColor: '#ffffff' },
+            ]}
+          >
+            <View style={[styles.p1, { borderColor: '#6B35E8' }]}>
+              <MaterialCommunityIcons
+                name={'credit-card-check-outline'}
+                size={40}
+                color={'#3F13A4'}
+              />
+              <Text style={[styles.modalText, { color: '#6B35E8' }]}>
+                Congratulations
+              </Text>
+              <Text style={[styles.modalText, { color: '#6B35E8' }]}>
+                Payment Accepted!!!
+              </Text>
+            </View>
 
-            <Text style={styles.modalText}>
-              Congratulations Payment Accepted!!!
-            </Text>
-            <Text>info</Text>
-            <Text>info</Text>
-            <Text>info</Text>
-            <Text>info</Text>
-            <Text>info</Text>
-
+            <View style={[styles.p2, { borderColor: '#6B35E8' }]}>
+              <Text style={[styles.m_titulos, { color: '#987BDC' }]}>
+                Transaction Details
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                Order Number: 12345
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                Date and time: {currentDate} {currentTime}
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                User: Armando Lios Bueno
+              </Text>
+            </View>
+            <View style={[styles.p2, { borderColor: '#6B35E8' }]}>
+              <Text style={[styles.m_titulos, { color: '#987BDC' }]}>
+                Card Details and Amount
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                Number: **** **** ****
+                 {/* { cardDetails.last4 &&  cardDetails.last4
+                } */}
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                Tarjeta:
+                {/* {cardDetails.brand} */}
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                Import: {(datos.amount / 100).toFixed(2)}
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                currency: Dollar
+              </Text>
+            </View>
+            <View style={[styles.p2, { borderColor: '#6B35E8' }]}>
+              <Text style={[styles.m_titulos, { color: '#987BDC' }]}>
+                Products Detail
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                Order Number:{' '}
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                Date and time of the Operation:
+              </Text>
+              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+                User: Armando Lios Bueno
+              </Text>
+            </View>
             <TouchableOpacity onPress={() => closeModalAndPerformActions()}>
               <Text
                 style={[
@@ -254,11 +321,11 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
-   
+
     shadowOffset: {
       width: 0,
       height: 2,
@@ -270,6 +337,8 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 
   closeButton: {
@@ -280,6 +349,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
+  },
+  modalContent: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  separator: {
+    height: 2,
+    backgroundColor: 'red',
+    marginVertical: 10,
+  },
+  p1: {
+    alignContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    borderBottomWidth: 2,
+
+    width: 250,
+  },
+  p2: {
+    width: 250,
+    margin: 5,
+    borderBottomWidth: 2,
+  },
+  m_titulos: {
+    textAlign: 'left',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  m_Subtitulos: {
+    textAlign: 'auto',
+    fontSize: 12,
+    fontWeight: '400',
+    margin: 5,
   },
 });
 
