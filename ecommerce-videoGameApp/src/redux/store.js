@@ -3,6 +3,8 @@ import videogamesReducer from "./videogamesSlice";
 import userReducer from "./userSlices"
 import cartReducer from "./cartSlice"
 // import salesReducer from "./salesSlice"
+import reviewsReducer from './reviewSlice';
+
 
 export default configureStore({
     reducer:{
@@ -10,5 +12,7 @@ export default configureStore({
         usersState: userReducer,
         cartState: cartReducer,
         // salesState: salesReducer,
+        reviews: reviewsReducer,
+
     }
 })

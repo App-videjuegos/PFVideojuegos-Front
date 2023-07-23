@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -11,6 +11,11 @@ import {
 } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import GameRating from "./GameRating";
+import { useDispatch, useSelector } from "react-redux"; // Importamos useDispatch y useSelector
+import {
+  sendReview,
+  getReviewsByVideogameId,
+} from "../../../../redux/reviewActions"; // Importamos la acción creada anteriormente
 
 const DetailInfo = (props) => {
   const [ratingV, setRating] = useState(0);
@@ -28,6 +33,57 @@ const DetailInfo = (props) => {
 
   const { name, description, price, rating, image } = props.propInfo;
   const [showFullDescription, setShowFullDescription] = useState(false);
+  // Nuevo estado local para almacenar los comentarios del juego actual
+  const [currentGameComments, setCurrentGameComments] = useState([]);
+  // Efecto para cargar los comentarios del juego actual desde Redux cuando cambie de juego
+  useEffect(() => {
+    // Solo solicitamos los comentarios si no hay comentarios cargados previamente o si cambia el videogameId
+    if (
+      currentGameComments.length === 0 ||
+      currentGameComments[0]?.videogameId !== currentVideogameId
+    ) {
+      console.log("Obteniendo comentarios para el juego:", props.propInfo.name);
+      dispatch(getReviewsByVideogameId(currentVideogameId));
+    }
+  }, [dispatch, currentVideogameId, currentGameComments]);
+
+  // Actualiza el estado "currentGameComments" con los comentarios obtenidos desde Redux
+  useEffect(() => {
+    setCurrentGameComments(commentsForCurrentVideogame);
+  }, [commentsForCurrentVideogame]);
+
+  // Obtenemos el estado de carga desde Redux
+  const loading = useSelector((state) => state.reviews.loading);
+  // Obtenemos el videogameId del juego actual
+  const currentVideogameId = props.propInfo.id;
+
+  // Filtrar los comentarios por el videogameId del juego actual
+  const commentsForCurrentVideogame = comments.filter(
+    (comment) => comment.videogameId === currentVideogameId
+  );
+
+  // Aquí obtenemos el estado de las revisiones (reviews) desde Redux
+  const reviews = useSelector((state) => state.reviews.reviews);
+
+  useEffect(() => {
+    setComments(reviews); // Actualiza el estado "comments" con los comentarios
+  }, [reviews]);
+
+  useEffect(() => {
+    console.log("Comentarios recibidos desde Redux:", reviews);
+    // Aquí, los comentarios recibidos desde Redux se mostrarán correctamente en la vista.
+  }, [reviews]);
+
+  useEffect(() => {
+    // Solo solicitamos los comentarios si no hay comentarios cargados previamente
+    if (reviews.length === 0) {
+      console.log("videogameId:", props.propInfo.id);
+      dispatch(getReviewsByVideogameId(props.propInfo.id));
+    }
+  }, [dispatch, props.propInfo.id, reviews.length]);
+
+  // Aquí obtenemos el dispatch desde Redux para poder utilizar la acción sendReview
+  const dispatch = useDispatch();
 
   const handleRating = (value) => {
     setRating(value);
@@ -110,20 +166,39 @@ const DetailInfo = (props) => {
         .filter((tag) => tag.trim().startsWith("#"))
         .map((tag) => tag.trim());
 
+      const generateRandomToken = (length) => {
+        const characters =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let token = "";
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          token += characters[randomIndex];
+        }
+        return token;
+      };
+
+      const randomUserId = Math.floor(Math.random() * 3000) + 1;
+
+      const randomToken = generateRandomToken(10); // Puedes ajustar la longitud según tus necesidades
+      const videogameId = props.propInfo.id;
+
       // Create the new comment object
       const newComment = {
-        id: comments.length + 1,
-        title: title, // Add title to the comment
-        rating: ratingV, // Add rating to the comment
-        comment: comment, // Add the comment text to the comment
-        reviewDate: reviewDate, // Add the current date as the review date
-        recommendation: recommendation, // Add recommendation to the comment
-        hashtags: formattedHashtags, // Use the formatted hashtags
-        playtime: randomPlaytime, // Add the random playtime to the comment
+        id: reviews.length + 1, // Modificamos para usar el estado de Redux
+        userId: randomUserId, // Agregar el userId aleatorio aquí
+        videogameId: videogameId, // Agregar el videogameId aquí
+        title: title,
+        rating: ratingV,
+        comment: comment,
+        reviewDate: reviewDate,
+        recommendation: recommendation,
+        hashtags: formattedHashtags,
+        playtime: randomPlaytime,
+        token: generateRandomToken(10), // Puedes ajustar la longitud según tus necesidades
       };
 
       // Update the comments array with the new comment
-      setComments([...comments, newComment]);
+      dispatch(sendReview(newComment));
 
       // Reset the rating, title, comment, and hashtags state for the next comment
       setRating(0);
@@ -195,30 +270,41 @@ const DetailInfo = (props) => {
 
         {/* Comentarios */}
         <View style={styles.commentsContainer}>
-        <Text style={styles.commentsHeaderText}>Comments</Text>
-        <View style={styles.commentsListContainer}>
-        {comments.map((comment) => (
-            <View
-              key={comment.id}
-              style={[styles.comment, styles.commentContainer]}
-            >
-                <View style={styles.commentTitleContainer}>
-                  <Text style={styles.commentTitle}>{comment.title}</Text>
-                  <Text style={styles.commentDate}>{comment.reviewDate}</Text>
+          <Text style={styles.commentsHeaderText}>Comments</Text>
+          <View style={styles.commentsListContainer}>
+            {commentsForCurrentVideogame.length > 0 ? (
+              commentsForCurrentVideogame.map((comment) => (
+                <View
+                  key={comment.id}
+                  style={[styles.comment, styles.commentContainer]}
+                >
+                  <View style={styles.commentTitleContainer}>
+                    <Text style={styles.commentTitle}>{comment.title}</Text>
+                    <Text style={styles.commentDate}>{comment.reviewDate}</Text>
+                  </View>
+                  <Text style={styles.commentText}>{comment.comment}</Text>
+                  <Text style={styles.commentDetails}>
+                    <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
+                    {comment.playtime} hours -
+                    <Text style={styles.commentDetailsBold}>
+                      {" "}
+                      Recommendation:
+                    </Text>{" "}
+                    {comment.recommendation ? "👍" : "👎"}
+                  </Text>
+                  <Text style={styles.commentDetails}>
+                    <Text style={styles.commentDetailsBold}>Rating:</Text>{" "}
+                    {comment.rating}
+                  </Text>
+                  <Text style={styles.commentDetails}>
+                    <Text style={styles.commentDetailsBold}>Hashtags:</Text>{" "}
+                    {comment.hashtags.map((tag) => `${tag}`).join(", ")}
+                  </Text>
                 </View>
-                <Text style={styles.commentText}>{comment.comment}</Text>
-                <Text style={styles.commentDetails}>
-                  <Text style={styles.commentDetailsBold}>Playtime:</Text> {comment.playtime} hours - 
-                  <Text style={styles.commentDetailsBold}> Recommendation:</Text> {comment.recommendation ? "👍" : "👎"}
-                </Text>
-                <Text style={styles.commentDetails}>
-                  <Text style={styles.commentDetailsBold}>Rating:</Text> {comment.rating}
-                </Text>
-                <Text style={styles.commentDetails}>
-                  <Text style={styles.commentDetailsBold}>Hashtags:</Text> {comment.hashtags.map((tag) => `${tag}`).join(", ")}
-                </Text>
-              </View>
-            ))}
+              ))
+            ) : (
+              <Text>No hay comentarios disponibles.</Text>
+            )}
           </View>
           <View style={styles.recommendationContainer}>
             <Text style={styles.recommendationText}>
@@ -254,34 +340,38 @@ const DetailInfo = (props) => {
             <Text style={styles.errorText}>Complete the comment</Text>
           )}
           {hashtags.map((tag, index) => (
-        <View key={index} style={styles.hashtagContainer}>
-          <TextInput
-            style={[styles.hashtagInput, errorHashtag ? styles.errorInput : null]}
-            placeholder="Add a hashtag"
-            value={tag}
-            onChangeText={(text) => handleHashtagChange(index, text)}
-          />
-          
-          <TouchableOpacity onPress={() => removeHashtagInput(index)}>
-            <View style={[styles.button, styles.removeHashtagButton]}>
-              <Text style={[styles.buttonText, { color: "red" }]}>Remove</Text>
+            <View key={index} style={styles.hashtagContainer}>
+              <TextInput
+                style={[
+                  styles.hashtagInput,
+                  errorHashtag ? styles.errorInput : null,
+                ]}
+                placeholder="Add a hashtag"
+                value={tag}
+                onChangeText={(text) => handleHashtagChange(index, text)}
+              />
+
+              <TouchableOpacity onPress={() => removeHashtagInput(index)}>
+                <View style={[styles.button, styles.removeHashtagButton]}>
+                  <Text style={[styles.buttonText, { color: "red" }]}>
+                    Remove
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
+          {errorHashtag && (
+            <Text style={styles.errorText}>
+              Hashtag is not valid. It should start with # and contain only
+              letters (A/a-Z/z).
+            </Text>
+          )}
+          <TouchableOpacity onPress={addHashtagInput}>
+            <View style={[styles.button, styles.addHashtagButton]}>
+              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add</Text>
             </View>
           </TouchableOpacity>
-          
-        </View>
-        
-      ))}
-      {errorHashtag && (
-  <Text style={styles.errorText}>
-    Hashtag is not valid. It should start with # and contain only letters (A/a-Z/z).
-  </Text>
-)}
-      <TouchableOpacity onPress={addHashtagInput}>
-        <View style={[styles.button, styles.addHashtagButton]}>
-          <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add</Text>
-        </View>
-          </TouchableOpacity>
-          
+
           <Button title="Submit" onPress={submitComment} />
         </View>
       </View>
