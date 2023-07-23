@@ -6,10 +6,12 @@ import {
   gamesUsr,
   updateUsr,
   usrMsgErr,
-  setUserLogging,
-} from "./usersSlices";
+  setUserLoged,
+  setUserToken,
+} from "./userSlices";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loadItemAsyncStorage } from "../components/helpers/functionsAsyncStorage";
 
 
 export const getUserByID = (id) => {
@@ -115,7 +117,7 @@ export const postUser = (data) => {
   
       if (changedFields.length > 0) {
         // Obtén los datos existentes del AsyncStorage
-        const storedData = await AsyncStorage.getItem('loggedGameShop');
+        const storedData = await AsyncStorage.getItem('user');
         if (storedData !== null) {
           const parsedData = JSON.parse(storedData);
           const updatedData = { ...parsedData };
@@ -133,7 +135,7 @@ export const postUser = (data) => {
           message = message.slice(0, -2); // Eliminar la coma y el espacio al final
   
           // Guarda los datos actualizados en el AsyncStorage
-          await AsyncStorage.setItem('loggedGameShop', JSON.stringify(updatedData));
+          await AsyncStorage.setItem('user', JSON.stringify(updatedData));
 
           Alert.alert(message)
         }
@@ -142,4 +144,38 @@ export const postUser = (data) => {
       Alert.alert("Something went wrong", "error updating data");
       console.log("error updating data", err);
     }
+  };
+
+
+  export const logedUser = () => {
+    return async (dispatch) => {
+      try {
+        const loged = await loadItemAsyncStorage('user');
+        if (loged) {
+          const logedData = JSON.parse(loged);
+          dispatch(setUserLogging(true));
+        } else {
+          dispatch(setUserLogging(false));
+        }
+      } catch (error) {
+        console.error('Error al obtener la información del usuario logeado:', error);
+      }
+    };
+  };
+
+
+  export const tokenUser = () => {
+    return async (dispatch) => {
+      try {
+        const user = await loadItemAsyncStorage('user');
+        if (user) {
+          const userData = JSON.parse(user);
+          dispatch(setUserToken(userData.token));
+        } else {
+          dispatch(setUserToken(null));
+        }
+      } catch (error) {
+        console.error('Error al obtener el token del usuario:', error);
+      }
+    };
   };

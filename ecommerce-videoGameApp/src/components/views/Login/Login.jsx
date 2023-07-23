@@ -22,22 +22,53 @@ import {
 // import { persons } from "../../../utils/arrayPersons";
 import { Formik } from "formik";
 import { useState, useEffect } from "react";
-// import axios from "axios";
 import loginService from "../../../services/login";
-// import {getItemAsyncStorage,InsertUserAsynStorage,removeItem} from '../Forms/Cart/CardCartController'
-// import { useFocusEffect } from '@react-navigation/native';
-import { setUserLogging } from "../../../redux/userSlices";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  saveItemAsyncStorage,
+  loadItemAsyncStorage,
+  removeItemAsyncStorage,
+  showAsyncStorageData,
+} from "../../helpers/functionsAsyncStorage";
+import imageUser from "../../../../assets/imageUser.png";
+import { logedUser, tokenUser } from "../../../redux/userActions";
 export const Login = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const [token, setToken] = useState();
+  const loged = useSelector((state) => state.usersState.userLoged);
+  const token = useSelector((state) => state.usersState.userToken);
 
-  const [session, setSession] = useState(null);
-  const [loginUser, setLogingUser] = useState("");
-  const [user, setUser] = useState(null);
-  const [password, setPassword] = useState("");
+  console.log(loged)
+  console.log(token)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loadUserFromAsyncStorage = async () => {
+      try {
+        const loggedUser = await loadItemAsyncStorage("user");
+        if (loggedUser) {
+          const dataUser = JSON.parse(loggedUser);
+          setLogingUser(dataUser);
+          dispatch(logedUser());
+          dispatch(tokenUser());
+        }
+      } catch (error) {
+        console.error("Error al cargar el usuario desde AsyncStorage:", error);
+      }
+    };
+
+    loadUserFromAsyncStorage();
+  }, [loginUser]);
+
+
+  useEffect(() => {
+    // Llama a la acción tokenUser al montar el componente
+    dispatch(tokenUser());
+  }, [dispatch]);
+
+
+  const [loginUser, setLogingUser] = useState(null);
+  // const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (values) => {
@@ -46,11 +77,16 @@ export const Login = ({ navigation }) => {
         user: values.user,
         password: values.password,
       });
-      console.log(user);
+      console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
+
+      // setToken(user.token)
 
       setLogingUser(user);
-      setUser("");
-      setPassword("");
+      saveItemAsyncStorage("user", user);
+      showAsyncStorageData();
+
+
+      console.log(token);
 
       console.log("This is login");
     } catch (e) {
@@ -61,7 +97,14 @@ export const Login = ({ navigation }) => {
       }, 5000);
     }
   };
-
+  const handleUnlogin = () => {
+    removeItemAsyncStorage("user");
+    dispatch(logedUser());
+    dispatch(tokenUser());
+  };
+  setTimeout(()=>{
+    console.log("------------------------->", token);
+  },5000)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   return (
     <Formik
@@ -194,22 +237,20 @@ export const Login = ({ navigation }) => {
               </View>
 
               <View style={styles.containerLogin}>
-                {/* <Text style={[{ fontSize: 45 }]}>Welcome</Text>
+                <Text style={[{ fontSize: 45 }]}>Welcome</Text>
                 <Text style={[{ fontSize: 20 }, { fontWeight: "bold" }]}>
-                Fullname
+                  Fullname
                 </Text>
-                <Image
-                style={styles.perfil}
-                  source={{ uri: logginUser.image }}
-                ></Image> */}
-                {/* <TouchableOpacity
+                <Image style={styles.perfil} source={{}}></Image>
+                <TouchableOpacity
                   onPress={() => {
                     handdleLogout();
                   }}
                   style={[styles.miniButtonLogout]}
-                  >
+                >
                   <Text style={[styles.buttonText]}>Logout</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
+
                 <TouchableOpacity
                   style={[styles.miniButtonRegister]}
                   onPress={() =>
