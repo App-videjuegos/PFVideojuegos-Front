@@ -8,44 +8,43 @@ import {
   Alert,
 } from "react-native";
 import axios from "axios";
+import { AirbnbRating } from "react-native-ratings";
 
 const Purchase = ({ navigation }) => {
   const [amount, setAmount] = useState("");
   const [videoGame, setVideoGame] = useState("");
-  // Agregar otros estados para recopilar más información de la compra si es necesario
+  const [rating, setRating] = useState(0);
 
   const onSubmit = async () => {
-    // Aca se envian los datos de la compra al backend
     try {
-      const response = await axios.post(
-        "https://tu_servidor_backend/compra", // Reemplazar esta URL con la del backend para realizar la compra
-        {
-          amount,
-          videoGame,
-          // Agrega otros campos de información de la compra si es necesario
-        }
-      );
+      const response = await axios.post("http://localhost:5432/compra", {
+        amount,
+        videoGame,
+      });
 
       console.log("Respuesta del servidor:", response.data);
 
-      // Si la compra es exitosa, enviar el correo electrónico de confirmación al usuario
-      const emailResponse = await axios.post(
-        "https://tu_servidor_backend/correo-carrito", // Reemplazar esta URL con la del backend para enviar el correo de confirmación
+      const ratingResponse = await axios.put(
+        `http://localhost:5432/games/update-rating/${videoGame}`, // Cambiar "videoGame" por el ID único del videojuego
         {
-          correo: "correo_del_usuario@gmail.com", // Reemplazar esto con el correo del usuario registrado en el componente Register
-          amount,
-          videoGame,
-          // Agrega otros campos de información de la compra si es necesario
+          rating: rating, // Utilizamos el rating del estado local
         }
       );
 
-      console.log("Respuesta del servidor de correo:", emailResponse.data);
+      console.log(
+        "Respuesta del servidor de calificación:",
+        ratingResponse.data
+      );
 
       Alert.alert("Purchase Completed!", "Email confirmation sent.");
     } catch (error) {
       console.log("Error en el backend:", error);
       Alert.alert("Oops! Something went wrong");
     }
+  };
+
+  const handleRating = (value) => {
+    setRating(value);
   };
 
   return (
@@ -63,7 +62,15 @@ const Purchase = ({ navigation }) => {
         value={videoGame}
         onChangeText={setVideoGame}
       />
-      {/* Agregar otros campos para recopilar información de la compra si es necesario */}
+
+      <AirbnbRating
+        count={5}
+        defaultRating={rating}
+        size={20}
+        showRating={false}
+        selectedColor="gold"
+        onFinishRating={handleRating}
+      />
 
       <TouchableOpacity style={styles.button} onPress={onSubmit}>
         <Text style={styles.buttonText}>Make Purchase</Text>
