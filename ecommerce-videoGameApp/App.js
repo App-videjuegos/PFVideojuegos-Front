@@ -18,17 +18,22 @@ import Landing from "./src/components/views/Landing/Landing";
 import Home from "./src/components/views/Home/HomeD";
 import MenuItems from "./src/components/views/MenuApp/MenuItems";
 import Cart from "./src/components/forms/Cart/Cart";
+import Pasarella from "./src/components/forms/Cart/Pasarella";
+import UserProfile from "./src/components/views/Dashboard/UserProfile";
+import { StripeProvider } from "@stripe/stripe-react-native";
 import { Provider } from "react-redux";
 import store from "./src/redux/store";
 import CreateVideogame from "./src/components/views/Create/CreateVideoGame";
 import Register from "./src/components/views/Create/RegisterUser";
 import { Login } from "./src/components/views/Login/Login";
 import { ForgotPassword } from "./src/components/views/ForgotPasword/ForgotPassword";
+
 export default function App() {
   return (
     <>
       <LanguajeProvider>
         <ThemeProvider>
+        <StripeProvider publishableKey="pk_test_51N7eXtIEe9GBUqtLHqAuwlTor3giWSzd60ooicGwoYQysemKeOM288y3908V2pTq2KCwBkYotvhMnRRPQ2WStRLZ00SfULJJhC"/>
           <Provider store={store}>
             <NavigationContainer>
               <Drawer.Navigator
@@ -130,8 +135,37 @@ export default function App() {
                     headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
                   }}
                 />
+                  <Drawer.Screen
+                  name="Pasarella"
+                  component={Pasarella}
+                  options={{
+                    title: "Pasarella  Pagos",
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                    },
+                    headerTintColor: color_morado_o,
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                      fontSize: 25,
+                    },
+                  }}
+                />
 
-
+            <Drawer.Screen
+                  name="UserProfile" //aqui va el nombre con el q lo vas a llamar dese el menu items
+                  component={UserProfile}
+                  options={{
+                    title: "User Profile",
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                    },
+                    headerTintColor: color_morado_o,
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                      fontSize: 25,
+                    },
+                  }}
+                />  
                 {/*
                 <Drawer.Screen
                   name="Dashboard"

@@ -1,1 +1,0 @@
-// la info del videojuego comprado 

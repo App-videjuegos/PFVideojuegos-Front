@@ -1,1 +1,0 @@
-// cada objeto es un array de amigos con sus datos, nombre, apellido, email, etc.

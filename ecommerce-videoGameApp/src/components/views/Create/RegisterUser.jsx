@@ -30,6 +30,7 @@ import {
 } from "../../utils/theme/stringsColors";
 
 import axios from "axios";
+import Purchase from "../Purchase/Purchase"; // Aca se importa el componente Purchase
 
 const Register = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
@@ -37,12 +38,12 @@ const Register = ({ navigation }) => {
   const [acceptTac, setAcceptTac] = useState(false);
   const [receibenewsLetter, setReceivenewsLetter] = useState(false);
   const [image, setImage] = useState(imageUser);
+  const [showPurchase, setShowPurchase] = useState(false); // Variable de estado para mostrar el componente Purchase
 
   useEffect(() => {
     convertirFecha();
   }, [date]);
 
-  console.log(date);
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -115,6 +116,8 @@ const Register = ({ navigation }) => {
 
         {
           correo: userData.email,
+          user: userData.user,
+          fullname: userData.fullname,
         }
       );
 
@@ -126,6 +129,9 @@ const Register = ({ navigation }) => {
           onPress: () => navigation.navigate("Login", { name: "Login" }),
         },
       ]);
+
+      // Mostrar el componente Purchase después de un registro exitoso
+      setShowPurchase(true);
     } catch (error) {
       console.log("Error en el backend:", error);
       Alert.alert("Auch...Something went wrong");
@@ -259,7 +265,7 @@ const Register = ({ navigation }) => {
 
                 <View>
                   <View style={{ flex: 1 }}>
-                    <Text style={styles.title}>Birtdate</Text>
+                    <Text style={styles.title}>Birthdate</Text>
                     <View style={{ flex: 1 }}>
                       <TouchableOpacity
                         onPress={showDatePicker}
@@ -267,7 +273,7 @@ const Register = ({ navigation }) => {
                       >
                         <Text style={styles.buttonTextDate}>
                           {!date
-                            ? "Intesert date of birth "
+                            ? "Insert date of birth "
                             : convertirFecha(date)}
                         </Text>
                       </TouchableOpacity>
@@ -336,6 +342,9 @@ const Register = ({ navigation }) => {
           </View>
         )}
       </Formik>
+
+      {/* Mostrar el componente Purchase si showPurchase es true */}
+      {showPurchase && <Purchase />}
     </ScrollView>
   );
 };

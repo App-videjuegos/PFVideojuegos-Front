@@ -1,1 +1,0 @@
-// chat interno con los administradores.
