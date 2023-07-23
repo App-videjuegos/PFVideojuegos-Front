@@ -25,9 +25,12 @@ const Purchase = ({ navigation }) => {
       console.log("Respuesta del servidor:", response.data);
 
       const ratingResponse = await axios.put(
-        `http://localhost:5432/games/update-rating/${videoGame}`, // Cambiar "videoGame" por el ID único del videojuego
+        "https://pfvideojuegos-back-production.up.railway.app/games/update-rating",
+
         {
-          rating: rating, // Utilizamos el rating del estado local
+          gameId: gameId,
+          score: rating,
+          actualRating: rating,
         }
       );
 

@@ -195,7 +195,12 @@ const DetailInfo = (props) => {
       <Image style={styles.image} source={{ uri: image }} />
       <View style={styles.infoContainer}>
         <Text style={styles.gameName}>{name}</Text>
-        <GameRating rating={rating} gameId={gameId} />
+        {/*videoGamesData.map((videoGame) => (*/}
+        <GameRating propInfo={props.propInfo} />
+
+        {/*))}*/}
+      </View>
+      <View style={styles.infoContainer}>
         <View style={styles.ratingContainer}>
           <AirbnbRating
             count={5}
