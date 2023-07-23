@@ -163,32 +163,8 @@ const DetailInfo = (props) => {
         .filter((tag) => tag.trim().startsWith("#"))
         .map((tag) => tag.trim());
 
-<<<<<<< Updated upstream
-      const generateRandomToken = (length) => {
-        const characters =
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let token = "";
-        for (let i = 0; i < length; i++) {
-          const randomIndex = Math.floor(Math.random() * characters.length);
-          token += characters[randomIndex];
-        }
-        return token;
-      };
-
-      const randomUserId = Math.floor(Math.random() * 3000) + 1;
-
-      const randomToken = generateRandomToken(10); // Puedes ajustar la longitud según tus necesidades
-      const videogameId = props.propInfo.id;
-
-      // Create the new comment object
-      const newComment = {
-        id: reviews.length + 1, // Modificamos para usar el estado de Redux
-        userId: randomUserId, // Agregar el userId aleatorio aquí
-        videogameId: videogameId, // Agregar el videogameId aquí
-=======
       const newComment = {
         id: comments.length + 1,
->>>>>>> Stashed changes
         title: title,
         rating: ratingV,
         comment: comment,
@@ -196,17 +172,9 @@ const DetailInfo = (props) => {
         recommendation: recommendation,
         hashtags: formattedHashtags,
         playtime: randomPlaytime,
-<<<<<<< Updated upstream
-        token: generateRandomToken(10), // Puedes ajustar la longitud según tus necesidades
-      };
-
-      // Update the comments array with the new comment
-      dispatch(sendReview(newComment));
-=======
       };
 
       setComments([...comments, newComment]);
->>>>>>> Stashed changes
 
       setRating(0);
       setTitle("");
@@ -278,41 +246,6 @@ const DetailInfo = (props) => {
         <View style={styles.commentsContainer}>
           <Text style={styles.commentsHeaderText}>Comments</Text>
           <View style={styles.commentsListContainer}>
-<<<<<<< Updated upstream
-            {commentsForCurrentVideogame.length > 0 ? (
-              commentsForCurrentVideogame.map((comment) => (
-                <View
-                  key={comment.id}
-                  style={[styles.comment, styles.commentContainer]}
-                >
-                  <View style={styles.commentTitleContainer}>
-                    <Text style={styles.commentTitle}>{comment.title}</Text>
-                    <Text style={styles.commentDate}>{comment.reviewDate}</Text>
-                  </View>
-                  <Text style={styles.commentText}>{comment.comment}</Text>
-                  <Text style={styles.commentDetails}>
-                    <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
-                    {comment.playtime} hours -
-                    <Text style={styles.commentDetailsBold}>
-                      {" "}
-                      Recommendation:
-                    </Text>{" "}
-                    {comment.recommendation ? "👍" : "👎"}
-                  </Text>
-                  <Text style={styles.commentDetails}>
-                    <Text style={styles.commentDetailsBold}>Rating:</Text>{" "}
-                    {comment.rating}
-                  </Text>
-                  <Text style={styles.commentDetails}>
-                    <Text style={styles.commentDetailsBold}>Hashtags:</Text>{" "}
-                    {comment.hashtags.map((tag) => `${tag}`).join(", ")}
-                  </Text>
-                </View>
-              ))
-            ) : (
-              <Text>No hay comentarios disponibles.</Text>
-            )}
-=======
             {comments.map((comment) => (
               <View
                 key={comment.id}
@@ -342,7 +275,6 @@ const DetailInfo = (props) => {
                 </Text>
               </View>
             ))}
->>>>>>> Stashed changes
           </View>
           <View style={styles.recommendationContainer}>
             <Text style={styles.recommendationText}>
@@ -388,10 +320,6 @@ const DetailInfo = (props) => {
                 value={tag}
                 onChangeText={(text) => handleHashtagChange(index, text)}
               />
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
               <TouchableOpacity onPress={() => removeHashtagInput(index)}>
                 <View style={[styles.button, styles.removeHashtagButton]}>
                   <Text style={[styles.buttonText, { color: "red" }]}>
@@ -412,10 +340,6 @@ const DetailInfo = (props) => {
               <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add</Text>
             </View>
           </TouchableOpacity>
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
           <Button title="Submit" onPress={submitComment} />
         </View>
       </View>
