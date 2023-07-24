@@ -106,7 +106,7 @@ export const removeItem = async (key) => {
     try {
       let allKeys = await AsyncStorage.getAllKeys();
       const filteredKeys = allKeys.filter((el) => el.substring(0, 4) === "cart");
-      console.log("Claves filtradas del carrito:", filteredKeys);
+      // console.log("Claves filtradas del carrito:", filteredKeys);
       await Promise.all(
         filteredKeys.map(async (el) => {
           try {

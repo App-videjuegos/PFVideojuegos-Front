@@ -28,7 +28,7 @@ const Pasarella = ({ navigation, route }) => {
   const { Cart, tot, userid } = route.params;
   const cardFieldRef = useRef(null);
 
-  console.log("modal visible???",modalVisible)
+  console.log('modal visible???', modalVisible);
   const closeModalAndPerformActions = () => {
     // Cerrar el modal
     setModalVisible(false);
@@ -125,11 +125,8 @@ const Pasarella = ({ navigation, route }) => {
           // console.log('aqui q hay', data.message);
 
           if (data.message === 'ok') {
-            // cleanCart();
-            // dispatch(updateCart());
-            // console.log("esto hay en este estado",cardDetails)
+            console.log('esto hay en este estado', cardDetails);
             setModalVisible(true);
-            // navigation.navigate('HomeStack');
           } else {
             alert(
               'It was not possible to complete the purchase, the payment has been refunded.'
@@ -148,7 +145,7 @@ const Pasarella = ({ navigation, route }) => {
       Alert.alert('Something went wrong, try again later!');
     }
   };
-
+console.log("esto hay en datos",datos)
   return (
     <View
       style={[
@@ -230,12 +227,12 @@ const Pasarella = ({ navigation, route }) => {
                 Card Details and Amount
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
-                Number: **** **** ****
-                {/* {cardDetails && cardDetails.last4} */}
+                Number: **** **** **** {' '}
+                {cardDetails && cardDetails.last4 ? cardDetails.last4 : ''}
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
-                Tarjeta:
-                {/* {cardDetails && cardDetails.brand} */}
+                Tarjeta:   
+                 {cardDetails && cardDetails.brand ? cardDetails.brand : ''}
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
                 Import: {datos.amount && (datos.amount / 100).toFixed(2)}
@@ -248,23 +245,23 @@ const Pasarella = ({ navigation, route }) => {
               <Text style={[styles.m_titulos, { color: '#6B35E8' }]}>
                 Products Detail
               </Text>
-              {/* {datos && (
+              {datos && (
                 <View>
+                  <Text   style={[styles.m_Subtitulos_i, { color: '#987BDC' }]}>
+                      Nombre                               Precio       Cantidad
+                    </Text>
                   {datos.items.map((item) => (
-                    <Text
-                      key={item.id}
-                      style={[styles.m_Subtitulos, { color: '#987BDC' }]}
-                    >
-                      {item.name}{' '}
+                    <Text  key={item.id} style={[styles.m_Subtitulos_i, { color: '#987BDC' }]}>
+                      {item.videogameName}     {item.unitPrice}     {item.quantity}
                      
                     </Text>
                   ))}
                 </View>
-              )} */}
+              )}
 
-              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
+              {/* <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
                 Date and time of the Operation:
-              </Text>
+              </Text> */}
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
                 Total: {datos.amount && (datos.amount / 100).toFixed(2)}
               </Text>
@@ -391,6 +388,12 @@ const styles = StyleSheet.create({
   m_Subtitulos: {
     textAlign: 'auto',
     fontSize: 14,
+    fontWeight: '400',
+    margin: 5,
+  },
+  m_Subtitulos_i: {
+    textAlign: 'auto',
+    fontSize: 12,
     fontWeight: '400',
     margin: 5,
   },
