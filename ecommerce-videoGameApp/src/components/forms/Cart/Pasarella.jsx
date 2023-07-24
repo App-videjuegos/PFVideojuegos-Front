@@ -28,6 +28,7 @@ const Pasarella = ({ navigation, route }) => {
   const { Cart, tot, userid } = route.params;
   const cardFieldRef = useRef(null);
 
+  console.log("modal visible???",modalVisible)
   const closeModalAndPerformActions = () => {
     // Cerrar el modal
     setModalVisible(false);
@@ -91,11 +92,11 @@ const Pasarella = ({ navigation, route }) => {
         }
       );
       const data = await response.json();
-      // console.log("lo que hay en data")
-      // console.log(data)
+      // console.log("lo que hay en data",data)
+
       if (!response.ok) return Alert.alert(data.message);
       const clientSecret = data.clientSecret;
-      // console.log("estoy bien")
+
       const { paymentIntent, error } = await confirmPayment(clientSecret, {
         paymentMethodType: 'Card',
       });
@@ -211,7 +212,7 @@ const Pasarella = ({ navigation, route }) => {
             </View>
 
             <View style={[styles.p2, { borderColor: '#6B35E8' }]}>
-              <Text style={[styles.m_titulos, { color: '#987BDC' }]}>
+              <Text style={[styles.m_titulos, { color: '#6B35E8' }]}>
                 Transaction Details
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
@@ -225,37 +226,47 @@ const Pasarella = ({ navigation, route }) => {
               </Text>
             </View>
             <View style={[styles.p2, { borderColor: '#6B35E8' }]}>
-              <Text style={[styles.m_titulos, { color: '#987BDC' }]}>
+              <Text style={[styles.m_titulos, { color: '#6B35E8' }]}>
                 Card Details and Amount
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
                 Number: **** **** ****
-                 {/* { cardDetails.last4 &&  cardDetails.last4
-                } */}
+                {/* {cardDetails && cardDetails.last4} */}
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
                 Tarjeta:
-                {/* {cardDetails.brand} */}
+                {/* {cardDetails && cardDetails.brand} */}
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
-                Import: {(datos.amount / 100).toFixed(2)}
+                Import: {datos.amount && (datos.amount / 100).toFixed(2)}
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
-                currency: Dollar
+                Currency: Dollar
               </Text>
             </View>
             <View style={[styles.p2, { borderColor: '#6B35E8' }]}>
-              <Text style={[styles.m_titulos, { color: '#987BDC' }]}>
+              <Text style={[styles.m_titulos, { color: '#6B35E8' }]}>
                 Products Detail
               </Text>
-              <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
-                Order Number:{' '}
-              </Text>
+              {/* {datos && (
+                <View>
+                  {datos.items.map((item) => (
+                    <Text
+                      key={item.id}
+                      style={[styles.m_Subtitulos, { color: '#987BDC' }]}
+                    >
+                      {item.name}{' '}
+                     
+                    </Text>
+                  ))}
+                </View>
+              )} */}
+
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
                 Date and time of the Operation:
               </Text>
               <Text style={[styles.m_Subtitulos, { color: '#987BDC' }]}>
-                User: Armando Lios Bueno
+                Total: {datos.amount && (datos.amount / 100).toFixed(2)}
               </Text>
             </View>
             <TouchableOpacity onPress={() => closeModalAndPerformActions()}>
@@ -379,7 +390,7 @@ const styles = StyleSheet.create({
   },
   m_Subtitulos: {
     textAlign: 'auto',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '400',
     margin: 5,
   },

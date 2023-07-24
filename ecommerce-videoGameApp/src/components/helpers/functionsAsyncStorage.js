@@ -23,6 +23,7 @@ export const loadItemAsyncStorage = async (key) => {
 export const removeItemAsyncStorage = async (key) => {
   try {
     await AsyncStorage.removeItem(key);
+    console.log("usuario eliminado")
   } catch (error) {
     console.error('Error al eliminar de AsyncStorage:', error);
   }

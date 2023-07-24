@@ -23,6 +23,7 @@ import { LanguajeContext } from '../../utils/languaje/languajeProvider';
 import { getItemAsyncStorage } from '../../forms/Cart/CardCartController';
 // import { electron } from 'webpack';
 
+
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch();
   const cartG = useSelector((state) => state.cartState);
@@ -34,11 +35,15 @@ const Cart = ({ navigation }) => {
   const { StringsLanguaje, locale } = useContext(LanguajeContext);
 
   //manejo de usuario logeado
-  // const [isLogged, setIsLogged]=useState(false)
-  // const [logginUser, setLoggingUser] = useState("");
-  // const isLoggedGlobal =useSelector((state)=>state.usersState.isLogged)
+  const [isLogged, setIsLogged]=useState(false)
+  const [logginUser, setLoggingUser] = useState("");
+  const isLoggedGlobal =useSelector((state)=>state.usersState.isLogged)
 
   let acumulador = 0;
+// esta linea de bede de eliminar
+
+
+
 
   useEffect(() => {
     // console.log("navigation",navigation.setOptions)
@@ -55,12 +60,12 @@ const Cart = ({ navigation }) => {
       getAllItems();
     }, [cartG])
   );
-  // useFocusEffect(
-  //         React.useCallback(() => {
-  //          getUserStorage()
-  //         },[isLoggedGlobal] )
-  //        //  [cartG]
-  //     );
+  useFocusEffect(
+          React.useCallback(() => {
+           getUserStorage()
+          },[isLoggedGlobal] )
+         //  [cartG]
+      );
   useEffect(() => {
     console.log('entre una vez------------------->');
     removeItem('EXPO_CONSTANTS_INSTALLATION_ID');
@@ -100,8 +105,8 @@ const Cart = ({ navigation }) => {
 
   const getUserStorage = async () => {
     try {
-      const LoggedUserJSON = await getItemAsyncStorage('loggedGameShop');
-      // console.log("variable LoggedUserJSON menu ITEMS->",LoggedUserJSON)
+      const LoggedUserJSON = await getItemAsyncStorage('logedGameStack');
+      console.log("variable LoggedUserJSON menu ITEMS->",LoggedUserJSON)
       if (LoggedUserJSON !== 'vacio') {
         setLoggingUser(LoggedUserJSON);
         setIsLogged(true);
@@ -111,7 +116,7 @@ const Cart = ({ navigation }) => {
         setIsLogged(false);
       }
     } catch (error) {
-      console.log('Error al obtener la clave de  loggedGameShop:', error);
+      console.log('Error al obtener la clave de  logedGameStack:', error);
     }
   };
   const handlePress = async () => {
@@ -119,11 +124,11 @@ const Cart = ({ navigation }) => {
     setCarrito([]); // Actualiza el estado de Carrito para que esté vacío
     dispatch(updateCart());
   };
-  // console.log("logginUser",Carrito)
+   console.log("logginUser",Carrito)
 
   const handlePasarellaPress = () => {
     const proceedWithPurchase = () => {
-      // if (isLogged) {
+       if (isLogged) {
         const itemsCart=Carrito.map(el=>{
           return { videogameId:   el.value.id,
                    videogameName: el.value.title,
@@ -131,15 +136,12 @@ const Cart = ({ navigation }) => {
                    quantity:  el.value.amount.toFixed(2)}
         })
         // const items = [{ videogameId: 3498, videogameName: "Grand Theft Auto V", unitPrice: 20, quantity: 2 }]
-        navigation.navigate('Pasarella', { Cart: itemsCart, tot:total ,
-          userid:'940'
-          // userid:logginUser.id
-        }
+        navigation.navigate('Pasarella', { Cart: itemsCart, tot:total ,userid: logginUser.id}
           );
-      // } else {
-      //   alert("Es necesario Regisrar inicio de Sesión")
-      //   navigation.navigate('Login');
-      // }
+      } else {
+        alert("Es necesario Regisrar inicio de Sesión")
+        navigation.navigate('Login');
+      }
     };
 
     Alert.alert(
