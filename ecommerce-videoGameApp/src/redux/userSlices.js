@@ -8,6 +8,7 @@ const initialState = {
   usrMsgErr: "",
   userLoged:false,
   userToken:"",
+  isLogged:""
 
 };
 export const UsersSlice = createSlice({
@@ -32,17 +33,17 @@ export const UsersSlice = createSlice({
     usrMsgErr: (state,action) =>{
         state.dataUser = action.payload 
     },
-    setUserLoged:(state,{payload})=>{
-      console.log("quee sta llegado??", payload)
-      state.isLogged = payload
+    setUserLoged:(state,action)=>{
+      console.log("user-------->", action.payload)
+      state.isLogged = action.payload
     },
-    setUserToken: (state, action) => {
-      console.log("token----->", action.payload);
-      state.userToken = action.payload;
+    setUserToken:(state,action)=>{
+      console.log("token------->", action.payload)
+      state.userToken = `Bearer ${action.payload}`
     },
 
 
   },
 });
-export const { getUsrByID, getUsrByName, getAllUsr, updateUsr, gamesUsr , usrMsgErr ,setUserLogging,setUserToken} = UsersSlice.actions;
+export const { getUsrByID, getUsrByName, getAllUsr, updateUsr, gamesUsr , usrMsgErr ,setUserLoged,setUserToken} = UsersSlice.actions;
 export default UsersSlice.reducer;

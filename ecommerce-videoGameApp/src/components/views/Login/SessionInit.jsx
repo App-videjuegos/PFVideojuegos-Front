@@ -20,13 +20,28 @@ import {
     color_gris_cdcdcd,
   } from "../../utils/theme/stringsColors";
 
+
+
   import imageUser from "../../../../assets/imageUser.png";
+  import {
+    saveItemAsyncStorage,
+    loadItemAsyncStorage,
+    removeItemAsyncStorage,
+    showAsyncStorageData,
+  } from "../../helpers/functionsAsyncStorage";
+import { useDispatch, useSelector } from "react-redux";
+import { checkLogedUser } from "../../../redux/userActions";
 
 export const StartedSession = () => {
+  const loged = useSelector((state) => state.usersState.isLogged);
+  const token = useSelector((state) => state.usersState.userToken);
+  const dispatch = useDispatch();
 
-    const handleSubmit =()=>{
-        
-    }
+  const handleUnlogin = () => {
+    removeItemAsyncStorage("logedGameStack");
+    dispatch(checkLogedUser());
+    showAsyncStorageData()
+  };
 
   return(
   <View>
@@ -39,11 +54,11 @@ export const StartedSession = () => {
     <View style={[styles.bgCont]}>
       <TouchableOpacity style={[styles.ImageButton]}>
         <Image
-          source={imageUser}
-          style={{ margin: 5, width: 200, height: 200 }}
+          source={loged.image ?  {uri: loged.image} : imageUser}
+          style={{ margin: 5, width: 200, height: 200 , borderRadius:125}}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.miniButton]} onPress={handleSubmit}>
+      <TouchableOpacity style={[styles.miniButton]} onPress={handleUnlogin}>
         <Text style={[styles.buttonText]}>Logout</Text>
       </TouchableOpacity>
     </View>
@@ -54,7 +69,7 @@ export const StartedSession = () => {
 
 const styles = StyleSheet.create({
     ImageButton: {
-        marginTop: 300,
+        marginTop: 100,
         alignItems: "center",
         alignContent: "center",
         justifyContent: "center",

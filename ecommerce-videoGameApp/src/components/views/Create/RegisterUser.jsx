@@ -37,7 +37,7 @@ const Register = ({ navigation }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [acceptTac, setAcceptTac] = useState(false);
   const [receibenewsLetter, setReceivenewsLetter] = useState(false);
-  const [image, setImage] = useState(imageUser);
+  const [image, setImage] = useState('https://res.cloudinary.com/deamondhero/image/upload/v1690180824/imageUser_g1mimk.png');
   const [showPurchase, setShowPurchase] = useState(false); // Variable de estado para mostrar el componente Purchase
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const Register = ({ navigation }) => {
       Alert.alert("User Created!", "", [
         {
           text: "Go to login",
-          onPress: () => navigation.navigate("Login", { name: "Login" }),
+          onPress: () => navigation.navigate("RenderLogin", { name: "RenderLogin" }),
         },
       ]);
 
@@ -154,8 +154,8 @@ const Register = ({ navigation }) => {
       <View style={[styles.bgCont]}>
         <TouchableOpacity onPress={pickImage} style={[styles.ImageButton]}>
           <Image
-            source={imageUser}
-            style={{ margin: 5, width: 200, height: 200 }}
+            source={{  uri: image}}
+            style={{ margin: 5, width: 200, height: 200, borderRadius:125}}
           />
         </TouchableOpacity>
       </View>

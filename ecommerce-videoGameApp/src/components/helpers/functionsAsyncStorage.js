@@ -12,7 +12,7 @@ export const saveItemAsyncStorage = async (key, value) => {
 export const loadItemAsyncStorage = async (key) => {
   try {
     const value = await AsyncStorage.getItem(key);
-    return value !== null ? JSON.parse(value) : "No encontró key";
+    return value !== null ? JSON.parse(value) : null;
   } catch (error) {
     console.error("Error al obtener el value desde AsyncStorage:", error);
     return null;

@@ -26,6 +26,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {color_gris_c, color_morado_o, color_celeste, color_morado_c2, color_gris_595959, color_gris_cdcdcd, color_gris_dadada} from '../../utils/theme/stringsColors'
 
 
+
 import {
   allGenres,
   allPlatforms,
@@ -34,9 +35,14 @@ import { useState, useRef, useEffect, useContext } from "react";
 
 import axios from "axios";
 
+import { useSelector } from "react-redux";
+
+
+
 const CreateVideogame = ({ navigation, route }) => {
   const [image, setImage] = useState([]);
-
+  const token = useSelector((state) => state.usersState.userToken);
+  console.log("elTokendeRegisteeeer",token)
   const [imageScreen, setImageScreen] = useState([]);
 
   const [date, setDate] = useState(new Date());
@@ -116,6 +122,7 @@ const CreateVideogame = ({ navigation, route }) => {
   };
 
   const Submit = async () => {
+    const config= {Authorization: token}
     try {
       console.log(newVideoGame);
       if (
@@ -144,7 +151,7 @@ const CreateVideogame = ({ navigation, route }) => {
             genre: newVideoGame.genre,
             price: newVideoGame.price,
             requeriments_en: newVideoGame.requeriments_en,
-          }
+          },config
           );
         Alert.alert("Publication Create!", "", [
           {

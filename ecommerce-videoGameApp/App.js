@@ -27,6 +27,8 @@ import CreateVideogame from "./src/components/views/Create/CreateVideoGame";
 import Register from "./src/components/views/Create/RegisterUser";
 import { Login } from "./src/components/views/Login/Login";
 import { ForgotPassword } from "./src/components/views/ForgotPasword/ForgotPassword";
+import { StartedSession } from "./src/components/views/Login/SessionInit";
+import { RenderLogin } from "./src/components/views/Login/RenderingLogin";
 
 export default function App() {
   return (
@@ -166,6 +168,38 @@ export default function App() {
                     },
                   }}
                 />  
+
+<Drawer.Screen
+                  name="StartedSession" //aqui va el nombre con el q lo vas a llamar dese el menu items
+                  component={StartedSession}
+                  options={{
+                    title: "StartedSession",
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                    },
+                    headerTintColor: color_morado_o,
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                      fontSize: 25,
+                    },
+                  }}
+                /> 
+
+<Drawer.Screen
+                  name="RenderLogin" //aqui va el nombre con el q lo vas a llamar dese el menu items
+                  component={RenderLogin}
+                  options={{
+                    title: "",
+                    headerStyle: {
+                      backgroundColor: color_blanco,
+                    },
+                    headerTintColor: color_morado_o,
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                      fontSize: 25,
+                    },
+                  }}
+                /> 
                 {/*
                 <Drawer.Screen
                   name="Dashboard"

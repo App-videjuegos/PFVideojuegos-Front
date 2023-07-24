@@ -63,7 +63,7 @@ const MenuItems = ({ navigation }) => {
       <MenuBottonItem
         // nombre={StringsLanguaje.Login}
         nombre={"Login"}
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => navigation.navigate("RenderLogin")}
         icon="login"
       />
       <MenuBottonItem

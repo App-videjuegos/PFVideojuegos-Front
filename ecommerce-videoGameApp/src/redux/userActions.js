@@ -147,35 +147,17 @@ export const postUser = (data) => {
   };
 
 
-  export const logedUser = () => {
-    return async (dispatch) => {
-      try {
-        const loged = await loadItemAsyncStorage('user');
-        if (loged) {
-          const logedData = JSON.parse(loged);
-          dispatch(setUserLogging(true));
-        } else {
-          dispatch(setUserLogging(false));
-        }
-      } catch (error) {
-        console.error('Error al obtener la información del usuario logeado:', error);
-      }
-    };
+  export const checkLogedUser  = () => async (dispatch) => {
+    try {
+      const data = await loadItemAsyncStorage('logedGameStack');
+      const user = data ? data : {};
+
+      dispatch(setUserLoged(user));
+      dispatch(setUserToken(user.token));
+      
+    } catch (error) {
+      console.error('Error al obtener los datos desde AsyncStorage:', error);
+    }
   };
 
 
-  export const tokenUser = () => {
-    return async (dispatch) => {
-      try {
-        const user = await loadItemAsyncStorage('user');
-        if (user) {
-          const userData = JSON.parse(user);
-          dispatch(setUserToken(userData.token));
-        } else {
-          dispatch(setUserToken(null));
-        }
-      } catch (error) {
-        console.error('Error al obtener el token del usuario:', error);
-      }
-    };
-  };

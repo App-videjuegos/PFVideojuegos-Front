@@ -31,13 +31,12 @@ import {
   showAsyncStorageData,
 } from "../../helpers/functionsAsyncStorage";
 import imageUser from "../../../../assets/imageUser.png";
-import { logedUser, tokenUser } from "../../../redux/userActions";
+import { checkLogedUser } from "../../../redux/userActions";
 export const Login = ({ navigation }) => {
-  const loged = useSelector((state) => state.usersState.userLoged);
+  const loged = useSelector((state) => state.usersState.isLogged);
   const token = useSelector((state) => state.usersState.userToken);
 
-  console.log(loged)
-  console.log(token)
+
 
   const dispatch = useDispatch();
 
@@ -48,8 +47,11 @@ export const Login = ({ navigation }) => {
         if (loggedUser) {
           const dataUser = JSON.parse(loggedUser);
           setLogingUser(dataUser);
-          dispatch(logedUser());
-          dispatch(tokenUser());
+          dispatch(checkLogedUser());
+          setTimeout(()=>{
+            console.log("------------------------->", token);
+            console.log("------------------------->", loged);
+          },5000)
         }
       } catch (error) {
         console.error("Error al cargar el usuario desde AsyncStorage:", error);
@@ -57,13 +59,9 @@ export const Login = ({ navigation }) => {
     };
 
     loadUserFromAsyncStorage();
-  }, [loginUser]);
+  }, [loginUser,handleUnlogin]);
 
 
-  useEffect(() => {
-    // Llama a la acción tokenUser al montar el componente
-    dispatch(tokenUser());
-  }, [dispatch]);
 
 
   const [loginUser, setLogingUser] = useState(null);
@@ -77,16 +75,19 @@ export const Login = ({ navigation }) => {
         user: values.user,
         password: values.password,
       });
-      console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
+
+        console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
+
 
       // setToken(user.token)
 
       setLogingUser(user);
-      saveItemAsyncStorage("user", user);
+      saveItemAsyncStorage("logedGameStack", user);
       showAsyncStorageData();
-
+      dispatch(checkLogedUser())
 
       console.log(token);
+      console.log()
 
       console.log("This is login");
     } catch (e) {
@@ -98,13 +99,10 @@ export const Login = ({ navigation }) => {
     }
   };
   const handleUnlogin = () => {
-    removeItemAsyncStorage("user");
+    removeItemAsyncStorage("logedGameStack");
     dispatch(logedUser());
-    dispatch(tokenUser());
   };
-  setTimeout(()=>{
-    console.log("------------------------->", token);
-  },5000)
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   return (
     <Formik
@@ -237,7 +235,7 @@ export const Login = ({ navigation }) => {
               </View>
 
               <View style={styles.containerLogin}>
-                <Text style={[{ fontSize: 45 }]}>Welcome</Text>
+                {/* <Text style={[{ fontSize: 45 }]}>Welcome</Text>
                 <Text style={[{ fontSize: 20 }, { fontWeight: "bold" }]}>
                   Fullname
                 </Text>
@@ -249,7 +247,7 @@ export const Login = ({ navigation }) => {
                   style={[styles.miniButtonLogout]}
                 >
                   <Text style={[styles.buttonText]}>Logout</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity
                   style={[styles.miniButtonRegister]}
