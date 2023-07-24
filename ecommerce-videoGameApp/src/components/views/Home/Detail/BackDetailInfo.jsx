@@ -410,7 +410,7 @@ const DetailInfo = (props) => {
           )}
           <TouchableOpacity onPress={addHashtagInput}>
             <View style={[styles.button, styles.addHashtagButton]}>
-              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add Hashtag</Text>
+              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add a hashtag</Text>
             </View>
           </TouchableOpacity>
 

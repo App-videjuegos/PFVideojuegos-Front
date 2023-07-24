@@ -324,7 +324,7 @@ const DetailInfo = (props) => {
                     <Text style={styles.commentDetailsBold}>By:</Text>{" "}
                     {username}
                   </Text>
-                  <Text style={styles.commentText}>{comment.comment}</Text>
+                  <Text style={styles.commentDetailsBold}>Comment:</Text><Text style={styles.commentText}>{comment.comment}</Text>
                   <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
                     {comment.playtime} hours -
@@ -345,7 +345,7 @@ const DetailInfo = (props) => {
                 </View>
               ))
             ) : (
-              <Text>No hay comentarios disponibles.</Text>
+              <Text>There are no comments available.</Text>
             )}
           </View>
           <View style={styles.recommendationContainer}>
@@ -410,7 +410,7 @@ const DetailInfo = (props) => {
           )}
           <TouchableOpacity onPress={addHashtagInput}>
             <View style={[styles.button, styles.addHashtagButton]}>
-              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add</Text>
+              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add a hashtag</Text>
             </View>
           </TouchableOpacity>
 
