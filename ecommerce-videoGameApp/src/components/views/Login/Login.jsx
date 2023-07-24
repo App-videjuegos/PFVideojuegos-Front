@@ -36,8 +36,6 @@ export const Login = ({ navigation }) => {
   const loged = useSelector((state) => state.usersState.isLogged);
   const token = useSelector((state) => state.usersState.userToken);
 
-
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,10 +46,10 @@ export const Login = ({ navigation }) => {
           const dataUser = JSON.parse(loggedUser);
           setLogingUser(dataUser);
           dispatch(checkLogedUser());
-          setTimeout(()=>{
+          setTimeout(() => {
             console.log("------------------------->", token);
             console.log("------------------------->", loged);
-          },5000)
+          }, 5000);
         }
       } catch (error) {
         console.error("Error al cargar el usuario desde AsyncStorage:", error);
@@ -59,15 +57,13 @@ export const Login = ({ navigation }) => {
     };
 
     loadUserFromAsyncStorage();
-  }, [loginUser,handleUnlogin]);
-
-
-
+  }, [loginUser, handleUnlogin]);
 
   const [loginUser, setLogingUser] = useState(null);
   // const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (values) => {
     try {
@@ -76,18 +72,17 @@ export const Login = ({ navigation }) => {
         password: values.password,
       });
 
-        console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
-
+      console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
 
       // setToken(user.token)
 
       setLogingUser(user);
       saveItemAsyncStorage("logedGameStack", user);
       showAsyncStorageData();
-      dispatch(checkLogedUser())
+      dispatch(checkLogedUser());
 
       console.log(token);
-      console.log()
+      console.log();
 
       console.log("This is login");
     } catch (e) {
@@ -167,7 +162,7 @@ export const Login = ({ navigation }) => {
                   placeholder="Password"
                   value={values.password}
                   onChangeText={handleChange("password")}
-                  secureTextEntry={true}
+                  secureTextEntry={!showPassword}
                   onBlur={handleBlur("password")}
                   style={styles.input}
                 />
@@ -175,6 +170,15 @@ export const Login = ({ navigation }) => {
                 {errors.password && touched.password && (
                   <Text style={styles.error}>{errors.password}</Text>
                 )}
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <Text style={styles.buttonText}>
+                    {showPassword ? "Ocultar" : "Mostrar"}
+                  </Text>
+                </TouchableOpacity>
+
               </View>
 
               {errorMsg && <Text>Incorrect user or password</Text>}
@@ -394,5 +398,13 @@ const styles = StyleSheet.create({
   imageGoogle: {
     height: 40,
     width: 250,
+  },
+  button: {
+    padding: 10,
+    backgroundColor: '#007BFF',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#FFFFFF',
   },
 });
