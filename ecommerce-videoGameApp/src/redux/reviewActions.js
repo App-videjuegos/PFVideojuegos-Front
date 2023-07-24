@@ -31,6 +31,8 @@ export const sendReview = (newComment) => {
       // Actualiza el estado "comments" con el nuevo comentario
       dispatch({ type: "ADD_COMMENT", comment: createdComment });
 
+
+
       // Manejo de éxito: muestra un mensaje de éxito en la consola o realiza cualquier otra acción que desees
       console.log("Comentario enviado exitosamente:", createdComment);
     } catch (error) {
@@ -69,9 +71,3 @@ export const getReviewsByVideogameId = (videogameId) => {
     }
   };
 };
-
-// Acción para agregar el comentario enviado al estado del store
-const addReview = (review) => ({
-  type: "ADD_REVIEW",
-  payload: review,
-});

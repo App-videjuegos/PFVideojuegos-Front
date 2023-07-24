@@ -324,7 +324,7 @@ const DetailInfo = (props) => {
                     <Text style={styles.commentDetailsBold}>By:</Text>{" "}
                     {username}
                   </Text>
-                  <Text style={styles.commentText}>{comment.comment}</Text>
+                  <Text style={styles.commentText}>Comment: {comment.comment}</Text>
                   <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
                     {comment.playtime} hours -
@@ -410,7 +410,7 @@ const DetailInfo = (props) => {
           )}
           <TouchableOpacity onPress={addHashtagInput}>
             <View style={[styles.button, styles.addHashtagButton]}>
-              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add</Text>
+              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add Hashtag</Text>
             </View>
           </TouchableOpacity>
 

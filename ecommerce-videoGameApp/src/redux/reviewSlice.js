@@ -22,6 +22,11 @@ export const reviewsSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    addComment: (state, action) => {
+      state.reviews.push(action.payload); // Agregar la nueva revisión al array de revisiones
+    },
+
+    
   },
 });
 
