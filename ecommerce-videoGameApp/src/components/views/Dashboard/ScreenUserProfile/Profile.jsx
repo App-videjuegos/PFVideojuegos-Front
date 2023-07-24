@@ -16,7 +16,7 @@ import { uploadImageAsync } from "../../../helpers/uploadImage";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { convertirFecha } from "../../../helpers/InvertDate";
-import imageUser from "../../../../../assets/imageUser.png";
+// import imageUser from "../../../../../assets/imageUser.png";
 import Reload from "../../../utils/theme/reload";
 
 
@@ -41,13 +41,12 @@ const Profile = ({ navigation }) => {
   const [acceptTac, setAcceptTac] = useState(true);
   const [receibenewsLetter, setReceivenewsLetter] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [dataUser, setDataUser] = useState(null);
+  const [dataUser, setDataUser] = useState("");
   const dispatch = useDispatch();
   const dataUserdb = useSelector((state) => state.usersState.dataUser);
   const [loading, setLoading] = useState(true);
+  const loged = useSelector((state) => state.usersState.isLogged);
 
-  console.log(dataUser);
-  console.log(dataUserdb);
   const getDataFromAsyncStorage = async () => {
     try {
       const data = await AsyncStorage.getItem("logedGameStack");
@@ -56,13 +55,13 @@ const Profile = ({ navigation }) => {
         const parsedData = JSON.parse(data);
         dispatch(getUserByName(parsedData.user)); // Despachar la acción antes de actualizar el estado
         setDataUser(parsedData);
-        console.log(parsedData);
+        console.log("SKMDKAKDNMASKJMDASJKDNMJKASNDKJASNASJKDNKAS",parsedData);
 
         // Realiza las operaciones que necesites con los datos obtenidos
         // ...
         setTimeout(() => {
           setLoading(false);
-        }, 5000);
+        }, 3000);
       } else {
         console.log("No se encontró ningún valor en AsyncStorage");
         setIsLoading(false);
@@ -76,8 +75,8 @@ const Profile = ({ navigation }) => {
   useEffect(() => {
     setTimeout(()=>{
     getDataFromAsyncStorage();
-    setImage(dataUserdb[0].image)
-  }, 8000)
+    setImage(loged.image)
+  }, 1000)
   }, []);
 
 
@@ -87,10 +86,9 @@ const Profile = ({ navigation }) => {
   
   const imageUser =
   'https://res.cloudinary.com/deamondhero/image/upload/v1690180824/imageUser_g1mimk.png'
-  // "https://us.123rf.com/450wm/nuwaba/nuwaba1707/nuwaba170700076/81763793-persona-usuario-icono-de-ilustraci%C3%B3n-de-amigo-vectror-aislado-sobre-fondo-gris.jpg";
   
-  const [image, setImage] = useState(
-    );
+  const [image, setImage] = useState(loged.image);
+  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",image)
     // !dataUserdb.length ? imageUser : dataUserdb[0].image
 
   //   useEffect(()=>{
@@ -129,6 +127,7 @@ const Profile = ({ navigation }) => {
       return arrLks;
     }
   };
+  console.log("ansjdnjaikndkjasnjkasndajsknda",dataUser)
 
   const onSubmit = async (values) => {
     const userData = {
@@ -195,7 +194,7 @@ const Profile = ({ navigation }) => {
           style={[styles.ImageButton]}
         >
           <Image
-            source={{ uri: image }}
+            source={{ uri: image.length ?  image : imageUser }}
             style={{ borderRadius: 100, margin: 5, width: 200, height: 200 }}
           />
         </TouchableOpacity>
