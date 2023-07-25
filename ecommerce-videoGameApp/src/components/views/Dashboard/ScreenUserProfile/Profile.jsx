@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   Alert,
+  Modal,
 } from "react-native";
 import { Formik } from "formik";
 import Checkbox from "expo-checkbox";
@@ -18,6 +19,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { convertirFecha } from "../../../helpers/InvertDate";
 // import imageUser from "../../../../../assets/imageUser.png";
 import Reload from "../../../utils/theme/reload";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import {
@@ -46,6 +48,8 @@ const Profile = ({ navigation }) => {
   const dataUserdb = useSelector((state) => state.usersState.dataUser);
   const [loading, setLoading] = useState(true);
   const loged = useSelector((state) => state.usersState.isLogged);
+  const [modalVisible, setModalVisible] = useState(false);
+
 
   const getDataFromAsyncStorage = async () => {
     try {
@@ -189,15 +193,27 @@ const Profile = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={[styles.bgCont]}>
-        <TouchableOpacity
-          onPress={pickImage}
-          style={[styles.ImageButton]}
-        >
-          <Image
-            source={{ uri: image.length ?  image : imageUser }}
-            style={{ borderRadius: 100, margin: 5, width: 200, height: 200 }}
-          />
-        </TouchableOpacity>
+        <View style={styles.imageContainer}>
+          <TouchableOpacity onPress={pickImage} style={[styles.ImageButton]}>
+            <Image
+              source={{ uri: image.length ? image : imageUser }}
+              style={{ borderRadius: 100, margin: 5, width: 200, height: 200 }}
+            />
+          </TouchableOpacity>
+
+          {/* Círculo de color #CDCDCD con ícono del lápiz */}
+          <View style={styles.circleContainer}>
+            <View style={styles.circle}>
+              <TouchableOpacity onPress={pickImage}>
+                <MaterialCommunityIcons
+                  name="pencil"
+                  size={35}
+                  color="#3F16A7"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       </View>
 
       <Formik
@@ -247,21 +263,11 @@ const Profile = ({ navigation }) => {
           image,
         }) => (
           <View>
-            <View
-              style={[
-                styles.container
-              ]}
-            >
-              <View
-                style={[
-                  styles.containerLogin
-                ]}
-              >
+            <View style={[styles.container]}>
+              <View style={[styles.containerLogin]}>
                 <View>
                   <TextInput
-                    style={[
-                      styles.input
-                    ]}
+                    style={[styles.input]}
                     value={values.user}
                     placeholder={dataUserdb[0].user}
                     onChangeText={handleChange("user")}
@@ -274,9 +280,7 @@ const Profile = ({ navigation }) => {
 
                 <View>
                   <TextInput
-                    style={[
-                      styles.input
-                    ]}
+                    style={[styles.input]}
                     value={values.password}
                     placeholder="••••••••••"
                     secureTextEntry
@@ -290,8 +294,7 @@ const Profile = ({ navigation }) => {
 
                 <View>
                   <TextInput
-                    style={[
-                      styles.input]}
+                    style={[styles.input]}
                     value={values.fullname}
                     placeholder={dataUserdb[0].fullname}
                     onChangeText={handleChange("fullname")}
@@ -304,8 +307,7 @@ const Profile = ({ navigation }) => {
 
                 <View>
                   <TextInput
-                    style={[
-                      styles.input]}
+                    style={[styles.input]}
                     value={values.email}
                     placeholder={dataUserdb[0].email}
                     onChangeText={handleChange("email")}
@@ -318,9 +320,7 @@ const Profile = ({ navigation }) => {
 
                 <View>
                   <TextInput
-                    style={[
-                      styles.input
-                    ]}
+                    style={[styles.input]}
                     value={values.date}
                     placeholder={convertirFecha(dataUserdb[0].date)}
                     onChangeText={handleChange("date")}
@@ -333,8 +333,7 @@ const Profile = ({ navigation }) => {
 
                 <View>
                   <TextInput
-                    style={[
-                      styles.input]}
+                    style={[styles.input]}
                     value={values.phone}
                     placeholder={dataUserdb[0].phone}
                     onChangeText={handleChange("phone")}
@@ -352,13 +351,15 @@ const Profile = ({ navigation }) => {
                       value={acceptTac}
                       onValueChange={setAcceptTac}
                     />
-                    <Text
-                      style={[
-                        styles.checkboxParagraph
-                      ]}
-                    >
-                      I accept the Terms and Conditions
-                    </Text>
+                    <View style={styles.boxcontainercheckbox}>
+                      <TouchableOpacity
+                        onPress={() => setModalVisible(true)} // Abrir el modal al presionar el texto
+                      >
+                        <Text style={[styles.checkboxParagraph]}>
+                          I accept the Terms and Conditions
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
 
                   <View style={styles.checkboxSection}>
@@ -367,11 +368,7 @@ const Profile = ({ navigation }) => {
                       value={receibenewsLetter}
                       onValueChange={setReceivenewsLetter}
                     />
-                    <Text
-                      style={[
-                        styles.checkboxParagraph
-                      ]}
-                    >
+                    <Text style={[styles.checkboxParagraph]}>
                       I want to receive the newsLetter
                     </Text>
                   </View>
@@ -380,24 +377,150 @@ const Profile = ({ navigation }) => {
 
               <View style={styles.submitContainer}>
                 <TouchableOpacity
-                  style={[
-                    styles.miniButton
-                  ]}
+                  style={[styles.miniButton]}
                   onPress={handleSubmit}
                 >
-                  <Text
-                    style={[
-                      styles.buttonText
-                    ]}
-                  >
-                    Submit
-                  </Text>
+                  <Text style={[styles.buttonText]}>Submit</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         )}
       </Formik>
+      {/* Modal */}
+    
+      <Modal
+        visible={modalVisible}
+        animationType="fade"
+        transparent
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+        <ScrollView
+            contentContainerStyle={styles.modalContentContainer}
+          >
+          <View style={styles.modalContent}>
+            {/* Título del modal */}
+            <Text style={styles.modalTitle}>
+              User Registration Terms and Conditions - GameStack
+            </Text>
+
+            {/* Subtítulo del modal */}
+            <Text style={styles.modalSubtitle}>
+              Welcome to GameStack. Before using our services, we kindly ask you
+              to read these User Registration Terms and Conditions carefully. By
+              registering on GameStack, you agree to comply with the following
+              terms and conditions that govern our relationship with users:
+            </Text>
+
+            {/* Lista enumerada */}
+            <View style={styles.listContainer}>
+              <Text style={styles.listItem}>
+                1- Acceptance of Terms and Conditions:
+              </Text>
+              <Text style={styles.listDescription}>
+                By creating an account on GameStack, you accept these terms and
+                conditions in full. If you do not agree with any part of these
+                terms, we recommend that you do not use our services.
+              </Text>
+
+              <Text style={styles.listItem}>
+                2- User Registration and Account:
+              </Text>
+              <Text style={styles.listDescription}>
+                a. To register on GameStack, you must be of legal age in your
+                country of residence or have the consent of your parents or
+                legal guardians. b. The information provided during registration
+                must be accurate, up-to-date, and complete. It is the user's
+                responsibility to keep this information updated at all times. c.
+                The user is solely responsible for maintaining the
+                confidentiality of their account and password. Any activity
+                performed from their account will be their sole responsibility.
+              </Text>
+
+              <Text style={styles.listItem}>3- Acceptable Use:</Text>
+              <Text style={styles.listDescription}>
+                a. By using GameStack, you agree not to violate any applicable
+                laws or infringe on the rights of third parties. b. You will not
+                use GameStack for illegal, fraudulent, or unauthorized purposes,
+                including, but not limited to, sending offensive, defamatory, or
+                inappropriate content.
+              </Text>
+
+              <Text style={styles.listItem}>4- Intellectual Property:</Text>
+              <Text style={styles.listDescription}>
+                a. GameStack and all its content (logos, designs, text,
+                graphics, images, software, etc.) are the exclusive property of
+                GameStack or their respective licensed owners. b. Unauthorized
+                reproduction, distribution, modification, public display, or any
+                other unauthorized use of GameStack's content is not permitted
+                without prior written consent from the owners.
+              </Text>
+
+              <Text style={styles.listItem}>
+                5- Purchases and Transactions:
+              </Text>
+              <Text style={styles.listDescription}>
+                a. By making purchases on GameStack, you acknowledge that you
+                are responsible for providing accurate and valid payment
+                information. b. All purchases are subject to product
+                availability and applicable terms and conditions of sale.
+              </Text>
+
+              <Text style={styles.listItem}>
+                6- Account Cancellation and Suspension:
+              </Text>
+              <Text style={styles.listDescription}>
+                a. GameStack reserves the right to cancel or suspend user
+                accounts that violate these terms and conditions or engage in
+                fraudulent or malicious activities.
+              </Text>
+
+              <Text style={styles.listItem}>
+                7- Modifications to Terms and Conditions:
+              </Text>
+              <Text style={styles.listDescription}>
+                a. GameStack may modify these terms and conditions at any time
+                without prior notice. Updated versions will be posted on our
+                website. b. It is the user's responsibility to regularly review
+                the updated terms and conditions.
+              </Text>
+
+              <Text style={styles.listItem}>8- Privacy Policy:</Text>
+              <Text style={styles.listDescription}>
+                a. The collection and use of personal data are governed by our
+                Privacy Policy, which is available on the GameStack website.
+              </Text>
+
+              <Text style={styles.listItem}>9- Applicable Law:</Text>
+              <Text style={styles.listDescription}>
+                These terms and conditions shall be governed and interpreted in
+                accordance with the laws of [Argentina]. Any dispute arising
+                from these terms and conditions shall be subject to the
+                exclusive jurisdiction of the courts of [Argentina].
+              </Text>
+
+              {/* Resto de los elementos de la lista enumerada */}
+            </View>
+
+            {/* Subtítulo final del modal */}
+            <Text style={styles.modalSubtitle}>
+              If you have any questions or concerns about these terms and
+              conditions, please contact us through the customer support
+              channels provided on our website.
+            </Text>
+
+            <TouchableOpacity
+              onPress={() => setModalVisible(false)} // Cerrar el modal al presionar el texto
+              style={styles.modalClose}
+            >
+              <Text style={styles.modalCloseText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+          </ScrollView>
+        </View>
+      </Modal>
+      {/* Modal */}
     </ScrollView>
   );
 };
@@ -445,6 +568,9 @@ const styles = StyleSheet.create({
     borderColor: color_gris_c,
     backgroundColor: color_gris_dadada,
     borderRadius: 8,
+    marginBottom: 10, // Agregar espacio hacia abajo
+    borderBottomWidth: 1.5, // Agregar borde inferior
+    borderBottomColor: "#280657", // Color del borde inferior
   },
 
   ImageButton: {
@@ -496,21 +622,119 @@ const styles = StyleSheet.create({
 
   boxcontainercheckbox: {
     flex: 1,
-    marginTop: 16,
+    marginTop: 5,
     alignItems: "flex-start",
   },
 
   checkboxSection: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center", // Alinear verticalmente los elementos en el centro
+    marginBottom: 5,
   },
   checkboxParagraph: {
     color: color_gris_595959,
     fontSize: 14,
+    textDecorationLine: 'underline', // Agregar subrayado al texto para indicar que es tocable
+    paddingBottom: 5,
   },
   checkbox: {
     margin: 8,
   },
+
+  bgCont: {
+    flex: 1,
+    alignItems: 'center', // Alineación al centro horizontalmente
+    justifyContent: 'flex-start', // Alineación en la parte superior
+    backgroundColor: color_gris_c,
+    padding: 16, // Ajusta el espaciado del componente
+    position: 'relative', // Agregar position:relative al contenedor para permitir position:absolute en los hijos
+  },
+
+  circleContainer: {
+    position: 'absolute',
+    top: 160, // Ajustar posición vertical del círculo
+    left: 150, // Alinear a la izquierda
+    alignItems: 'center', // Centrar horizontalmente el círculo en el contenedor
+  },
+
+  circle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#CDCDCD',
+    alignItems: 'center', // Alineación horizontal del contenido dentro del círculo
+    justifyContent: 'center', // Alineación vertical del contenido dentro del círculo
+  },
+
+  pencilIcon: {
+    position: 'absolute',
+    top: 10, // Ajusta la posición vertical del ícono dentro del círculo
+  },
+
+
+  // Estilos para el Modal
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Color de fondo semitransparente
+  },
+  modalContentContainer: {
+    flexGrow: 1, // Permitir que el contenido del ScrollView crezca
+    justifyContent: 'center', // Centrar verticalmente el contenido del ScrollView
+    paddingHorizontal: 20,
+  },
+
+  modalContent: {
+    backgroundColor: '#FFF',
+    padding: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color:"#3F16A7",
+    textAlign: 'center',
+  },
+
+  modalSubtitle: {
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+
+  listContainer: {
+    marginLeft: 15,
+    
+  },
+
+  listItem: {
+    fontWeight: 'bold',
+  },
+
+  listDescription: {
+    marginLeft: 15,
+    
+  },
+  modalClose: {
+    backgroundColor: '#622EDA', // Fondo de color #622EDA
+    fontWeight: 'bold', // Negrita
+    paddingHorizontal: 10, // Agregar espaciado horizontal
+    paddingVertical: 5, // Agregar espaciado vertical
+    borderRadius: 8, // Agregar bordes redondeados
+    alignSelf: 'center', // Centrar el botón horizontalmente dentro del modal
+    marginTop: 10, // Agregar margen superior
+  },
+  modalCloseText: {
+    color: '#FFF', // Letra blanca
+    fontSize: 18, // Aumentar el tamaño de la fuente
+
+  },
+
 });
 
 export default Profile;

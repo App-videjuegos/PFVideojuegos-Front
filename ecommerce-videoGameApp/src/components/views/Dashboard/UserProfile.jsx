@@ -75,49 +75,50 @@ const UserProfileComponent = ({ navigation }) => {
         description="Account information"
         screenName="Profile"
       />
-      <Card
+      {/* <Card
         iconName="file-document-outline"
         title="Posts"
         description="Publications"
         screenName="Posts"
-      />
-      <Card
+      /> */}
+      {/* <Card
         iconName="message"
         title="Communications"
         description="Sensitive data"
         screenName="Communications"
-      />
+      /> */}
       <Card
         iconName="cart"
-        title="Shoppings"
+        title="My Shoppings"
         description="History"
         screenName="Shoppings"
       />
-      <Card
+      {/* <Card
         iconName="gamepad-variant"
         title="Videogames"
         description="My videogames"
         screenName="Videogames"
-      />
-      <Card
-        iconName="comment"
-        title="Comments"
-        description="My Comments"
-        screenName="Comments"
-      />
+      /> */}
+      
       <Card
         iconName="heart"
         title="My favorite games"
         description="Favorites games"
         screenName="MyFavoriteGames"
       />
-      <Card
+       <Card
+        iconName="comment"
+        title="Comments"
+        description="My Comments"
+        screenName="Comments"
+      /> 
+      {/* <Card
         iconName="account-group"
         title="Friends"
         description="Community"
         screenName="Friends"
-      />
-    </View>
+      />*/}
+    </View> 
   );
 };
 
