@@ -83,11 +83,11 @@ const Card = (props) => {
           isDisabled={true}
         />
         <Text style={styles.price}>$ {videoG.price}</Text>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => nav.navigate("Detail", { videoGames: videoG })}
         >
           <Text style={styles.detail}>See Detail</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           onPress={() => {
@@ -98,7 +98,7 @@ const Card = (props) => {
           }}
         >
           <View
-            style={[styles.AddCartContainer, { backgroundColor: "#FF8800" }]}
+            style={[styles.AddCartContainer, { backgroundColor: "#622EDA" }]}
           >
             <Text style={[styles.addItemCar, { color: "#ffffff" }]}>
               {"Add to cart"}
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center",
     fontWeight: "bold",
-    height: 25,
+    height: 28,
     color: "white",
   },
   detail: {
@@ -181,7 +181,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     borderRadius: 8,
     alignItems: "center",
-    width: "84%",
+    width: "100%",
+    marginTop: 15,
     // textAlign:'center'
   },
   addItemCar: {
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "700",
     fontSize: 15,
-    width: 105,
+    width: 110,
     // backgroundColor:'white'
   },
 });
