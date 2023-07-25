@@ -14,6 +14,7 @@ import {getAllVideogames, addUser,setNextPage,setPrevPage,setMaxPage,setErrorMsg
   clearFilters,
   sortByAlphabeticalAsc,
   sortByAlphabeticalDesc,
+  notFoundGamesError
      } from "./videogamesSlice";
 
          
@@ -42,7 +43,8 @@ export const getvGamebyName =(query)=> (dispatch=>{
                 if(estado ===200)
                 // {
                    if(json.includes('No se encontraron videojuegos con el nombre') ) 
-                         alert('No se encontraron videojuegos con ese Nombre')
+                        //  alert('No se encontraron videojuegos con ese Nombre')
+                        dispatch(notFoundGamesError())
                     else 
                         dispatch(getVideogamesbyName(json))
               

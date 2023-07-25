@@ -8,50 +8,107 @@ import {
 } from "react-native";
 import React from "react";
 // import StarRating from "react-native-star-rating";
-import { AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from "react-native-ratings";
+import { InsertarItem } from "../../forms/Cart/CardCartController";
+import { updateCart } from "../../../redux/cartSlice";
+import { useDispatch } from "react-redux";
+import GameRating from "../../views/Home/Detail/GameRating";
+import { useState } from "react";
 
+const Card = (props) => {
+  const { videoG, nav } = props;
+  const dispatch = useDispatch();
+  // Función para actualizar el rating del videojuego en la tarjeta inicial (Home)
+  const [videoGames, setVideoGames] = useState([]);
+  //PARSEANDO OBJETO PARA AGREGAR AL CARRITO
+  let objeto = {
+    id: videoG.id,
+    title: videoG.name,
+    price: videoG.price,
+    img: videoG.image,
+    stock: 5,
+    amount: 1,
+  };
+  const objString = JSON.stringify(objeto);
 
-  const Card = (props) => {
-   
-    const { videoG, nav } = props;
+  const key = "cart" + videoG.id;
+  // console.log("generado clave cart",key)
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <TouchableOpacity
-            onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-          >
-            <Image
-              style={styles.image}
-              source={{ uri: videoG.image }}
-              PlaceholderContent={
-                <ActivityIndicator color={"#FFFFFF"} size={"large"} />
-              }
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.name}>{videoG.name}</Text>
-
-          <AirbnbRating
-            count={5} // Cantidad de íconos de clasificación a mostrar
-            defaultRating={videoG.rating} // Valor de clasificación predeterminado
-            size={20} // Tamaño de los íconos de clasificación
-            showRating={false}
-            selectedColor="gold"
-            isDisabled={true}
+  // Función para actualizar el rating del videojuego en la tarjeta inicial (Home)
+  const updateCardRating = (newRating) => {
+    const updatedVideoGames = videoGames.map((videoGame) => {
+      if (videoGame.id === videoG.id) {
+        return { ...videoGame, rating: newRating };
+      } else {
+        return videoGame;
+      }
+    });
+    setVideoGames(updatedVideoGames);
+  };
+  console.log("id", videoG.id);
+  /*////////////////////////////////////////// */
+  return (
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <TouchableOpacity
+          onPress={() => nav.navigate("Detail", { videoGames: videoG })}
+        >
+          <Image
+            style={styles.image}
+            source={{ uri: videoG.image }}
+            PlaceholderContent={
+              <ActivityIndicator color={"#FFFFFF"} size={"large"} />
+            }
           />
-
-          <Text style={styles.price}>$ {videoG.price}</Text>
-          <TouchableOpacity
-            onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-          >
-            <Text style={styles.detail}>See Detail</Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
-    );
-  }
+      <View style={styles.detailsContainer}>
+        <Text style={styles.name}>{videoG.name}</Text>
+
+        {/* Aquí pasamos la función updateCardRating y la variable videoGames como props a GameRating */}
+        {/* <GameRating
+          initialRating={videoG.rating}
+          gameId={videoG.id}
+          // updateCardRating={updateCardRating}
+          // videoGames={videoGames}
+          // setVideoGames={setVideoGames}
+        />
+        */}
+        <AirbnbRating
+          count={5}
+          defaultRating={videoG.rating}
+          size={20}
+          showRating={false}
+          selectedColor="gold"
+          isDisabled={true}
+        />
+        <Text style={styles.price}>$ {videoG.price}</Text>
+        {/* <TouchableOpacity
+          onPress={() => nav.navigate("Detail", { videoGames: videoG })}
+        >
+          <Text style={styles.detail}>See Detail</Text>
+        </TouchableOpacity> */}
+
+        <TouchableOpacity
+          onPress={() => {
+            InsertarItem(key, objString);
+            dispatch(updateCart());
+            // getKeysCount();
+            console.log("key guardada", objString);
+          }}
+        >
+          <View
+            style={[styles.AddCartContainer, { backgroundColor: "#622EDA" }]}
+          >
+            <Text style={[styles.addItemCar, { color: "#ffffff" }]}>
+              {"Add to cart"}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -92,9 +149,9 @@ const styles = StyleSheet.create({
   detailsContainer: {
     width: "50%",
     // height:'100%',
-    alignContent:'space-between',
+    alignContent: "space-between",
     alignItems: "center",
-    padding:5,
+    padding: 5,
   },
   name: {
     fontSize: 15,
@@ -113,12 +170,29 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center",
     fontWeight: "bold",
-    height: 25,
+    height: 28,
     color: "white",
   },
   detail: {
     fontSize: 18,
     textAlign: "center",
+  },
+  AddCartContainer: {
+    alignContent: "center",
+    borderRadius: 8,
+    alignItems: "center",
+    width: "100%",
+    marginTop: 15,
+    // textAlign:'center'
+  },
+  addItemCar: {
+    margin: 5,
+    // marginLeft:10,
+    textAlign: "center",
+    fontWeight: "700",
+    fontSize: 15,
+    width: 110,
+    // backgroundColor:'white'
   },
 });
 

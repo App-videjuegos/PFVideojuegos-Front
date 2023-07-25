@@ -119,24 +119,6 @@ const DetailInfo = (props) => {
     alert(`Score ${ratingV} has been set successfully`);
   };
 
-  // Función para actualizar el rating en la tarjeta inicial
-  //const updateCardRating = (newRating) => {
-  // Puedes utilizar el estado local o Redux para mantener los datos de los videojuegos mostrados en la vista inicial y actualizar el rating del videojuego correspondiente.
-  // ver si la información de los videojuegos se encuentra en el estado local o viene de Redux
-  //   const setRating = videoGames.map((videoGame) => {
-  //     if (videoGame.id === gameId) {
-  //       return { ...videoGame, rating: newRating };
-  //     } else {
-  //       return videoGame;
-  //     }
-  //   });
-
-  //   // Actualizar el estado local con los videojuegos actualizados
-
-  //   setRating(newRating); // Actualizar el rating en la vista de detalle
-
-  // };
-
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
@@ -239,7 +221,7 @@ const DetailInfo = (props) => {
         hashtags: formattedHashtags,
         playtime: randomPlaytime,
         token: generateRandomToken(10), // Puedes ajustar la longitud según tus necesidades
-        user: isLogged.user, // Agrega el nombre de usuario al objeto del comentario
+        username: username, // Agrega el nombre de usuario al objeto del comentario
 
       };
 
@@ -269,13 +251,21 @@ const DetailInfo = (props) => {
       <Image style={styles.image} source={{ uri: image }} />
       <View style={styles.infoContainer}>
         <Text style={styles.gameName}>{name}</Text>
-        {/* Aquí pasamos la función updateCardRating como una prop a GameRating */}
-        <GameRating
-          rating={rating}
-          gameId={props.propInfo.id}
-          // updateCardRating={updateCardRating}
-        />
-        
+        <GameRating rating={rating} />
+        <View style={styles.ratingContainer}>
+          <AirbnbRating
+            count={5}
+            defaultRating={ratingV}
+            size={20}
+            showRating={false}
+            selectedColor="gold"
+            onFinishRating={handleRating}
+          />
+          <Text style={styles.textRating} onPress={putRating}>
+            Add your rating
+          </Text>
+          <Text> Score: {ratingV}</Text>
+        </View>
         <Text style={[styles.gamePrice, { color: "#1B063E" }]}>$ {price}</Text>
         <TouchableOpacity onPress={() => console.log("Añadir al carrito")}>
           <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
@@ -332,9 +322,9 @@ const DetailInfo = (props) => {
                   </View>
                   <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>By:</Text>{" "}
-                    {comment.user}
+                    {username}
                   </Text>
-                  <Text style={styles.commentDetailsBold}>Comment:</Text><Text style={styles.commentText}>{comment.comment}</Text>
+                  <Text style={styles.commentText}>Comment: {comment.comment}</Text>
                   <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
                     {comment.playtime} hours -
@@ -355,7 +345,7 @@ const DetailInfo = (props) => {
                 </View>
               ))
             ) : (
-              <Text>There are no comments available.</Text>
+              <Text>No hay comentarios disponibles.</Text>
             )}
           </View>
           <View style={styles.recommendationContainer}>
@@ -368,26 +358,6 @@ const DetailInfo = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
-
-
-          {/* Las estrellas papurri */}
-          <Text style={styles.textRating} onPress={putRating}>
-            Add your rating
-          </Text>
-          <View style={styles.ratingContainer}>
-          <AirbnbRating
-            count={5}
-            defaultRating={ratingV}
-            size={20}
-            showRating={false}
-            selectedColor="gold"
-            onFinishRating={handleRating}
-          />
-        
-        </View>
-
-
-
           <TextInput
             style={[styles.commentInput, errorTitle ? styles.errorInput : null]}
             placeholder="*Title"
@@ -560,11 +530,8 @@ const styles = StyleSheet.create({
   textRating: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#622EDA",
+    color: "#496BFF",
     paddingLeft: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingLeft: 93,
   },
   button: {
     width: "100%", // Cambia el ancho fijo a ancho completo

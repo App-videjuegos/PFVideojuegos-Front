@@ -4,13 +4,15 @@ import {
   TouchableOpacity,
   Text,
   View,
-  Button,
-  SectionList,
-  ScrollView,
   TextInput,
+  Button
 } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import * as Google from 'expo-auth-session/providers/google'
+
+
 
 import {
   color_gris_c,
@@ -19,98 +21,161 @@ import {
   color_morado_c2,
   color_gris_595959,
   color_gris_cdcdcd,
+  color_gris_dadada,
 } from "../../utils/theme/stringsColors";
 
 // import { persons } from "../../../utils/arrayPersons";
 import { Formik } from "formik";
 import { useState, useEffect } from "react";
-// import axios from "axios";
-// import { logService } from "../../../services/ServiceLogin";
-// import {getItemAsyncStorage,InsertUserAsynStorage,removeItem} from '../Forms/Cart/CardCartController'
-// import { useFocusEffect } from '@react-navigation/native';
-import { setUserLogging } from "../../../redux/userSlices";
-import { useDispatch } from "react-redux";
-export const Login = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const [token, setToken] = useState();
+import loginService from "../../../services/login";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  saveItemAsyncStorage,
+  loadItemAsyncStorage,
+  removeItemAsyncStorage,
+  showAsyncStorageData,
+} from "../../helpers/functionsAsyncStorage";
+import imageUser from "../../../../assets/imageUser.png";
+import { checkLogedUser } from "../../../redux/userActions";
 
-  const [session, setSession] = useState(null);
-  const [user, setUser] = useState("");
-  const [logginUser, setLoggingUser] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
+
+export const Login = ({ navigation }) => {
+
+
+//AUTH GOOGLE
+  const [accessToken, setAccessToken] = useState()
+  const [userInfo, setUserInfo] = useState();
+
+  const [request,response,promptAsync] = Google.useAuthRequest({
+    androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+    iosClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+    expoClientId:"992202978342-r97fm6970n55pdn6jsu5s2h8tme07qbe.apps.googleusercontent.com"
+  })
+
+
+
+  useEffect(()=>{
+    if(response?.type === "success"){
+      setAccessToken(response.authentication.accessToken)
+
+     }
+  },[response])
 
   useEffect(() => {
-    getUserStorage();
-  }, [isLogged]);
+    if (accessToken) {
+      getUserData();
 
-  const getUserStorage = async () => {
+      handleLoginAuth()
+
+      const handleLoginAuth = async () => {
+        try {
+
+          const user = await loginService.authLogin({
+            user: userInfo.email,
+          });
+
+          console.log(user)
+
+        }catch(e){
+          console.log(e.error)
+        }
+      }
+
+    }
+  }, [accessToken]);
+
+
+  const getUserData = async  () => {
+    let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me",
+    { headers: {Authorization: `Bearer ${accessToken}`}})
+
+      await userInfoResponse.json().then(data => {
+      setUserInfo(data)
+    })
+
+  }
+
+
+  const showUserData = () => {
+    console.log(userInfo)
+    if(userInfo) {
+      return (
+        <View style={styles.userInfo}>
+          <Image source={{ uri: userInfo.picture}} style ={styles.profilePic}/>
+          <Text>welcome {userInfo.name}</Text>
+          <Text> {userInfo.email}</Text>
+
+        </View>
+      )
+    }
+  }
+
+  // ----------- FIN AUTH GOOGLE ------
+
+  const loged = useSelector((state) => state.usersState.isLogged);
+  const token = useSelector((state) => state.usersState.userToken);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loadUserFromAsyncStorage = async () => {
+      try {
+        const loggedUser = await loadItemAsyncStorage("user");
+        if (loggedUser) {
+          const dataUser = JSON.parse(loggedUser);
+          setLogingUser(dataUser);
+          dispatch(checkLogedUser());
+          setTimeout(() => {
+            // console.log("------------------------->", token);
+            // console.log("------------------------->", loged);
+          }, 5000);
+        }
+      } catch (error) {
+        console.error("Error al cargar el usuario desde AsyncStorage:", error);
+      }
+    };
+
+    loadUserFromAsyncStorage();
+  }, [loginUser, handleUnlogin]);
+
+  const [loginUser, setLogingUser] = useState(null);
+  // const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const handleLogin = async (values) => {
     try {
-      const LoggedUserJSON = await getItemAsyncStorage("loggedGameShop");
-      // console.log("variable LoggedUserJSON->",LoggedUserJSON)
-      if (LoggedUserJSON !== "vacio") {
-        setLoggingUser(LoggedUserJSON);
-        setIsLogged(true);
-        // dispatch(setUserLogging(true))
-        console.log("Usuario Cargado correctamente");
-      } else {
-        setLoggingUser("vacio");
-        setIsLogged(false);
-        // dispatch(setUserLogging(false))
-      }
-    } catch (error) {
-      console.log("Error al obtener la clave de  loggedGameShop:", error);
+      const user = await loginService.login({
+        user: values.user,
+        password: values.password,
+      });
+
+      console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
+
+      if(user.user){
+        setLogingUser(user);
+        saveItemAsyncStorage("logedGameStack", user);
+        showAsyncStorageData();
+        dispatch(checkLogedUser());
+      }else{
+        setErrorMessage("Wrong credentials");
+
+
+    }
+
+    } catch (e) {
+      console.log(e);
+      setErrorMessage("Wrong credentials");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
     }
   };
-
-  //console.log("estado loginuser--->",(logginUser))
-  const handdleLogout = () => {
-    removeItem("loggedGameShop");
-    setUser("");
-    setPassword("");
-    dispatch(setUserLogging(false));
-    setIsLogged(false);
-  };
-  const handdleLogin = async (values) => {
-    // console.log("values recibido en hanndler", values)
-    setUser(values.user);
-    setPassword(values.password);
-    // console.log("que hay en estado user", values.user)
-    // console.log("que hay en estado password", values.password)
-    // try {
-    const userCredencials = await logService({
-      user: values.user, // Utiliza values.user en lugar de user
-      password: values.password, // Utiliza values.password en lugar de password
-    });
-    // console.log("data recibida del backHardCode",userCredencials)
-    if (userCredencials !== null) {
-      // "Error de autenticación"
-      // console.log("que llega de LOG SERVICE->",userCredencials)
-      if (userCredencials.id !== undefined) {
-        InsertUserAsynStorage(
-          "loggedGameShop",
-          JSON.stringify(userCredencials)
-        );
-        dispatch(setUserLogging(true));
-        setIsLogged(true);
-        setUser("");
-        setPassword("");
-        navigation.navigate("HomeScreen");
-      } else {
-        console.log("no encontrado");
-        alert("Password Incorrecto");
-        return;
-      }
-    }
-    // catch (error) {
-    //   setErrorMsg(true);
-    //   setTimeout(() => {
-    //     setErrorMsg(false);
-    //   }, 5000);
-
-    //   console.log("rompio en handle Logging !!!!!",error);
-    // }
+  const handleUnlogin = () => {
+    removeItemAsyncStorage("logedGameStack");
+    dispatch(logedUser());
   };
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -137,7 +202,7 @@ export const Login = ({ navigation }) => {
 
         return errors;
       }}
-      onSubmit={handdleLogin}
+      onSubmit={handleLogin}
     >
       {({
         handleChange,
@@ -158,6 +223,7 @@ export const Login = ({ navigation }) => {
               ></Image>
             </View>
             <View style={[styles.containerLogin]}>
+              {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
               <View>
                 <TextInput
                   placeholder="Username"
@@ -168,7 +234,7 @@ export const Login = ({ navigation }) => {
                 />
                 {errors.user && touched.user && (
                   <Text style={styles.error}>{errors.user}</Text>
-                  )}
+                )}
               </View>
 
               <View>
@@ -176,43 +242,81 @@ export const Login = ({ navigation }) => {
                   placeholder="Password"
                   value={values.password}
                   onChangeText={handleChange("password")}
-                  secureTextEntry={true}
+                  secureTextEntry={!showPassword}
                   onBlur={handleBlur("password")}
                   style={styles.input}
                 />
                 {/* <TouchableOpacity title={isPasswordVisible ? 'Hide Password' : 'Show Password'} onPress={() => setIsPasswordVisible(!isPasswordVisible)} /> */}
                 {errors.password && touched.password && (
                   <Text style={styles.error}>{errors.password}</Text>
-                  )}
+                )}
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <MaterialCommunityIcons
+                    name={showPassword ? "eye-off" : "eye"}
+                    size={20}
+                    color="#000"
+                    style={{marginTop:-50, left:260, padding:10}}
+                  />
+                </TouchableOpacity>
               </View>
 
               {errorMsg && <Text>Incorrect user or password</Text>}
 
-                  <TouchableOpacity
-                    style={[styles.miniButton]}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={[styles.buttonText]}>Login</Text>
-                  </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.miniButton]}
+                onPress={handleSubmit}
+              >
+                <Text style={[styles.buttonText]}>Login</Text>
+              </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={[styles.miniButtonRegister]}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={[styles.buttonTextRegister]}>Forgot Password?</Text>
-                  </TouchableOpacity>
-    
+              <TouchableOpacity
+                style={[styles.miniButtonRegister]}
+                onPress={() =>
+                  navigation.navigate("ForgotPassword", {
+                    name: "ForgotPassword",
+                  })
+                }
+              >
+                <Text style={[styles.buttonTextRegister]}>
+                  Forgot Password?
+                </Text>
+              </TouchableOpacity>
 
               <View>
                 <View>
-                  <Text style={{ textAlign: "center", fontSize:16, marginTop:8, color: color_morado_c2, fontWeight:"bold"}}>or</Text>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 16,
+                      marginTop: 8,
+                      color: color_morado_c2,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    or
+                  </Text>
                 </View>
                 <View>
-                  <Text style={{ textAlign: "center", fontSize:16, marginTop:8, color: color_morado_c2, fontWeight:"bold"}}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 16,
+                      marginTop: 8,
+                      color: color_morado_c2,
+                      fontWeight: "bold",
+                    }}
+                  >
                     -------- sing in --------
                   </Text>
                 </View>
-                <TouchableOpacity style={styles.buttonGoogle}>
+                <TouchableOpacity style={styles.buttonGoogle}
+                onPress={ ()=> promptAsync({
+                  useProxy:true, showInRecents: true
+                })}
+                >
                   <Image
                     style={styles.imageGoogle}
                     source={require("../../../../assets/singinwhitgoogle.png")}
@@ -220,27 +324,27 @@ export const Login = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
 
+              {showUserData()}
+
               <View style={styles.containerLogin}>
                 {/* <Text style={[{ fontSize: 45 }]}>Welcome</Text>
                 <Text style={[{ fontSize: 20 }, { fontWeight: "bold" }]}>
-                Fullname
+                  Fullname
                 </Text>
-                <Image
-                style={styles.perfil}
-                  source={{ uri: logginUser.image }}
-                ></Image> */}
-                {/* <TouchableOpacity
+                <Image style={styles.perfil} source={{}}></Image>
+                <TouchableOpacity
                   onPress={() => {
                     handdleLogout();
                   }}
                   style={[styles.miniButtonLogout]}
-                  >
+                >
                   <Text style={[styles.buttonText]}>Logout</Text>
                 </TouchableOpacity> */}
+
                 <TouchableOpacity
                   style={[styles.miniButtonRegister]}
                   onPress={() =>
-                    navigation.navigate("CreateUser", { name: "CreateUser" })
+                    navigation.navigate("Register", { name: "Register" })
                   }
                 >
                   <Text style={[styles.buttonTextRegister]}>Register</Text>
@@ -265,7 +369,7 @@ const styles = StyleSheet.create({
 
   logo: {
     marginTop: 42,
-    marginBottom:42,
+    marginBottom: 42,
     height: 42,
     width: 315,
   },
@@ -306,12 +410,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     height: 42,
     width: 315,
-    marginTop:8,
+    marginTop: 8,
     borderColor: color_morado_c2,
     paddingHorizontal: 70,
 
     borderRadius: 5,
-    backgroundColor: color_gris_cdcdcd,
+    backgroundColor: color_gris_dadada,
   },
   miniButton: {
     alignItems: "center",
@@ -336,7 +440,7 @@ const styles = StyleSheet.create({
     backgroundColor: color_gris_c,
     borderRadius: 8,
   },
-  
+
   miniButtonLogout: {
     alignItems: "center",
     alignContent: "center",
@@ -367,7 +471,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 10,
     fontSize: 15,
-    fontWeight: 'normal',
+    fontWeight: "normal",
     color: color_celeste,
   },
   buttonGoogle: {
@@ -382,5 +486,13 @@ const styles = StyleSheet.create({
   imageGoogle: {
     height: 40,
     width: 250,
+  },
+  button: {
+    padding: 10,
+
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#FFFFFF",
   },
 });

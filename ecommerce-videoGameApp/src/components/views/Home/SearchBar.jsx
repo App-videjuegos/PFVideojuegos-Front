@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {useState} from 'react'
 
 import { Searchbar } from 'react-native-paper';
-import {getvGamebyName,getvideoGames} from "../../../redux/videogamesActions"
+import {getvGamebyName,getvideoGames,clearAllFilters} from "../../../redux/videogamesActions"
 
 const SearchBar = (props) => {
 
@@ -15,14 +15,19 @@ const SearchBar = (props) => {
 
     const onChangeSearch = (query) => {
           setSearchQuery(query);
-          console.log("estas bsucando",query) 
-          }
+          console.log("estas bsucando",query)
+          
+            dispatch(getvGamebyName(query))
+          
+    }
+
 
     const onCloseSearch = () => {
         // console.log("limpiando valores de busqueda");
         setSearchQuery("");
-        dispatch(getvideoGames()) ;
-      }
+        dispatch(clearAllFilters()) 
+        
+    }
 
 
       function handleSubmit() {

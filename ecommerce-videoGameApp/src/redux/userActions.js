@@ -6,17 +6,19 @@ import {
   gamesUsr,
   updateUsr,
   usrMsgErr,
-  setUserLogging,
-} from "./usersSlices";
+  setUserLoged,
+  setUserToken,
+} from "./userSlices";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loadItemAsyncStorage } from "../components/helpers/functionsAsyncStorage";
 
 
 export const getUserByID = (id) => {
     return async (dispatch) => {
       try {
         const response = await axios.get(
-          `https://gameshop-production-e844.up.railway.app/user/${id}`
+          `https://pfvideojuegos-back-production.up.railway.app/user/${id}`
         );
   
         const dataUser = response.data;
@@ -37,7 +39,7 @@ export const getUserByID = (id) => {
     return async (dispatch) => {
       try {
         const response = await axios.get(
-          `https://gameshop-production-e844.up.railway.app/user?user=${name}`
+          `https://pfvideojuegos-back-production.up.railway.app/user?user=${name}`
         );
   
         const dataUser = response.data;
@@ -58,7 +60,7 @@ export const getAllUsers = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `https://gameshop-production-e844.up.railway.app/user`
+        `https://pfvideojuegos-back-production.up.railway.app/user`
       );
 
       const dataUsers = response.data;
@@ -75,13 +77,33 @@ export const getAllUsers = () => {
   };
 };
 
+export const postUser = (data) => {
+  if(data.user,data.password,data.fullname,data.email,data.date,data.image,data.number,data.tac === true,data.newsLetter)
+  axios.post("https://pfvideojuegos-back-production.up.railway.app/user", 
+  {
+   id: 1 + Math.floor(Math.random() * 999),
+   user: data.user,
+   password: data.password,
+   fullname: data.fullname,
+   userAdmin: false,
+   email: data.email,
+   date:data.date,
+   image: data.image,
+   phone:data.number,
+   tac:data.tac,
+   tac:data.newsLetter, 
+
+  });
+};
+
+
 
 
   export const updateUser = async (newData) => {
     const oldData = { ...newData };
     try {
       const response = await axios.put(
-        'https://gameshop-production-e844.up.railway.app/user/update',
+        'https://pfvideojuegos-back-production.up.railway.app/user/update',
         newData
       );
   
@@ -95,7 +117,7 @@ export const getAllUsers = () => {
   
       if (changedFields.length > 0) {
         // Obtén los datos existentes del AsyncStorage
-        const storedData = await AsyncStorage.getItem('loggedGameShop');
+        const storedData = await AsyncStorage.getItem('user');
         if (storedData !== null) {
           const parsedData = JSON.parse(storedData);
           const updatedData = { ...parsedData };
@@ -113,7 +135,7 @@ export const getAllUsers = () => {
           message = message.slice(0, -2); // Eliminar la coma y el espacio al final
   
           // Guarda los datos actualizados en el AsyncStorage
-          await AsyncStorage.setItem('loggedGameShop', JSON.stringify(updatedData));
+          await AsyncStorage.setItem('user', JSON.stringify(updatedData));
 
           Alert.alert(message)
         }
@@ -123,3 +145,19 @@ export const getAllUsers = () => {
       console.log("error updating data", err);
     }
   };
+
+
+  export const checkLogedUser  = () => async (dispatch) => {
+    try {
+      const data = await loadItemAsyncStorage('logedGameStack');
+      const user = data ? data : {};
+
+      dispatch(setUserLoged(user));
+      dispatch(setUserToken(user.token));
+      
+    } catch (error) {
+      console.error('Error al obtener los datos desde AsyncStorage:', error);
+    }
+  };
+
+

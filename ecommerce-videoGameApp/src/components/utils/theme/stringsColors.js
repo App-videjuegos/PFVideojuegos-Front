@@ -8,13 +8,20 @@ export const color_morado_sc2= '#987BDC' //morado super claro 2
 export const color_blanco='#FFFFFF';
 export const color_gris_c='#FAFAFA' //griss claro
 export const color_gris_595959= '#595959'
-export const color_gris_cdcdcd= '#cdcdcd'
+export const color_gris_cdcdcd= '#9a9a9a'
+export const color_gris_dadada= '#dadada'
 
 
 export const color_rojoNeon='#E94E4E';
 export const color_crema= '#FF8800'; 
-export const color_celeste= '#496BFF';
 export const color_morado_c2= "#622EDA";
+
+//Colores de sistema
+export const color_rojo= '#ff193b';
+export const color_naranja= 'ff871f';
+export const color_amarillo= '#fadb1b';
+export const color_verde= '#00d37b';
+export const color_celeste= '#496BFF';
 
 export const strings = {
   light: {//combinacion de colores modo Ligth

@@ -19,11 +19,12 @@ import  {validate}  from './components/Validate/CreateGameValidate';
 
 import { SelectList } from "react-native-dropdown-select-list";
 
-import { convertirFecha } from "../../helpers/InvertDate";
+import { convertirFecha, convertirFechaDiasCruzados } from "../../helpers/InvertDate";
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-import {color_gris_c, color_morado_o, color_celeste, color_morado_c2, color_gris_595959, color_gris_cdcdcd} from '../../utils/theme/stringsColors'
+import {color_gris_c, color_morado_o, color_celeste, color_morado_c2, color_gris_595959, color_gris_cdcdcd, color_gris_dadada} from '../../utils/theme/stringsColors'
+
 
 
 import {
@@ -34,12 +35,19 @@ import { useState, useRef, useEffect, useContext } from "react";
 
 import axios from "axios";
 
+import { useSelector } from "react-redux";
+
+
+
 const CreateVideogame = ({ navigation, route }) => {
   const [image, setImage] = useState([]);
-
+  const token = useSelector((state) => state.usersState.userToken);
+  console.log("elTokendeRegisteeeer",token)
   const [imageScreen, setImageScreen] = useState([]);
 
   const [date, setDate] = useState(new Date());
+
+  console.log(`-------------------->>-->>>> ${date}`)
   const [inputFocusedName, setInputFocusedName] = useState(true);
   const [inputFocusedDesc, setInputFocusedDesc] = useState(true);
   const [inputFocusedDate, setInputFocusedDate] = useState(true);
@@ -58,16 +66,17 @@ const CreateVideogame = ({ navigation, route }) => {
     id: 1 + Math.floor(Math.random() * 999),
     name: "",
     description: "",
-    releaseDate: `${convertirFecha(date)}`,
     image: "",
     screenShots: [],
     platforms: [],
     genre: [],
     price: "",
     requeriments_en: "",
+    releaseDate: "10-12-2022",
   });
 
 
+  console.log(`------------------------------------------ ${newVideoGame}`)
 
   useEffect(() => {
     validate(newVideoGame);
@@ -113,6 +122,7 @@ const CreateVideogame = ({ navigation, route }) => {
   };
 
   const Submit = async () => {
+    const config= {Authorization: token}
     try {
       console.log(newVideoGame);
       if (
@@ -133,16 +143,16 @@ const CreateVideogame = ({ navigation, route }) => {
           {
             id: newVideoGame.id,
             name: newVideoGame.name,
+            releaseDate: newVideoGame.releaseDate ,
             description: newVideoGame.description,
-            releaseDate: date,
             image: newVideoGame.image,
             screenShots: newVideoGame.screenShots,
             platforms: newVideoGame.platforms,
             genre: newVideoGame.genre,
             price: newVideoGame.price,
             requeriments_en: newVideoGame.requeriments_en,
-          }
-        );
+          },config
+          );
         Alert.alert("Publication Create!", "", [
           {
             onPress: () =>
@@ -150,24 +160,24 @@ const CreateVideogame = ({ navigation, route }) => {
                 id: 1 + Math.floor(Math.random() * 999),
                 name: "",
                 description: "",
-                releaseDate: date,
+                releaseDate: "",
                 image: "",
                 screenShots: [],
                 platforms: [],
                 genre: [],
                 price: "",
                 requeriments_en: "",
+                
               }),
             text: "Continue loading games",
           },
           {
             text: "Back to dashboard",
             onPress: () =>
-              navigation.navigate("Dashboard", { name: "Dashboard" }),
+              navigation.navigate("Landing", { name: "RenderLogin" }),
           },
         ]);
 
-        console.log("Respuesta del servidor:", res.data);
       }
     } catch (error) {
       Alert.alert("Auch...Something went wrong", "");
@@ -184,13 +194,13 @@ const CreateVideogame = ({ navigation, route }) => {
           text: "Cancel",
           onPress: () =>
             Alert.alert(
-              "Return to Dashboard",
-              "Are you sure you want to return to Dashboard?",
+              "Return to Home",
+              "Are you sure you want to return to Home?",
               [
                 {
                   text: "Yes",
                   onPress: () =>
-                    navigation.navigate("Dashboard", { name: "Dashboard" }),
+                    navigation.navigate("HomeStack", { name: "Home" }),
                 },
                 { text: "No", onPress: () => console.log("No pressed") },
               ]
@@ -482,8 +492,7 @@ const CreateVideogame = ({ navigation, route }) => {
           >
             <Text
               style={[styles.title]}
-            >
-              releaseDate
+            >Release date
             </Text>
             <View>
 
@@ -508,7 +517,6 @@ const CreateVideogame = ({ navigation, route }) => {
                   />
                 )}
               </View>
-              {console.log(date)}
               {validateNvg.releaseDate !== "" && !inputFocusedDate && (
               <Text style={styles.error}>{validateNvg.releaseDate}</Text>
             )}
@@ -580,8 +588,8 @@ const CreateVideogame = ({ navigation, route }) => {
             </Text>
 
             <View
-              style={[
-                styles.viewContx1]}
+              style={
+                styles.viewContx1}
             >
               <TouchableOpacity
                 onPress={pickImageScreen}
@@ -589,9 +597,8 @@ const CreateVideogame = ({ navigation, route }) => {
                   styles.miniButton]}
               >
                 <Text
-                  style={[styles.buttonText]}
-                >Load Images
-                </Text>
+                  style={styles.buttonText}
+                >Load Images</Text>
               </TouchableOpacity>
               {validateNvg.screenShots !== "" && !validateSubmit && (
                 <Text style={styles.error}>{validateNvg.screenShots}</Text>
@@ -614,8 +621,7 @@ const CreateVideogame = ({ navigation, route }) => {
             </View>
           </View>
           <View
-            style={[
-              styles.containerInput]}
+            style={styles.containerInput}
           >
             <Text
               style={[styles.title]}
@@ -715,7 +721,8 @@ const styles = StyleSheet.create({
   },
   TitlePage: {
     fontSize: 24,
-    fontWeight: "bold", 
+    fontWeight: "900", 
+    color: color_morado_o
 
   },
 
@@ -724,7 +731,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    backgroundColor:  color_gris_cdcdcd,
+    backgroundColor:  color_gris_dadada,
     height: 42,
     width: 315,
     padding: 0,
@@ -754,7 +761,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    marginBottom: 8,
+
     marginTop: 8,
     height: 42,
     width: 315,
@@ -819,8 +826,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     height: 50,
     marginHorizontal: "auto",
-    backgroundColor: color_gris_cdcdcd,
-    marginBottom: 15,
+    backgroundColor: color_gris_dadada,
     borderRadius: 8,
   },
 
@@ -849,12 +855,9 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     textAlign: "center",
-    // borderColor: color_azul,
     marginHorizontal: "auto",
-    // borderColor: "#ddd",
-    backgroundColor: color_gris_cdcdcd,
-    marginBottom: 15,
-    borderRadius: 8,
+    backgroundColor: color_gris_dadada,
+    borderRadius: 5,
   },
 
   viewContx1: {

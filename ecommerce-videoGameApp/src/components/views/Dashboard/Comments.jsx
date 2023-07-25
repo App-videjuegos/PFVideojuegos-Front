@@ -1,1 +1,0 @@
-// una constante para un array de comentarios, que dentro posea en forma de objeto los datos de cada comentario, con el id del comentario, el usuario que lo ha escrito, el comentario en sí y la puntuación que le ha dado al juego.
