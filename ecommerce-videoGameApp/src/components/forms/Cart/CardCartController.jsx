@@ -11,14 +11,14 @@ export const  InsertarItem= async (key,objString) => {
         if (currentValue !== null) {
             const parsedValue = JSON.parse(currentValue);
             if (parsedValue.amount===3){
-                alert("Lo Sentimos el numero maximo de compras por titulo es 3.")
+                alert("Sorry, the maximum number of purchases per title is 3.")
             }else{
             parsedValue.amount = parsedValue.amount+1; // Aquí puedes realizar las modificaciones necesarias en el valor
             // Convertir el objeto modificado a una cadena de texto
             const updatedValue = JSON.stringify(parsedValue);
             await AsyncStorage.setItem(key, updatedValue);
             
-            alert('Se adiciono una unidad al item actual')
+            alert('One unit was added to the current item')
             // console.log('Item modificado exitosamente');
             }
         }   
@@ -26,7 +26,7 @@ export const  InsertarItem= async (key,objString) => {
             await AsyncStorage.setItem(key, objString);
             // Kawait AsyncStorage.setItem('item2', objString);
             // console.log("llave agregada",objString)
-            alert('el item ha sido agregado')
+            alert('Item has been added')
         }
        
     } catch (error) {
@@ -44,7 +44,7 @@ export const amountAdd = async (key, newValue) => {
         const currentValue = await AsyncStorage.getItem(key);
         if (currentValue !== null) {
           if (newValue===3){
-              alert("Lo Sentimos el numero maximo de compras por titulo es 3.")
+              alert("Sorry, the maximum number of purchases per title is 3.")
           }else{
             const parsedValue = JSON.parse(currentValue);
             parsedValue.amount = newValue+1; // Aquí puedes realizar las modificaciones necesarias en el valor
@@ -71,7 +71,7 @@ export const amountSub = async (key, newValue) => {
         if (currentValue !== null) {
           // Analizar el valor obtenido para convertirlo en un objeto
           const parsedValue = JSON.parse(currentValue);
-          console.log("newValie",newValue)
+          console.log("newValue",newValue)
               parsedValue.amount = newValue-1; // Aquí puedes realizar las modificaciones necesarias en el valor
               // Convertir el objeto modificado a una cadena de texto
               const updatedValue = JSON.stringify(parsedValue);

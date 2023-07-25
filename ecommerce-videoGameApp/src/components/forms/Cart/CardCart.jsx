@@ -72,7 +72,7 @@ const CartItems = (props) => {
             onPress={() => {
               if (amount === 1) {
                 Alert.alert(
-                  'Are you sure you want to delete the Item?',
+                  'Are you sure you want to delete this Item?',
                   '',
                   [
                     {
@@ -106,14 +106,30 @@ const CartItems = (props) => {
         <View style={styles.cartItemRemove}>
           <TouchableOpacity
             onPress={() => {
-              removeItem(cartKEy);
-              dispatch(updateCart());
+            Alert.alert(
+              'Are you sure you want to delete this Item?',
+              '',
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: () => handlePress(),
+                },
+              ],
+              { cancelable: false }
+            );
             }}
+            
             style={styles.cartItemRemoveButton}
           >
             <Ionicons name="md-trash" size={15} color={StringsDark.text} />
             <Text style={{ color: StringsDark.text }}>
-              {StringsLanguaje.remove}
+              {/* {StringsLanguaje.remove} */}
+              Delete
             </Text>
           </TouchableOpacity>
         </View>

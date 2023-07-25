@@ -44,7 +44,9 @@ const Cart = ({ navigation }) => {
   useEffect(() => {
     // console.log("navigation",navigation.setOptions)
     navigation.setOptions({
-      headerTitle: `${StringsLanguaje.Shopping_Car}`,
+      // headerTitle: `${StringsLanguaje.Shopping_Car}`,
+      headerTitle: `Shopping Cart`,
+      headerTintColor: '#280657',
       headerStyle: {
         backgroundColor: StringsDark.backgroundContainer,
       },
@@ -82,11 +84,12 @@ const Cart = ({ navigation }) => {
 
   const AlertItem = () => {
     Alert.alert(
-      StringsLanguaje.MsgAlertTitle,
+      // StringsLanguaje.MsgAlertTitle,
+      'Are you sure you want to clean the Cart?',
       '',
       [
         {
-          text: StringsLanguaje.optCancel,
+          text: 'Cancel',//StringsLanguaje.optCancel,
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
@@ -138,21 +141,23 @@ const Cart = ({ navigation }) => {
           Cart: itemsCart,
           tot: total,
           userid: logginUser.id,
+          // username:logginUser.name
         });
       } else {
-        alert('Es necesario Regisrar inicio de Sesión');
+        alert('Login Registration is required\nYou are being redirected to Login...');
+
         navigation.navigate('Login');
       }
     };
 
     Alert.alert(
-      'Proceder con la compra',
+      'Proceed to checkout',
       '',
       [
         {
-          text: StringsLanguaje.optCancel,
+          text: 'Cancel',//StringsLanguaje.optCancel,
           onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
+          style: 'Cancel',
         },
         {
           text: 'OK',
@@ -171,7 +176,7 @@ const Cart = ({ navigation }) => {
       }
 
       const filteredKeys = keys.filter((el) => el.substring(0, 4) === 'cart');
-      console.log('Claves filtradas del carrito:', filteredKeys);
+      // console.log('Claves filtradas del carrito:', filteredKeys);
 
       AsyncStorage.multiGet(filteredKeys, (error, items) => {
         if (error) {
@@ -210,7 +215,8 @@ const Cart = ({ navigation }) => {
         ]}
       >
         <Text style={[styles.emptyCart, { color: StringsDark.srchBartxt }]}>
-          {StringsLanguaje.emptycar}
+          {/* {StringsLanguaje.emptycar} */}
+          Your Cart is Empty
         </Text>
 
         <TouchableOpacity
@@ -218,7 +224,8 @@ const Cart = ({ navigation }) => {
           style={[styles.clearCart, { backgroundColor: StringsDark.txtClaro }]}
         >
           <Text style={[styles.clearCartText, { color: StringsDark.text }]}>
-            {StringsLanguaje.Home}
+            {/* {StringsLanguaje.Home} */}
+            Go Gome
           </Text>
         </TouchableOpacity>
       </View>
@@ -237,7 +244,8 @@ const Cart = ({ navigation }) => {
           {isLogged ? `${logginUser.fullname}` : StringsLanguaje.CartValidate}
         </Text> */}
         <Text style={[styles.cartTitle, { color: StringsDark.text }]}>
-          {StringsLanguaje.youtCart}
+          {/* {StringsLanguaje.youtCart} */}
+          Your Basket
         </Text>
       </View>
       <View style={{ backgroundColor: StringsDark.bktitle }}>
@@ -259,7 +267,8 @@ const Cart = ({ navigation }) => {
         style={[styles.clearCart, { backgroundColor: '#E94E4E' }]}
       >
         <Text style={[styles.clearCartText, { color: '#ffffff' }]}>
-          {StringsLanguaje.clCart}
+          {/* {StringsLanguaje.clCart} */}
+          Clear Basket
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -267,7 +276,8 @@ const Cart = ({ navigation }) => {
         style={[styles.chkOutCart, { backgroundColor: '#496BFF' }]}
       >
         <Text style={[styles.clearCartText, { color: '#ffffff' }]}>
-          {StringsLanguaje.chkOut}
+          {/* {StringsLanguaje.chkOut} */}
+          Pay
         </Text>
       </TouchableOpacity>
       <View style={{ height: 100 }} />
