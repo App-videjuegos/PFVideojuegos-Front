@@ -5,6 +5,7 @@
 
 
 
+
 We are a group of Soy Henry students in the final stage of the bootcamp, we are carrying out the project in react native.
 We are versatile and easily adapt to different hats (Full Stack Web Developers 🌐, Application Developers 📱, ML Engineers 🤖 or Entry Level Designers 🎨) depending on what the project requires. We love exploring new technology stacks 💻 and harnessing them to create great products 🛠️. 
 <br/>
