@@ -1,125 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import axios from "axios";
 import { StyleSheet } from "react-native";
 
-// json de videojuegos
-const GameRating = ({ gameId, actualRating }) => {
-  const videoGamesData = [
-    {
-      gameId: 1,
-      score: 4.5,
-      actualRating: 4.5,
-    },
-    {
-      gameId: 2,
-      score: 4.8,
-      actualRating: 4.8,
-    },
-    {
-      gameId: 3,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 4,
-      score: 4.7,
-      actualRating: 4.7,
-    },
-    {
-      gameId: 5,
-      score: 4.6,
-      actualRating: 4.6,
-    },
-    {
-      gameId: 6,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 7,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 8,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 10,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 4100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 4200,
-      score: 4.9,
-      actualRating: 4.9,
-    },
+const GameRating = ({ gameId, initialRating, updateCardRating }) => {
+  const [rating, setRating] = useState(initialRating);
 
-    {
-      gameId: 5100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 6100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 7100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 8100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 9100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 10100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 11100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 12100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 13100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-    {
-      gameId: 14100,
-      score: 4.9,
-      actualRating: 4.9,
-    },
-  ];
-
-  const [rating, setRating] = useState(
-    videoGamesData.find((game) => game.id === gameId)?.rating || actualRating
-  ); // aca se puede poner el rating del videojuego en la base de datos
+  useEffect(() => {
+    const getActualRating = async (id) => {
+      const game = await axios.get(
+        `https://pfvideojuegos-back-production.up.railway.app/games/${id}`
+      );
+      console.log("dentro de la funcion", game.data.rating);
+      setRating(game.data.rating);
+      return game.data.rating;
+    };
+    getActualRating(gameId);
+  }, [gameId]);
 
   const handleRatingChange = async (newRating) => {
+    console.log("actual rating:");
+    console.log("Nueva calificación:", newRating);
+    console.log("Id:", gameId);
+
     try {
       const response = await axios.put(
         "https://pfvideojuegos-back-production.up.railway.app/games/update-rating",
@@ -131,10 +35,11 @@ const GameRating = ({ gameId, actualRating }) => {
       );
 
       console.log("Respuesta del servidor de calificación:", response.data);
-
+      setRating(newRating);
       // Aquí puedes hacer algo con la respuesta del servidor, si es necesario
 
-      setRating(newRating); // Actualizar el estado local con la nueva calificación
+      // Rating(2); // Actualizar el estado local con la nueva calificación
+      // updateCardRating(2); // Actualizar el rating en la tarjeta inicial (Home)
     } catch (error) {
       console.error("Error al actualizar el rating del videojuego:", error);
       // Aquí puedes manejar el error, mostrar un mensaje de error, etc.
@@ -152,10 +57,7 @@ const GameRating = ({ gameId, actualRating }) => {
         selectedColor="gold"
         onFinishRating={handleRatingChange}
       />
-
-      <TouchableOpacity onPress={() => handleRatingChange(0)}>
-        <Text>Reset Rating</Text>
-      </TouchableOpacity>
+      <Text style={styles.ratingText}>{rating}</Text>
     </View>
   );
 };

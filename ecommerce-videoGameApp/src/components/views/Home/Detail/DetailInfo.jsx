@@ -119,6 +119,24 @@ const DetailInfo = (props) => {
     alert(`Score ${ratingV} has been set successfully`);
   };
 
+  // Función para actualizar el rating en la tarjeta inicial
+  //const updateCardRating = (newRating) => {
+  // Puedes utilizar el estado local o Redux para mantener los datos de los videojuegos mostrados en la vista inicial y actualizar el rating del videojuego correspondiente.
+  // ver si la información de los videojuegos se encuentra en el estado local o viene de Redux
+  //   const setRating = videoGames.map((videoGame) => {
+  //     if (videoGame.id === gameId) {
+  //       return { ...videoGame, rating: newRating };
+  //     } else {
+  //       return videoGame;
+  //     }
+  //   });
+
+  //   // Actualizar el estado local con los videojuegos actualizados
+
+  //   setRating(newRating); // Actualizar el rating en la vista de detalle
+
+  // };
+
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
@@ -251,7 +269,12 @@ const DetailInfo = (props) => {
       <Image style={styles.image} source={{ uri: image }} />
       <View style={styles.infoContainer}>
         <Text style={styles.gameName}>{name}</Text>
-        <GameRating rating={rating} />
+        {/* Aquí pasamos la función updateCardRating como una prop a GameRating */}
+        <GameRating
+          rating={rating}
+          gameId={props.propInfo.id}
+          // updateCardRating={updateCardRating}
+        />
         <View style={styles.ratingContainer}>
           <AirbnbRating
             count={5}
