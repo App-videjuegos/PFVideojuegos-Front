@@ -5,10 +5,11 @@ import {
   Text,
   View,
   TextInput,
+  Alert,
 } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
-
+import queryString from 'query-string';
 import {
   color_gris_c,
   color_morado_o,
@@ -22,7 +23,7 @@ import {
 // import { persons } from "../../../utils/arrayPersons";
 import { Formik } from "formik";
 import { useState, useEffect } from "react";
-// import axios from "axios";
+import axios from "axios";
 // import { logService } from "../../../services/ServiceLogin";
 // import {getItemAsyncStorage,InsertUserAsynStorage,removeItem} from '../Forms/Cart/CardCartController'
 // import { useFocusEffect } from '@react-navigation/native';
@@ -40,11 +41,18 @@ export const ForgotPassword = ({ navigation }) => {
   const [isLogged, setIsLogged] = useState(false);
 
   const handdleForgot = async (values) => {
+    console.log("asdkasldasklnmdklasdasklmdakslmdasklmdaskldmaslkmaslkdmaslñmdasldmas----->",values.email)
+    const email = JSON.stringify(values.email)
+    console.log(email)
+    console.log(values.email)
+    const encodedEmail = encodeURIComponent(values.email);
+    console.log(encodedEmail)
+    console.log(`https://pfvideojuegos-back-production.up.railway.app/forgotPassword/${values.email}`)
     try {
       // Envolvemos la petición en un bloque try-catch para capturar errores
-      const res = await axios.put(`https://pfvideojuegos-back-production.up.railway.app/forgotPassword/${values.email}`);
-  
-      console.log(values.email)
+      const res = await axios.put(`https://pfvideojuegos-back-production.up.railway.app/forgotPassword/${encodedEmail}`);
+    
+      console.log("asdkasldasklnmdklasdasklmdakslmdasklmdaskldmaslkmaslkdmaslñmdasldmas----->",values.email)
       Alert.alert("We sent your new password!", "", [
         {
           onPress: () => {
@@ -61,6 +69,7 @@ export const ForgotPassword = ({ navigation }) => {
       ]);
     } catch (error) {
       // Si ocurre un error, significa que el usuario no está registrado
+      console.log(error)
       Alert.alert("You are not registered", "", [
         {
           onPress: () => {
