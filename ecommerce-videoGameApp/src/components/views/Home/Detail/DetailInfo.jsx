@@ -17,7 +17,8 @@ import {
   getReviewsByVideogameId,
 } from "../../../../redux/reviewActions"; // Importamos la acción creada anteriormente
 import {convertirFecha} from "../../../helpers/InvertDate"
-
+import { InsertarItem } from "../../../forms/Cart/CardCartController";
+import { updateCart } from "../../../../redux/cartSlice";
 
 const DetailInfo = (props) => {
   const [ratingV, setRating] = useState(0);
@@ -32,7 +33,7 @@ const DetailInfo = (props) => {
   const [errorComment, setErrorComment] = useState(false);
   const [errorHashtag, setErrorHashtag] = useState(false);
   const [comments, setComments] = useState([]);
-
+  
   // Obtenemos el estado isLogged para verificar si el usuario está logueado
   const isLogged = useSelector((state) => state.usersState.isLogged);
   const token = useSelector((state) => state.usersState.userToken);
@@ -264,6 +265,20 @@ const DetailInfo = (props) => {
   }
 };
 
+let objeto = {
+  id: props.propInfo.id,
+  title: props.propInfo.name,
+  price: props.propInfo.price,
+  img: props.propInfo.image,
+  stock: 5,
+  amount: 1,
+};
+const objString = JSON.stringify(objeto);
+
+const key = "cart" + props.propInfo.id;
+
+// console.log("esto es lo q tengo en OBJ",objeto)
+// console.log("esto es lo q tengo en key",key)
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image style={styles.image} source={{ uri: image }} />
@@ -277,7 +292,12 @@ const DetailInfo = (props) => {
         />
         
         <Text style={[styles.gamePrice, { color: "#1B063E" }]}>$ {price}</Text>
-        <TouchableOpacity onPress={() => console.log("Añadir al carrito")}>
+        <TouchableOpacity onPress={() => {
+            InsertarItem(key, objString);
+            dispatch(updateCart());
+            // getKeysCount();
+            // console.log("key guardada", objString);
+          }}>
           <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
             <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
               Add to Cart
