@@ -28,11 +28,68 @@ import {
   color_rojo,
   color_gris_cdcdcd,
 } from "../../utils/theme/stringsColors";
-
+import * as Google from 'expo-auth-session/providers/google'
 import axios from "axios";
 import Purchase from "../Purchase/Purchase"; // Aca se importa el componente Purchase
 
 const Register = ({ navigation }) => {
+
+  //AUTH GOOGLE// 
+
+  const [accessToken, setAccessToken] = useState()
+  const [userInfo, setUserInfo] = useState();
+
+  const [request,response,promptAsync] = Google.useAuthRequest({
+    androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+    iosClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+    expoClientId:"992202978342-r97fm6970n55pdn6jsu5s2h8tme07qbe.apps.googleusercontent.com"
+  })
+
+
+
+  useEffect(()=>{
+    if(response?.type === "success"){
+      setAccessToken(response.authentication.accessToken)
+
+     }
+  },[response])
+
+  useEffect(() => {
+    if (accessToken) {
+      getUserData();
+    }
+  }, [accessToken]);
+
+
+  const getUserData = async  () => {
+    let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me",
+    { headers: {Authorization: `Bearer ${accessToken}`}})
+
+      await userInfoResponse.json().then(data => {
+      setUserInfo(data)
+    })
+
+  }
+
+
+  const showUserData = () => {
+
+    if(userInfo) {
+      return (
+        <View style={styles.userInfo}>
+          <Image source={{ uri: userInfo.picture}} style ={styles.profilePic}/>
+          <Text>welcome {userInfo.name}</Text>
+          <Text> {userInfo.email}</Text>
+
+        </View>
+      )
+    }
+  }
+
+  // ----------- FIN AUTH GOOGLE ------
+
+
+
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [acceptTac, setAcceptTac] = useState(false);
@@ -219,7 +276,7 @@ const Register = ({ navigation }) => {
                     <Text style={styles.error}>{errors.user}</Text>
                   )}
                 </View>
-
+                    {showUserData()}
                 <View>
                   <Text style={styles.title}>Password</Text>
                   <TextInput

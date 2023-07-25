@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme":"com.gameStack.gamsestack",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -15,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier":"com.gameStack.gamsestack"
     },
     "android": {
       "package": "com.gameStack.gamsestack",
@@ -29,7 +31,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "845def10-19e5-4fb3-a4bf-402d9abcdfd0"
+        "projectId": "d484256a-95bd-4f19-9537-11b653df05a5"
       }
     }
   }

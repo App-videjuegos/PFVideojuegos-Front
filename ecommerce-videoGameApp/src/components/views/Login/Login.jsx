@@ -5,9 +5,16 @@ import {
   Text,
   View,
   TextInput,
+  Button
 } from "react-native";
 
+<<<<<<< Updated upstream
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+=======
+import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
+import * as Google from 'expo-auth-session/providers/google'
+
+>>>>>>> Stashed changes
 
 import {
   color_gris_c,
@@ -32,7 +39,81 @@ import {
 } from "../../helpers/functionsAsyncStorage";
 import imageUser from "../../../../assets/imageUser.png";
 import { checkLogedUser } from "../../../redux/userActions";
+
+
 export const Login = ({ navigation }) => {
+
+
+//AUTH GOOGLE
+  const [accessToken, setAccessToken] = useState()
+  const [userInfo, setUserInfo] = useState();
+
+  const [request,response,promptAsync] = Google.useAuthRequest({
+    androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+    iosClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+    expoClientId:"992202978342-r97fm6970n55pdn6jsu5s2h8tme07qbe.apps.googleusercontent.com"
+  })
+
+
+
+  useEffect(()=>{
+    if(response?.type === "success"){
+      setAccessToken(response.authentication.accessToken)
+
+     }
+  },[response])
+
+  useEffect(() => {
+    if (accessToken) {
+      getUserData();
+
+      handleLoginAuth()
+
+      const handleLoginAuth = async () => {
+        try {
+
+          const user = await loginService.authLogin({
+            user: userInfo.email,
+          });
+
+          console.log(user)
+
+        }catch(e){
+          console.log(e.error)
+        }
+      }
+
+    }
+  }, [accessToken]);
+
+
+  const getUserData = async  () => {
+    let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me",
+    { headers: {Authorization: `Bearer ${accessToken}`}})
+
+      await userInfoResponse.json().then(data => {
+      setUserInfo(data)
+    })
+
+  }
+
+
+  const showUserData = () => {
+    console.log(userInfo)
+    if(userInfo) {
+      return (
+        <View style={styles.userInfo}>
+          <Image source={{ uri: userInfo.picture}} style ={styles.profilePic}/>
+          <Text>welcome {userInfo.name}</Text>
+          <Text> {userInfo.email}</Text>
+
+        </View>
+      )
+    }
+  }
+
+  // ----------- FIN AUTH GOOGLE ------
+
   const loged = useSelector((state) => state.usersState.isLogged);
   const token = useSelector((state) => state.usersState.userToken);
 
@@ -64,6 +145,7 @@ export const Login = ({ navigation }) => {
   const [errorMsg, setErrorMsg] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
 
   const handleLogin = async (values) => {
     try {
@@ -232,13 +314,19 @@ export const Login = ({ navigation }) => {
                     -------- sing in --------
                   </Text>
                 </View>
-                <TouchableOpacity style={styles.buttonGoogle}>
+                <TouchableOpacity style={styles.buttonGoogle}
+                onPress={ ()=> promptAsync({
+                  useProxy:true, showInRecents: true
+                })}
+                >
                   <Image
                     style={styles.imageGoogle}
                     source={require("../../../../assets/singinwhitgoogle.png")}
                   />
                 </TouchableOpacity>
               </View>
+
+              {showUserData()}
 
               <View style={styles.containerLogin}>
                 {/* <Text style={[{ fontSize: 45 }]}>Welcome</Text>
