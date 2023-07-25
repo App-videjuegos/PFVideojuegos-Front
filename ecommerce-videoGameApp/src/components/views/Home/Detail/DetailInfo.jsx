@@ -275,20 +275,7 @@ const DetailInfo = (props) => {
           gameId={props.propInfo.id}
           // updateCardRating={updateCardRating}
         />
-        <View style={styles.ratingContainer}>
-          <AirbnbRating
-            count={5}
-            defaultRating={ratingV}
-            size={20}
-            showRating={false}
-            selectedColor="gold"
-            onFinishRating={handleRating}
-          />
-          <Text style={styles.textRating} onPress={putRating}>
-            Add your rating
-          </Text>
-          <Text> Score: {ratingV}</Text>
-        </View>
+        
         <Text style={[styles.gamePrice, { color: "#1B063E" }]}>$ {price}</Text>
         <TouchableOpacity onPress={() => console.log("Añadir al carrito")}>
           <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
@@ -345,7 +332,7 @@ const DetailInfo = (props) => {
                   </View>
                   <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>By:</Text>{" "}
-                    {username}
+                    {comment.user}
                   </Text>
                   <Text style={styles.commentDetailsBold}>Comment:</Text><Text style={styles.commentText}>{comment.comment}</Text>
                   <Text style={styles.commentDetails}>
@@ -381,6 +368,26 @@ const DetailInfo = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
+
+
+          {/* Las estrellas papurri */}
+          <Text style={styles.textRating} onPress={putRating}>
+            Add your rating
+          </Text>
+          <View style={styles.ratingContainer}>
+          <AirbnbRating
+            count={5}
+            defaultRating={ratingV}
+            size={20}
+            showRating={false}
+            selectedColor="gold"
+            onFinishRating={handleRating}
+          />
+        
+        </View>
+
+
+
           <TextInput
             style={[styles.commentInput, errorTitle ? styles.errorInput : null]}
             placeholder="*Title"
@@ -553,8 +560,11 @@ const styles = StyleSheet.create({
   textRating: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#496BFF",
+    color: "#622EDA",
     paddingLeft: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 93,
   },
   button: {
     width: "100%", // Cambia el ancho fijo a ancho completo
