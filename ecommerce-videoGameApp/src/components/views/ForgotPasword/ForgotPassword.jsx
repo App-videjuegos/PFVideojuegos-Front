@@ -39,94 +39,56 @@ export const ForgotPassword = ({ navigation }) => {
   const [errorMsg, setErrorMsg] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
 
-  useEffect(() => {
-    getUserStorage();
-  }, [isLogged]);
-
-  const getUserStorage = async () => {
+  const handdleForgot = async (values) => {
     try {
-      const LoggedUserJSON = await getItemAsyncStorage("loggedGameShop");
-      // console.log("variable LoggedUserJSON->",LoggedUserJSON)
-      if (LoggedUserJSON !== "vacio") {
-        setLoggingUser(LoggedUserJSON);
-        setIsLogged(true);
-        // dispatch(setUserLogging(true))
-        console.log("Usuario Cargado correctamente");
-      } else {
-        setLoggingUser("vacio");
-        setIsLogged(false);
-        // dispatch(setUserLogging(false))
-      }
+      // Envolvemos la petición en un bloque try-catch para capturar errores
+      const res = await axios.put(`https://pfvideojuegos-back-production.up.railway.app/forgotPassword/${values.email}`);
+  
+      console.log(values.email)
+      Alert.alert("We sent your new password!", "", [
+        {
+          onPress: () => {
+            // Reseteamos el valor del email después de mostrar la alerta
+            values.email = "";
+          },
+          text: "Close",
+        },
+        {
+          text: "Go to login",
+          onPress: () =>
+            navigation.navigate("Login", { name: "Home" }),
+        },
+      ]);
     } catch (error) {
-      console.log("Error al obtener la clave de  loggedGameShop:", error);
+      // Si ocurre un error, significa que el usuario no está registrado
+      Alert.alert("You are not registered", "", [
+        {
+          onPress: () => {
+            // Reseteamos el valor del email después de mostrar la alerta
+            values.email = "";
+          },
+          text: "Close",
+        },
+      ]);
     }
-  };
-
-  //console.log("estado loginuser--->",(logginUser))
-  const handdleLogout = () => {
-    removeItem("loggedGameShop");
-    setUser("");
-    setPassword("");
-    dispatch(setUserLogging(false));
-    setIsLogged(false);
-  };
-  const handdleLogin = async (values) => {
-    // console.log("values recibido en hanndler", values)
-    setUser(values.user);
-    setPassword(values.password);
-    // console.log("que hay en estado user", values.user)
-    // console.log("que hay en estado password", values.password)
-    // try {
-    const userCredencials = await logService({
-      user: values.user, // Utiliza values.user en lugar de user
-      password: values.password, // Utiliza values.password en lugar de password
-    });
-    // console.log("data recibida del backHardCode",userCredencials)
-    if (userCredencials !== null) {
-      // "Error de autenticación"
-      // console.log("que llega de LOG SERVICE->",userCredencials)
-      if (userCredencials.id !== undefined) {
-        InsertUserAsynStorage(
-          "loggedGameShop",
-          JSON.stringify(userCredencials)
-        );
-        dispatch(setUserLogging(true));
-        setIsLogged(true);
-        setUser("");
-        setPassword("");
-        navigation.navigate("HomeScreen");
-      } else {
-        console.log("no encontrado");
-        alert("Password Incorrecto");
-        return;
-      }
-    }
-    // catch (error) {
-    //   setErrorMsg(true);
-    //   setTimeout(() => {
-    //     setErrorMsg(false);
-    //   }, 5000);
-
-    //   console.log("rompio en handle Logging !!!!!",error);
-    // }
   };
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   return (
     <Formik
       initialValues={{
-        user: "", // Should be "user" instead of "email" based on the input field below
+        email: "", // Should be "user" instead of "email" based on the input field below
       }}
       validate={(values) => {
         let errors = {};
 
-        if (!values.user) {
-          errors.user = "Please enter your email address"; // Should be "Please enter your username"
+        if (!values.email) {
+          errors.email = "Please enter your email address"; // Should be "Please enter your username"
         }
 
         return errors;
       }}
-      onSubmit={handdleLogin}
+      onSubmit={handdleForgot}
     >
       {({
         handleChange,
@@ -150,13 +112,13 @@ export const ForgotPassword = ({ navigation }) => {
             <View>
               <TextInput
                 placeholder="    Email"
-                value={values.user}
-                onChangeText={handleChange('user')}
-                onBlur={handleBlur('user')}
+                value={values.email}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
                 style={styles.input}
               />
-              {errors.user && touched.user && (
-                <Text style={styles.error}>{errors.user}</Text>
+              {errors.email && touched.email && (
+                <Text style={styles.error}>{errors.email}</Text>
               )}
             </View>
             <TouchableOpacity

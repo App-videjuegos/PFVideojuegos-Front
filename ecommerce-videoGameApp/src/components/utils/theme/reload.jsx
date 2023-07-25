@@ -6,11 +6,7 @@ const Reload = () => {
   const [selectedImage, setSelectedImage] = useState('');
 
   const imageArray = [
-    'https://i.gifer.com/ZHDR.gif',
-    'https://i.gifer.com/origin/f7/f777401addf0210bb0e8fa134f5c4fef_w200.gif',
-    'https://usagif.com/wp-content/uploads/2020/11/am0ngsusxh-43.gif',
-    'https://i0.wp.com/www.puntogeek.com/wp-content/uploads/2013/11/hC2dAuK.gif?resize=150%2C150',
-    'https://i.gifer.com/origin/80/80908d38aba2e9a2e49315b0cc20b61b.gif'
+'https://thumbs.gfycat.com/BiodegradableFrankChimpanzee-max-1mb.gif'
     // Agrega aquí más URLs de imágenes en el array
   ];
 
@@ -52,7 +48,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode:"center",
+    resizeMode:"cover",
   },
 });
 

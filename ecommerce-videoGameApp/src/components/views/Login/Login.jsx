@@ -8,13 +8,11 @@ import {
   Button
 } from "react-native";
 
-<<<<<<< Updated upstream
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-=======
-import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
+
 import * as Google from 'expo-auth-session/providers/google'
 
->>>>>>> Stashed changes
+
 
 import {
   color_gris_c,
@@ -156,17 +154,17 @@ export const Login = ({ navigation }) => {
 
       console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
 
-      // setToken(user.token)
+      if(user.user){
+        setLogingUser(user);
+        saveItemAsyncStorage("logedGameStack", user);
+        showAsyncStorageData();
+        dispatch(checkLogedUser());
+      }else{
+        setErrorMessage("Wrong credentials");
 
-      setLogingUser(user);
-      saveItemAsyncStorage("logedGameStack", user);
-      showAsyncStorageData();
-      dispatch(checkLogedUser());
 
-      console.log(token);
-      console.log();
+    }
 
-      console.log("This is login");
     } catch (e) {
       console.log(e);
       setErrorMessage("Wrong credentials");
@@ -225,7 +223,7 @@ export const Login = ({ navigation }) => {
               ></Image>
             </View>
             <View style={[styles.containerLogin]}>
-              {errorMessage && <Text>{errorMessage}</Text>}
+              {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
               <View>
                 <TextInput
                   placeholder="Username"

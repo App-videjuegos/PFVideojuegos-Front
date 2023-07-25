@@ -45,8 +45,6 @@ const Register = ({ navigation }) => {
     expoClientId:"992202978342-r97fm6970n55pdn6jsu5s2h8tme07qbe.apps.googleusercontent.com"
   })
 
-
-
   useEffect(()=>{
     if(response?.type === "success"){
       setAccessToken(response.authentication.accessToken)
@@ -134,6 +132,8 @@ const Register = ({ navigation }) => {
     }
   };
 
+
+
   const onSubmit = async (values) => {
     const userData = {
       ...values,
@@ -144,6 +144,8 @@ const Register = ({ navigation }) => {
       image: image,
       date: date,
     };
+
+
 
     console.log(`Antes del try ${userData}`);
 
@@ -167,6 +169,7 @@ const Register = ({ navigation }) => {
         }
       );
       console.log(`Respuesta del servidor:`, response.data);
+      
 
       const emailResponse = await axios.post(
         "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
@@ -177,7 +180,6 @@ const Register = ({ navigation }) => {
           fullname: userData.fullname,
         }
       );
-
       console.log(`Respuesta del servidor:`, emailResponse.data);
 
       Alert.alert("User Created!", "", [
@@ -417,6 +419,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
+    marginTop:8,
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",

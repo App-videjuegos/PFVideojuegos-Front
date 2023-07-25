@@ -131,7 +131,7 @@ const Profile = ({ navigation }) => {
       return arrLks;
     }
   };
-  console.log("ansjdnjaikndkjasnjkasndajsknda",dataUser)
+
 
   const onSubmit = async (values) => {
     const userData = {
@@ -166,7 +166,7 @@ const Profile = ({ navigation }) => {
 
       updateUser(objupdatedUser);
 
-      console.log(`Respuesta del servidor:`, response.data);
+      // console.log(`Respuesta del servidor:`, response.data);
 
       Alert.alert("Data update!", "", [
         {
@@ -176,7 +176,7 @@ const Profile = ({ navigation }) => {
       ]);
     } catch (error) {
       console.log(
-        `Error en el backend:, ${error},data enviada  ${objupdatedUser}`
+        `Error en el backend:, ${error},data enviada ${objupdatedUser}`
       );
       Alert.alert("Auch...Something went wrong");
     }

@@ -21,15 +21,17 @@ const MenuItems = ({ navigation }) => {
     >
       <View style={{ backgroundColor: StringsDark.menuDrawner_c }}>
         <View style={styles.cabeceraimg}>
+          <TouchableOpacity onPress={() => navigation.navigate("UserProfile")} >
           <Image
-            source={require("../../../../assets/icon.png")}
+            source={loged.image ? {uri:loged.image} : require("../../../../assets/imageUser.png")}
             style={styles.imgmenu}
           />
+          </TouchableOpacity>
         </View>
         <View style={styles.cabeceraText}>
           <Text
             style={[styles.textoUsr, { color: StringsDark.menuDrawner_t }]}
-          ></Text>
+          >{loged.user ? loged.user : "Welcome"}</Text>
         </View>
         <View
           style={[
@@ -64,17 +66,17 @@ const MenuItems = ({ navigation }) => {
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Login}
-        nombre={"Login"}
+        nombre={loged ? "Logout": "Login"}
         onPress={() => navigation.navigate("RenderLogin")}
-        icon="login"
+        icon={loged ? "logout" : "login"}
       />
-      {loged.user&&<MenuBottonItem
+      {/* {loged.user&&<MenuBottonItem
         // nombre={StringsLanguaje.Login}
         nombre={"DashBoard"}
         // onPress={() => navigation.navigate("Login")}
         icon="view-dashboard"
-      />}
-      {loged.user && <MenuButtonSubItem
+      />} */}
+      {loged.user&&<MenuBottonItem
               nombre= {'User Profile'}
               onPress={()=> navigation.navigate('UserProfile')}
               icon="account-eye-outline"

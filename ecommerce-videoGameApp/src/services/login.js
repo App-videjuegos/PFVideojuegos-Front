@@ -13,13 +13,13 @@ const login = async credentials =>{
 const authLogin = async (user) => {
 
     
-    function generarPasswordDesdeString(str) {
+    function generarPasswordDesdeString(user) {
         // Patrón constante para la contraseña
         const patron = "MyPass123!";
-      
+
         // Concatenar el string original con el patrón constante
-        const password = str + patron;
-      
+        const password = user + patron;
+        console.log(password)
         return password;
       }
 

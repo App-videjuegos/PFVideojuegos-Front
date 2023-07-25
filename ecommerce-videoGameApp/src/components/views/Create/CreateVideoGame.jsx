@@ -174,7 +174,7 @@ const CreateVideogame = ({ navigation, route }) => {
           {
             text: "Back to dashboard",
             onPress: () =>
-              navigation.navigate("Landing", { name: "Home" }),
+              navigation.navigate("Landing", { name: "RenderLogin" }),
           },
         ]);
 
