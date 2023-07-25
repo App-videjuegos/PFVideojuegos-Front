@@ -12,7 +12,7 @@ const GameRating = ({ gameId, initialRating, updateCardRating }) => {
       const game = await axios.get(
         `https://pfvideojuegos-back-production.up.railway.app/games/${id}`
       );
-      console.log("dentro de la funcion", game.data.rating);
+      // console.log("dentro de la funcion", game.data.rating);
       setRating(game.data.rating);
       return game.data.rating;
     };
@@ -20,9 +20,9 @@ const GameRating = ({ gameId, initialRating, updateCardRating }) => {
   }, [gameId]);
 
   const handleRatingChange = async (newRating) => {
-    console.log("actual rating:");
-    console.log("Nueva calificación:", newRating);
-    console.log("Id:", gameId);
+    // console.log("actual rating:");
+    // console.log("Nueva calificación:", newRating);
+    // console.log("Id:", gameId);
 
     try {
       const response = await axios.put(
@@ -34,14 +34,14 @@ const GameRating = ({ gameId, initialRating, updateCardRating }) => {
         }
       );
 
-      console.log("Respuesta del servidor de calificación:", response.data);
+      // console.log("Respuesta del servidor de calificación:", response.data);
       setRating(newRating);
       // Aquí puedes hacer algo con la respuesta del servidor, si es necesario
 
       // Rating(2); // Actualizar el estado local con la nueva calificación
       // updateCardRating(2); // Actualizar el rating en la tarjeta inicial (Home)
     } catch (error) {
-      console.error("Error al actualizar el rating del videojuego:", error);
+      // console.error("Error al actualizar el rating del videojuego:", error);
       // Aquí puedes manejar el error, mostrar un mensaje de error, etc.
     }
   };

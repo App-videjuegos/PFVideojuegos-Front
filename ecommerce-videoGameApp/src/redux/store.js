@@ -2,7 +2,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import videogamesReducer from "./videogamesSlice";
 import userReducer from "./userSlices"
 import cartReducer from "./cartSlice"
-// import salesReducer from "./salesSlice"
+import salesReducer from "./salesSlice"
 import reviewsReducer from './reviewSlice';
 
 
@@ -11,7 +11,7 @@ export default configureStore({
         videogamesState: videogamesReducer,
         usersState: userReducer,
         cartState: cartReducer,
-        // salesState: salesReducer,
+        salesState: salesReducer,
         reviews: reviewsReducer,
 
     }

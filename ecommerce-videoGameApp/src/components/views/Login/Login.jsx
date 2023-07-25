@@ -7,7 +7,7 @@ import {
   TextInput,
 } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
   color_gris_c,
@@ -47,8 +47,8 @@ export const Login = ({ navigation }) => {
           setLogingUser(dataUser);
           dispatch(checkLogedUser());
           setTimeout(() => {
-            console.log("------------------------->", token);
-            console.log("------------------------->", loged);
+            // console.log("------------------------->", token);
+            // console.log("------------------------->", loged);
           }, 5000);
         }
       } catch (error) {
@@ -174,11 +174,13 @@ export const Login = ({ navigation }) => {
                   style={styles.button}
                   onPress={() => setShowPassword(!showPassword)}
                 >
-                  <Text style={styles.buttonText}>
-                    {showPassword ? "Ocultar" : "Mostrar"}
-                  </Text>
+                  <MaterialCommunityIcons
+                    name={showPassword ? "eye-off" : "eye"}
+                    size={20}
+                    color="#000"
+                    style={{marginTop:-50, left:260, padding:10}}
+                  />
                 </TouchableOpacity>
-
               </View>
 
               {errorMsg && <Text>Incorrect user or password</Text>}
@@ -401,10 +403,10 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 10,
-    backgroundColor: '#007BFF',
+
     borderRadius: 5,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
   },
 });
