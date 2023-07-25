@@ -239,7 +239,7 @@ const DetailInfo = (props) => {
         hashtags: formattedHashtags,
         playtime: randomPlaytime,
         token: generateRandomToken(10), // Puedes ajustar la longitud según tus necesidades
-        username: username, // Agrega el nombre de usuario al objeto del comentario
+        user: isLogged.user, // Agrega el nombre de usuario al objeto del comentario
 
       };
 

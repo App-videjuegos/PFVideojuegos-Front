@@ -7,11 +7,13 @@ import { ThemeContext } from "../../utils/theme/ThemeProvider";
 import { ChangeButtonContext } from "../../utils/changeContextButton/ChangeContextButton";
 import { useContext } from "react";
 import MenuButtonSubItem from "./MenuButtonSubItem";
+import { useSelector } from "react-redux";
 
 const MenuItems = ({ navigation }) => {
   //esta linea debo de llamar en cada componente
   const { StringsDark } = useContext(ThemeContext);
   const { StringsLanguaje } = useContext(LanguajeContext);
+  const loged = useSelector((state) => state.usersState.isLogged);
 
   return (
     <DrawerContentScrollView
@@ -66,23 +68,23 @@ const MenuItems = ({ navigation }) => {
         onPress={() => navigation.navigate("RenderLogin")}
         icon="login"
       />
-      <MenuBottonItem
+      {loged.user&&<MenuBottonItem
         // nombre={StringsLanguaje.Login}
         nombre={"DashBoard"}
         // onPress={() => navigation.navigate("Login")}
         icon="view-dashboard"
-      />
-      <MenuButtonSubItem
+      />}
+      {loged.user && <MenuButtonSubItem
               nombre= {'User Profile'}
               onPress={()=> navigation.navigate('UserProfile')}
               icon="account-eye-outline"
-            />
-      <MenuBottonItem
+            />}
+{      !loged.user && <MenuBottonItem
         // nombre={StringsLanguaje.Login}
         nombre={"Register"}
         onPress={() => navigation.navigate("Register")}
         icon="account-plus"
-      />
+      />}
       {/* Botones para cambiar el modoDark o Idioma */}
       <ChangeButtonContext
         name={
