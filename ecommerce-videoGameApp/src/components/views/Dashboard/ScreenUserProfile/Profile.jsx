@@ -138,18 +138,17 @@ const Profile = ({ navigation }) => {
       ...values,
       tac: acceptTac,
       newsLetter: receibenewsLetter,
-      id: 1 + Math.floor(Math.random() * 999),
       userAdmin: true,
       image: image,
     };
-
-    console.log(`Antes del try ${userData}`);
+  
+    console.log(`Antes del try`, userData);
     const objupdatedUser = {};
-
+  
     // Verifica cada propiedad y agrega solo las que no sean nulas
     if (userData.user) objupdatedUser.user = userData.user;
     if (userData.fullname) objupdatedUser.fullname = userData.fullname;
-    if (userData.password) objupdatedUser.password = userData.password;
+    if (userData.pass) objupdatedUser.pass = userData.pass;
     if (userData.userAdmin) objupdatedUser.userAdmin = userData.userAdmin;
     if (userData.email) objupdatedUser.email = userData.email;
     if (userData.date) objupdatedUser.date = userData.date;
@@ -157,27 +156,34 @@ const Profile = ({ navigation }) => {
     if (userData.phone) objupdatedUser.phone = userData.phone;
     if (userData.tac) objupdatedUser.tac = userData.tac;
     if (userData.newsLetter) objupdatedUser.newsLetter = userData.newsLetter;
-    objupdatedUser.id = dataUserdb[0].id;
-
-    console.log(objupdatedUser);
+  
+    // Aquí utilizamos el ID directamente desde el estado loged (suponiendo que loged es un estado)
+    objupdatedUser.id = loged.id;
+  
+    console.log("LOGEDID------------------>", loged.id);
+  
+    console.log("OBJUSR----------------------------------->",objupdatedUser);
+  
     try {
-      console.log(`Después del try ${userData}`);
-      console.log(objupdatedUser);
-
-      updateUser(objupdatedUser);
-
+      console.log("OBJUSR----------------------------------->",objupdatedUser);
+      console.log(`Después del try`, userData);
+  
+      // Supongo que updateUser es una función que realiza una solicitud PUT al backend
+      // pero aquí no se muestra cómo se implementa updateUser, asegúrate de que esté correctamente implementada
+      await updateUser(objupdatedUser);
+  
+      // Si la función updateUser es asíncrona, asegúrate de esperar su resultado con "await" o usar ".then()"
+      // const response = await updateUser(objupdatedUser);
       // console.log(`Respuesta del servidor:`, response.data);
-
+  
       Alert.alert("Data update!", "", [
         {
-          text: "Go to home",
-          onPress: () => navigation.navigate("Home", { name: "Home" }),
+          text: "Ok",
+          // onPress: () => navigation.navigate("HomeStack", { name: "HomeStack" }),
         },
       ]);
     } catch (error) {
-      console.log(
-        `Error en el backend:, ${error},data enviada ${objupdatedUser}`
-      );
+      console.log(`Error en el backend:`, error);
       Alert.alert("Auch...Something went wrong");
     }
   };
@@ -219,7 +225,7 @@ const Profile = ({ navigation }) => {
       <Formik
         initialValues={{
           user: "",
-          password: "",
+          pass: "",
           fullname: "",
           email: "",
           date: "",
@@ -281,11 +287,11 @@ const Profile = ({ navigation }) => {
                 <View>
                   <TextInput
                     style={[styles.input]}
-                    value={values.password}
+                    value={values.pass}
                     placeholder="••••••••••"
                     secureTextEntry
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
+                    onChangeText={handleChange("pass")}
+                    onBlur={handleBlur("pass")}
                   />
                   {/* {errors.password && touched.password && (
                     <Text style={styles.error}>{errors.password}</Text>

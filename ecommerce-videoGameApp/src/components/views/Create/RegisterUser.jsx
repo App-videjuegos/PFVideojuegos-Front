@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    marginTop:8,
+    marginTop:16,
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
