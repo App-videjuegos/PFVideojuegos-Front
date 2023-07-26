@@ -2,6 +2,9 @@ import "react-native-gesture-handler";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const Drawer = createDrawerNavigator();
 // variables proveedoras del tema y cambiode lenguaje
