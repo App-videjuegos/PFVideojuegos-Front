@@ -5,24 +5,21 @@ import Card from "../../../utils/Card/Card";
 import { getAllSlsUser, setLoading } from "../../../../redux/salesSlice";
 import { getAllSalesUser } from "../../../../redux/salesActions";
 
+import PurchaseCard from "./PurchaseCard";
+
 const Shoppings = () => {
   const dispatch = useDispatch();
   const loged = useSelector((state) => state.usersState.isLogged);
-  // console.log(loged);
+
   const userSales = useSelector((state) => state.salesState.allSlsUsr);
   const isLoading = useSelector((state) => state.salesState.loading);
-
-  // useEffect(() => {
-  //   dispatch(setLoading(true));
-  //   dispatch(getAllSalesUser(loged.id)).then(() => dispatch(setLoading(false)));
-  // }, [dispatch, loged.id]);
 
   useEffect(() => {
     dispatch(getAllSalesUser(loged.id));
     
   }, []);
 
-  console.log("estado allSlsUsr", userSales);
+  // console.log("estado allSlsUsr", userSales);
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -40,12 +37,18 @@ const Shoppings = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>My Purchase</Text>
+      {!userSales && (
+        <Text style={styles.heading}>You don't have any purchase yet.</Text>
+      )}
+      {userSales && (
+        <FlatList
+          data={userSales}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => <PurchaseCard videoG={item} />}
 
-      <FlatList
-        data={userSales}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => <Card videoG={item} />}
-      />
+          //renderItem={({ item }) => <Card videoG={item} />}
+        />
+      )}
     </View>
   );
 };
@@ -61,6 +64,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
+  // loadingContainer: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
 });
 
 export default Shoppings;
