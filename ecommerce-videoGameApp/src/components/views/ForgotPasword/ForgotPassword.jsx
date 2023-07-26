@@ -64,7 +64,7 @@ export const ForgotPassword = ({ navigation }) => {
         {
           text: "Go to login",
           onPress: () =>
-            navigation.navigate("Login", { name: "Home" }),
+            navigation.navigate("RenderLogin", { name: "RenderLogin" }),
         },
       ]);
     } catch (error) {

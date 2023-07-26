@@ -16,6 +16,7 @@ import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { convertirFecha } from "../../helpers/InvertDate";
 import imageUser from "../../../../assets/imageUser.png";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
   color_gris_c,
@@ -38,7 +39,7 @@ const Register = ({ navigation }) => {
 
   const [accessToken, setAccessToken] = useState()
   const [userInfo, setUserInfo] = useState();
-
+  const [showPassword, setShowPassword] = useState(false);
   const [request,response,promptAsync] = Google.useAuthRequest({
     androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
     iosClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
@@ -285,10 +286,21 @@ const Register = ({ navigation }) => {
                     style={styles.input}
                     value={values.password}
                     placeholder="Password"
-                    secureTextEntry
+                    secureTextEntry={!showPassword}
                     onChangeText={handleChange("password")}
                     onBlur={handleBlur("password")}
                   />
+                                  <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <MaterialCommunityIcons
+                    name={showPassword ? "eye" : "eye-off"}
+                    size={20}
+                    color="#000"
+                    style={{marginTop:-40, left:260, padding:10}}
+                  />
+                </TouchableOpacity>
                   {errors.password && touched.password && (
                     <Text style={styles.error}>{errors.password}</Text>
                   )}

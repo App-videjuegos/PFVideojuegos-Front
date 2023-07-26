@@ -19,6 +19,7 @@ const Shoppings = () => {
 
   useEffect(() => {
     dispatch(getAllSalesUser(loged.id));
+    
   }, []);
 
   console.log("estado allSlsUsr", userSales);

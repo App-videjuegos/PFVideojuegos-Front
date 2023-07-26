@@ -40,6 +40,7 @@ import { getUserByName, updateUser } from "../../../../redux/userActions";
 //Dark Mode:
 
 const Profile = ({ navigation }) => {
+  const loged = useSelector((state) => state.usersState.isLogged);
   const [acceptTac, setAcceptTac] = useState(true);
   const [receibenewsLetter, setReceivenewsLetter] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +48,6 @@ const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
   const dataUserdb = useSelector((state) => state.usersState.dataUser);
   const [loading, setLoading] = useState(true);
-  const loged = useSelector((state) => state.usersState.isLogged);
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -160,6 +160,8 @@ const Profile = ({ navigation }) => {
     // Aquí utilizamos el ID directamente desde el estado loged (suponiendo que loged es un estado)
     objupdatedUser.id = loged.id;
   
+    console.log("LOGEDID------------------>", loged);
+
     console.log("LOGEDID------------------>", loged.id);
   
     console.log("OBJUSR----------------------------------->",objupdatedUser);
