@@ -142,7 +142,7 @@ export const postUser = (data) => {
       }
     } catch (error) {
       Alert.alert("Something went wrong", "error updating data");
-      console.log("error updating data", err);
+      console.log("error updating data", error);
     }
   };
 
