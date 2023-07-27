@@ -45,8 +45,7 @@ const Card = (props) => {
     });
     setVideoGames(updatedVideoGames);
   };
-  console.log("id", videoG.id);
-  /*////////////////////////////////////////// */
+ 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>

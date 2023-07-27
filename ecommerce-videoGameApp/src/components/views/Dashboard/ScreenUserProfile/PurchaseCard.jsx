@@ -19,38 +19,41 @@ const PurchaseCard = ({ videoG }) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#E1F5FE", // Color de fondo en tono azul claro
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
+    shadowColor: "#000", // Agregamos sombra
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   image: {
     width: 150,
     height: 100,
     resizeMode: "cover",
     marginBottom: 8,
+    borderRadius: 4,
   },
   gameName: {
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 8,
+    color: "#2196F3", // Color del texto en tono azul
   },
   rating: {
     fontSize: 14,
     marginBottom: 4,
+    color: "#1976D2", // Color del texto en tono azul más oscuro
   },
   price: {
     fontSize: 14,
     marginBottom: 8,
-  },
-  addToCartButton: {
-    fontSize: 16,
-    color: "#007BFF",
-    textAlign: "center",
-    borderWidth: 1,
-    borderColor: "#007BFF",
-    borderRadius: 4,
-    padding: 8,
+    color: "#1976D2", // Color del texto en tono azul más oscuro
   },
 });
 
