@@ -43,72 +43,74 @@ export const Login = ({ navigation }) => {
 
 
 //AUTH GOOGLE
-  const [accessToken, setAccessToken] = useState()
-  const [userInfo, setUserInfo] = useState();
+const [accessToken, setAccessToken] = useState()
+const [userInfo, setUserInfo] = useState();
 
-  const [request,response,promptAsync] = Google.useAuthRequest({
-    androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
-    iosClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
-    expoClientId:"992202978342-r97fm6970n55pdn6jsu5s2h8tme07qbe.apps.googleusercontent.com"
+const [request,response,promptAsync] = Google.useAuthRequest({
+  androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+  iosClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+  expoClientId:"992202978342-r97fm6970n55pdn6jsu5s2h8tme07qbe.apps.googleusercontent.com"
+})
+
+
+
+useEffect(()=>{
+  if(response?.type === "success"){
+    setAccessToken(response.authentication.accessToken)
+
+   }
+},[response])
+
+useEffect(() => {
+  const handleLoginAuth = async () => {
+    console.log("DESDE USER", userInfo);
+    try {
+      const user = await loginService.authLogin({
+        user: userInfo.email,
+      });
+      console.log(user);
+    } catch (e) {
+      console.log("ERRRROR", e);
+    }
+  }
+
+  if (accessToken && userInfo) {
+    console.log("LLEGA");
+    handleLoginAuth();
+  }
+}, [accessToken, userInfo]);
+
+useEffect(() => {
+  if (accessToken) {
+    getUserData();
+  }
+}, [accessToken]);
+
+
+const getUserData = async  () => {
+  let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me",
+  { headers: {Authorization: `Bearer ${accessToken}`}})
+
+    await userInfoResponse.json().then(data => {
+    setUserInfo(data)
   })
 
+}
 
 
-  useEffect(()=>{
-    if(response?.type === "success"){
-      setAccessToken(response.authentication.accessToken)
+const showUserData = () => {
+  console.log(userInfo)
+  if(userInfo) {
+    return (
+      <View style={styles.userInfo}>
+        <Image source={{ uri: userInfo.picture}} style ={styles.profilePic}/>
+        <Text>welcome {userInfo.name}</Text>
+        <Text> {userInfo.email}</Text>
 
-     }
-  },[response])
-
-  useEffect(() => {
-    if (accessToken) {
-      getUserData();
-
-      handleLoginAuth()
-
-      const handleLoginAuth = async () => {
-        try {
-
-          const user = await loginService.authLogin({
-            user: userInfo.email,
-          });
-
-          console.log(user)
-
-        }catch(e){
-          console.log(e.error)
-        }
-      }
-
-    }
-  }, [accessToken]);
-
-
-  const getUserData = async  () => {
-    let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me",
-    { headers: {Authorization: `Bearer ${accessToken}`}})
-
-      await userInfoResponse.json().then(data => {
-      setUserInfo(data)
-    })
-
+      </View>
+    )
   }
-
-
-  const showUserData = () => {
-    console.log(userInfo)
-    if(userInfo) {
-      return (
-        <View style={styles.userInfo}>
-          <Image source={{ uri: userInfo.picture}} style ={styles.profilePic}/>
-          <Text>welcome {userInfo.name}</Text>
-          <Text> {userInfo.email}</Text>
-
-        </View>
-      )
-    }
-  }
+}
 
   // ----------- FIN AUTH GOOGLE ------
 
