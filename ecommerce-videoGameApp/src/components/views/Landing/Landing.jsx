@@ -118,7 +118,7 @@ const Landing = ({ navigation }) => {
           <TouchableOpacity onPress={() => loadMoreGames('menu1')}>
             <View style={[styles.button, styles.menuButton]}>
               <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>
-                {menu1Index >= videoGames.length ? 'Cerrar' : 'Ver más'}
+                {menu1Index >= videoGames.length ? 'Close' : 'See more'}
               </Text>
             </View>
           </TouchableOpacity>
@@ -126,7 +126,7 @@ const Landing = ({ navigation }) => {
         {showCloseMenu1 && (
           <TouchableOpacity onPress={() => setShowCloseMenu1(false)}>
             <View style={[styles.button, styles.menuButton]}>
-              <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>Cerrar</Text>
+              <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>Close</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -143,7 +143,7 @@ const Landing = ({ navigation }) => {
           <TouchableOpacity onPress={() => loadMoreGames('menu2')}>
             <View style={[styles.button, styles.menuButton]}>
               <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>
-                {menu2Index >= videoGames.length ? 'Cerrar' : 'Ver más'}
+                {menu2Index >= videoGames.length ? 'Close' : 'See more'}
               </Text>
             </View>
           </TouchableOpacity>
@@ -151,7 +151,7 @@ const Landing = ({ navigation }) => {
         {showCloseMenu2 && (
           <TouchableOpacity onPress={() => setShowCloseMenu2(false)}>
             <View style={[styles.button, styles.menuButton]}>
-              <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>Cerrar</Text>
+              <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>Close</Text>
             </View>
           </TouchableOpacity>
         )}
