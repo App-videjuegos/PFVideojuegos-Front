@@ -50,7 +50,7 @@ const DetailInfo = (props) => {
   useEffect(() => {
     // Solo solicitamos los comentarios si se presionó el botón "Cargar comentarios"
     if (shouldLoadComments) {
-      console.log("Obteniendo comentarios para el juego:", props.propInfo.name);
+      //console.log("Obteniendo comentarios para el juego:", props.propInfo.name);
       dispatch(getReviewsByVideogameId(currentVideogameId));
       setShouldLoadComments(false); // Reiniciamos el estado para futuras actualizaciones
     }
@@ -69,7 +69,7 @@ const DetailInfo = (props) => {
       currentGameComments.length === 0 ||
       currentGameComments[0]?.videogameId !== currentVideogameId
     ) {
-      console.log("Obteniendo comentarios para el juego:", props.propInfo.name);
+      //console.log("Getting feedback for the game:", props.propInfo.name);
       dispatch(getReviewsByVideogameId(currentVideogameId));
     }
   }, [dispatch, currentVideogameId, currentGameComments]);
@@ -97,14 +97,14 @@ const DetailInfo = (props) => {
   }, [reviews]);
 
   useEffect(() => {
-    console.log("Comentarios recibidos desde Redux:", reviews);
+    //console.log("Comentarios recibidos desde Redux:", reviews);
     // Aquí, los comentarios recibidos desde Redux se mostrarán correctamente en la vista.
   }, [reviews]);
 
   useEffect(() => {
     // Solo solicitamos los comentarios si no hay comentarios cargados previamente
     if (reviews.length === 0) {
-      console.log("videogameId:", props.propInfo.id);
+      //console.log("videogameId:", props.propInfo.id);
       dispatch(getReviewsByVideogameId(props.propInfo.id));
     }
   }, [dispatch, props.propInfo.id, reviews.length]);
@@ -261,7 +261,7 @@ const DetailInfo = (props) => {
       setErrorHashtag(true);
     }
   } else {
-    console.log("Usuario no logueado. No se puede enviar la reseña.");
+    console.log("User not logged in. Unable to submit review.");
   }
 };
 
@@ -335,7 +335,7 @@ const key = "cart" + props.propInfo.id;
       <TouchableOpacity onPress={handleLoadComments}>
         <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
           <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
-            Cargar comentarios
+          Add a comment to this game
           </Text>
         </View>
       </TouchableOpacity>
