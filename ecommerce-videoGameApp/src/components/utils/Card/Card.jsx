@@ -13,10 +13,25 @@ import { InsertarItem } from "../../forms/Cart/CardCartController";
 import { updateCart } from "../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import GameRating from "../../views/Home/Detail/GameRating";
-import { useState } from "react";
+import { useState, useRef, useSelector } from "react";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Animatable from "react-native-animatable"; // Importamos la librería para las animaciones
 
 const Card = (props) => {
   const { videoG, nav } = props;
+
+  {/* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */}
+  const [isFavorite, setIsFavorite] = useState(false); // Estado para controlar si el juego es favorito o no
+  const heartRef = useRef(null); // Referencia para la animación del corazón
+  const handleToggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    // Hacemos que el corazón tiemble cada vez que se toque
+    heartRef.current?.rubberBand(500); // 500ms para completar la animación
+  };
+ {/* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */}
+
+
+
   const dispatch = useDispatch();
   // Función para actualizar el rating del videojuego en la tarjeta inicial (Home)
   const [videoGames, setVideoGames] = useState([]);
@@ -49,30 +64,20 @@ const Card = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <TouchableOpacity
-          onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-        >
+        {/* Imagen del videojuego */}
+        <TouchableOpacity onPress={() => nav.navigate("Detail", { videoGames: videoG })}>
           <Image
             style={styles.image}
             source={{ uri: videoG.image }}
-            PlaceholderContent={
-              <ActivityIndicator color={"#FFFFFF"} size={"large"} />
-            }
+            PlaceholderContent={<ActivityIndicator color={"#FFFFFF"} size={"large"} />}
           />
         </TouchableOpacity>
       </View>
       <View style={styles.detailsContainer}>
+        {/* Nombre del videojuego */}
         <Text style={styles.name}>{videoG.name}</Text>
-
-        {/* Aquí pasamos la función updateCardRating y la variable videoGames como props a GameRating */}
-        {/* <GameRating
-          initialRating={videoG.rating}
-          gameId={videoG.id}
-          // updateCardRating={updateCardRating}
-          // videoGames={videoGames}
-          // setVideoGames={setVideoGames}
-        />
-        */}
+  
+        {/* Rating del videojuego */}
         <AirbnbRating
           count={5}
           defaultRating={videoG.rating}
@@ -81,35 +86,53 @@ const Card = (props) => {
           selectedColor="gold"
           isDisabled={true}
         />
+  
+        {/* Fila que contiene el precio y el corazón */}
+      <View style={styles.priceAndFavoriteContainer}>
+        {/* Precio del videojuego */}
         <Text style={styles.price}>$ {videoG.price}</Text>
-        {/* <TouchableOpacity
-          onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-        >
-          <Text style={styles.detail}>See Detail</Text>
-        </TouchableOpacity> */}
 
-        <TouchableOpacity
-          onPress={() => {
-            InsertarItem(key, objString);
-            dispatch(updateCart());
-            // getKeysCount();
-            console.log("key guardada", objString);
-          }}
-        >
-          <View
-            style={[styles.AddCartContainer, { backgroundColor: "#622EDA" }]}
-          >
+        {/* Espacio entre el precio y el corazón */}
+        <View style={styles.space} />
+
+        {/* Botón de favoritos */}
+        <TouchableOpacity onPress={handleToggleFavorite}>
+        <Animatable.View ref={heartRef} >
+            <MaterialCommunityIcons style={styles.heartIcon}
+              name={isFavorite ? 'heart-plus' : 'heart-minus'}
+              size={30}
+              color={isFavorite ? "#622EDA" : "#595959"}
+            />
+          </Animatable.View>
+        </TouchableOpacity>
+      </View>
+        
+        {/* Botón "Add to cart" */}
+        <TouchableOpacity onPress={() => {
+          InsertarItem(key, objString);
+          dispatch(updateCart());
+          console.log("key guardada", objString);
+        }}>
+          <View style={[styles.AddCartContainer, { backgroundColor: "#622EDA" }]}>
             <Text style={[styles.addItemCar, { color: "#ffffff" }]}>
               {"Add to cart"}
             </Text>
           </View>
         </TouchableOpacity>
+        
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  priceAndFavoriteContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  space: {
+    width: 30, // Ajusta este valor según el espaciado deseado
+  },
   container: {
     padding: 3,
     flexDirection: "row",

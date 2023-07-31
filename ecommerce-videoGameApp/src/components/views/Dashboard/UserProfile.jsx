@@ -108,7 +108,7 @@ const UserProfileComponent = ({ navigation }) => {
       />
        <Card
         iconName="comment"
-        title="Comments"
+        title="My reviews"
         description="My Comments"
         screenName="Comments"
       /> 
@@ -126,13 +126,14 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     padding: 16,
+    paddingTop: 28,
   },
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    padding: 32,
     backgroundColor: '#FFF',
-    marginBottom: 14,
+    marginBottom: 72,
     borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

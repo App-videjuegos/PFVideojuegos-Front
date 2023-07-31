@@ -71,3 +71,58 @@ export const getReviewsByVideogameId = (videogameId) => {
     }
   };
 };
+
+export const getReviewsByUserId = (userId) => {
+  return async (dispatch) => {
+    try {
+      console.log("Obteniendo comentarios por userId:", userId);
+
+      dispatch(setLoading(true));
+
+      // Obtener todas las reviews desde la URL
+      const response = await axios.get(
+        "https://pfvideojuegos-back-production.up.railway.app/reviews"
+      );
+
+      // Filtrar las reviews según el userId
+      const allReviews = response.data;
+      const reviewsByUserId = allReviews.filter(
+        (comment) => comment.userId === userId
+      );
+
+      console.log("Comentarios recibidos desde el servidor:", reviewsByUserId);
+
+      dispatch(setReviews(reviewsByUserId));
+      dispatch(setLoading(false));
+    } catch (error) {
+      console.log("Error al obtener comentarios:", error.message);
+      dispatch(setError("Error al obtener comentarios"));
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+export const getAllReviews = () => {
+  return async (dispatch) => {
+    try {
+      //console.log("Obteniendo todas las reviews");
+
+      dispatch(setLoading(true));
+
+      const response = await axios.get(
+        "https://pfvideojuegos-back-production.up.railway.app/reviews"
+      );
+
+      const allReviews = response.data;
+
+      //console.log("Todas las reviews recibidas desde el servidor:", allReviews);
+
+      dispatch(setReviews(allReviews));
+      dispatch(setLoading(false));
+    } catch (error) {
+      console.log("Error al obtener todas las reviews:", error.message);
+      dispatch(setError("Error al obtener todas las reviews"));
+      dispatch(setLoading(false));
+    }
+  };
+};
