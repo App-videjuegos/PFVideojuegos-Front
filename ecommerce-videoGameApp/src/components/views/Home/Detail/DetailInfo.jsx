@@ -271,7 +271,7 @@ let objeto = {
   price: props.propInfo.price,
   img: props.propInfo.image,
   stock: 5,
-  amount: 1,
+  amount: Number(1),
 };
 const objString = JSON.stringify(objeto);
 

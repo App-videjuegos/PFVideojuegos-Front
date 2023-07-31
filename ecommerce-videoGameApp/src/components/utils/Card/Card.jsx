@@ -42,7 +42,7 @@ const Card = (props) => {
     price: videoG.price,
     img: videoG.image,
     stock: 5,
-    amount: 1,
+    amount: Number(1),
   };
   const objString = JSON.stringify(objeto);
 

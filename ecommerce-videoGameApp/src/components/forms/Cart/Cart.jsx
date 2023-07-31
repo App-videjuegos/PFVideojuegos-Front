@@ -105,7 +105,8 @@ const Cart = ({ navigation }) => {
   const getUserStorage = async () => {
     try {
       const LoggedUserJSON = await getItemAsyncStorage('logedGameStack');
-      console.log('variable LoggedUserJSON menu ITEMS->', LoggedUserJSON);
+      // console.log("que hay ahora en loggeuserjson----->>>>>",LoggedUserJSON.fullname);
+      // // console.log('variable LoggedUserJSON menu ITEMS->', LoggedUserJSON);
       if (LoggedUserJSON !== 'vacio') {
         setLoggingUser(LoggedUserJSON);
         setIsLogged(true);
@@ -127,21 +128,24 @@ const Cart = ({ navigation }) => {
 
   const handlePasarellaPress = () => {
     const proceedWithPurchase = () => {
+      // console.log("isLogged,",isLogged);
       if (isLogged) {
+        // console.log (" me dejo pasar a pasarela sin login?")
         const itemsCart = Carrito.map((el) => {
           return {
             videogameId: el.value.id,
             videogameName: el.value.title,
             unitPrice: el.value.price,
-            quantity: el.value.amount.toFixed(2),
+            quantity: el.value.amount,
           };
         });
+        // console.log("que hay en fyll name",logginUser.fullname )
         // const items = [{ videogameId: 3498, videogameName: "Grand Theft Auto V", unitPrice: 20, quantity: 2 }]
         navigation.navigate('Pasarella', {
           Cart: itemsCart,
           tot: total,
           userid: logginUser.id,
-          // username:logginUser.name
+          userName: logginUser.fullname
         });
       } else {
         alert('Login Registration is required\nYou are being redirected to Login...');

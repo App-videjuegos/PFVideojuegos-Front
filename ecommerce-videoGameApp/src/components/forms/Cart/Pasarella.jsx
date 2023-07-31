@@ -20,12 +20,14 @@ import { ThemeContext } from "../../utils/theme/ThemeProvider";
 import { LanguajeContext } from "../../utils/languaje/languajeProvider";
 import React, { useEffect, useState, useContext, useRef } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 const Pasarella = ({ navigation, route }) => {
+
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const { StringsDark, isDarkMode } = useContext(ThemeContext);
   const { StringsLanguaje, locale } = useContext(LanguajeContext);
-  const { Cart, tot, userid } = route.params;
+  const { Cart, tot, userid, userName } = route.params;
   const cardFieldRef = useRef(null);
   const currentDate = new Date().toLocaleDateString();
   const currentTime = new Date().toLocaleTimeString();
@@ -38,7 +40,7 @@ const Pasarella = ({ navigation, route }) => {
     dispatch(updateCart()); // Actualiza el estado del carrito en el Redux store
     navigation.navigate("HomeStack"); // Navega a la pantalla 'HomeStack'
   };
-
+  console.log("esto me llega en cart ojo a cntidd",Cart);
   useEffect(() => {
     // console.log("esta entrando ?")
     navigation.setOptions({
@@ -124,7 +126,7 @@ const Pasarella = ({ navigation, route }) => {
           // console.log('aqui q hay', data.message);
 
           if (data.message === "ok") {
-            console.log("esto hay en este estado", cardDetails);
+            // console.log("esto hay en este estado", cardDetails);
             setModalVisible(true);
           } else {
             alert(
@@ -223,9 +225,9 @@ const Pasarella = ({ navigation, route }) => {
               <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
                 Date and time: {currentDate} {currentTime}
               </Text>
-              {/* <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                User: {datos && datos.userId ? datos.userId : "en desarrollo"}
-              </Text> */}
+              <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
+                User: {userName }
+              </Text>
             </View>
             <View style={[styles.p2, { borderColor: "#6B35E8" }]}>
               <Text style={[styles.m_titulos, { color: "#6B35E8" }]}>
