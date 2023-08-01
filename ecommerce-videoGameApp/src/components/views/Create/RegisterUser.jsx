@@ -193,8 +193,8 @@ const Register = ({ navigation }) => {
       // Mostrar el componente Purchase después de un registro exitoso
       setShowPurchase(true);
     } catch (error) {
-      console.log("Error en el backend:", error);
-      Alert.alert("Auch...Something went wrong");
+      console.log("Error en el backend:", error.response.data.message);
+      Alert.alert("Auch...Something went wrong", error.response.data.message);
     }
   };
 

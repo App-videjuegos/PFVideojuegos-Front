@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
+
 const PurchaseCard = ({ videoG }) => {
   const videoGames = useSelector((state) => state.videogamesState.videoGames);
 
@@ -9,21 +10,31 @@ const PurchaseCard = ({ videoG }) => {
 
   return (
     <View style={styles.cardContainer}>
-      <Image source={{ uri: actualgame[0].image }} style={styles.image} />
-      <Text style={styles.gameName}>{actualgame[0].name}</Text>
-      <Text style={styles.rating}>Rating:{actualgame[0].rating}</Text>
-      <Text style={styles.price}>Price: ${actualgame[0].price}</Text>
+      <View style={styles.leftContainer}>
+        <Image source={{ uri: actualgame[0].image }} style={styles.image} />
+      </View>
+      <View style={styles.rightContainer}>
+        <Text style={styles.infoText}>
+          <Text style={styles.boldText}>N° Order:</Text> {actualgame[0].id}
+        </Text>
+        <Text style={styles.infoText}>
+          Quantity Items: {videoG.items[0].quantity}
+        </Text>
+        <Text style={styles.infoText}>Videogames: {actualgame[0].name}</Text>
+        <Text style={styles.infoText}>Date: {videoG.date}</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: "#E1F5FE", // Color de fondo en tono azul claro
+    flexDirection: "row",
+    backgroundColor: "#FFFFFF", // Color de fondo BLANCO
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
-    shadowColor: "#000", // Agregamos sombra
+    shadowColor: "#000", // sombra
     shadowOffset: {
       width: 0,
       height: 2,
@@ -32,28 +43,28 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  leftContainer: {
+    marginRight: 16,
+  },
+  rightContainer: {
+    flex: 1,
+  },
   image: {
-    width: 150,
+    width: 100,
     height: 100,
     resizeMode: "cover",
-    marginBottom: 8,
-    borderRadius: 4,
+    borderRadius: 5,
   },
-  gameName: {
+  infoText: {
+    fontFamily: "Roboto", // Font family
+    fontWeight: 400,
     fontSize: 16,
+    lineHeight: 14.52,
+    marginBottom: 8,
+    color: "#606060", // Color gris
+  },
+  boldText: {
     fontWeight: "bold",
-    marginBottom: 8,
-    color: "#2196F3", // Color del texto en tono azul
-  },
-  rating: {
-    fontSize: 14,
-    marginBottom: 4,
-    color: "#1976D2", // Color del texto en tono azul más oscuro
-  },
-  price: {
-    fontSize: 14,
-    marginBottom: 8,
-    color: "#1976D2", // Color del texto en tono azul más oscuro
   },
 });
 

@@ -57,7 +57,7 @@ const Shoppings = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>My Purchase</Text>
+      <Text style={styles.heading}>My Shoppings</Text>
 
       {!userSales && (
         <Text style={styles.heading}>You don't have any purchase yet.</Text>
