@@ -1,5 +1,15 @@
 import { useState } from "react";
 import Dialog from "react-native-dialog";
+import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 
 const AlertDialog = () => {
   const [isAlertVisible, setAlertVisible] = useState(false);

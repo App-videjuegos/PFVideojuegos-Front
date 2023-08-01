@@ -36,7 +36,7 @@ import {
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserByName, updateUser } from "../../../../redux/userActions";
-import AlertDialog
+
 //Dark Mode:
 
 const Profile = ({ navigation }) => {
