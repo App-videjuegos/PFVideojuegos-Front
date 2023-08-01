@@ -1,18 +1,25 @@
 import React, { useEffect } from "react";
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllReviews } from "../../../../redux/reviewActions";
-import {convertirFecha} from "../../../helpers/InvertDate"
+import { convertirFecha } from "../../../helpers/InvertDate";
 import { useNavigation } from "@react-navigation/native";
 
 const Comments = () => {
-  
   const navigation = useNavigation(); // Correctly using useNavigation hook
 
   //Estado donde traigo los juegos para sacar la info (Imagen, titulo)
   const videoGames = useSelector((state) => state.videogamesState.videoGames);
-    //console.log('Toda la data devideoGames:',videoGames);
-    //De aca me traigo TODAS las review
+  //console.log('Toda la data devideoGames:',videoGames);
+  //De aca me traigo TODAS las review
   const reviews = useSelector((state) => state.reviews.reviews);
   //De aca sacamos la informacion del usuario para hacer el filtro de comentarios por usuario
   const isLogged = useSelector((state) => state.usersState.isLogged);
@@ -53,23 +60,25 @@ const Comments = () => {
 
     return (
       <TouchableOpacity onPress={() => handleReviewPress(item.videogameId)}>
-      <View style={styles.reviewCard}>
-        <Image source={{ uri: gameInfo.image }} style={styles.image} />
-        <View style={styles.reviewInfoContainer}>
-          <Text style={styles.gameTitle} numberOfLines={1}>
-            Game Title: {gameInfo.title}
-          </Text>
-          <Text style={styles.user}>User: {item.user}</Text>
-          <Text style={styles.reviewDate}>Review Date: {convertirFecha(item.reviewDate)}</Text>
-          <Text style={styles.reviewComment} numberOfLines={2}>
-            Comment: {item.comment}
-          </Text>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.ratingText}>Rating: {item.rating}</Text>
-            {/* Puedes agregar aquí el componente de rating que desees */}
+        <View style={styles.reviewCard}>
+          <Image source={{ uri: gameInfo.image }} style={styles.image} />
+          <View style={styles.reviewInfoContainer}>
+            <Text style={styles.gameTitle} numberOfLines={1}>
+              Game Title: {gameInfo.title}
+            </Text>
+            <Text style={styles.user}>User: {item.user}</Text>
+            <Text style={styles.reviewDate}>
+              Review Date: {convertirFecha(item.reviewDate)}
+            </Text>
+            <Text style={styles.reviewComment} numberOfLines={2}>
+              Comment: {item.comment}
+            </Text>
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingText}>Rating: {item.rating}</Text>
+              {/* Puedes agregar aquí el componente de rating que desees */}
+            </View>
           </View>
         </View>
-      </View>
       </TouchableOpacity>
     );
   };
