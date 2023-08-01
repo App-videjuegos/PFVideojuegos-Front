@@ -111,7 +111,7 @@ const Card = (props) => {
         <TouchableOpacity onPress={() => {
           InsertarItem(key, objString);
           dispatch(updateCart());
-          console.log("key guardada", objString);
+          // console.log("key guardada", objString);
         }}>
           <View style={[styles.AddCartContainer, { backgroundColor: "#622EDA" }]}>
             <Text style={[styles.addItemCar, { color: "#ffffff" }]}>
