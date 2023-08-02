@@ -81,12 +81,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo oscuro semi-transparente
+    width: "100%",
+    height: "100%",
   },
   modalContent: {
     backgroundColor: "#FFFFFF", // Color de fondo BLANCO
     borderRadius: 8,
     padding: 16,
-    width: "80%",
+    width: "50%",
+    height: "80%",
     alignItems: "center",
     shadowColor: "#000", // sombra
     shadowOffset: {

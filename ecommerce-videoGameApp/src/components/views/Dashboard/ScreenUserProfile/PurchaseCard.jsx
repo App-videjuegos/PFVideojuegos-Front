@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   infoText: {
     fontFamily: "Roboto", // Font family
     fontWeight: 400,
-    fontSize: 16,
+    fontSize: 12,
     lineHeight: 14.52,
     marginBottom: 8,
     color: "#606060", // Color gris
