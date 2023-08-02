@@ -1,27 +1,56 @@
-import React from "react";
+import { React, useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
+// Función para generar un número de orden aleatorio entre 0 y 9999
+// Tiene un useState para que no se genere un número nuevo cada vez que se renderiza el componente (modo para la demo)
+const generateOrderNumber = () => {
+  return Math.floor(Math.random() * 10000);
+};
+
 const PurchaseCard = ({ videoG }) => {
   const videoGames = useSelector((state) => state.videogamesState.videoGames);
+  const [orderNumber] = useState(generateOrderNumber());
 
-  const actualgame =
-    videoGames && videoGames.filter((i) => i.id == videoG.items[0].videogameId);
+  const totalQuantity = videoG.items.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
+  // Función para formatear la fecha en formato "dia-mes-año"
+  const formatDate = (dateString) => {
+    // nativa de JS
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+  };
+
+  const formattedDate = formatDate(videoG.date);
 
   return (
     <View style={styles.cardContainer}>
       <View style={styles.leftContainer}>
-        <Image source={{ uri: actualgame[0].image }} style={styles.image} />
+        <Image source={{ uri: videoG.items[0].image }} style={styles.image} />
       </View>
       <View style={styles.rightContainer}>
         <Text style={styles.infoText}>
-          <Text style={styles.boldText}>N° Order:</Text> {actualgame[0].id}
+          <Text style={styles.boldText}>N° Order:</Text> {orderNumber}
         </Text>
+        <Text style={styles.infoText}>Quantity Items: {totalQuantity}</Text>
         <Text style={styles.infoText}>
-          Quantity Items: {videoG.items[0].quantity}
+          Videogames:{" "}
+          {videoG.items
+            .map((item) => {
+              const game = videoGames.find(
+                (game) => game.id === item.videogameId
+              );
+              return game.name;
+            })
+            .join(", ")}
         </Text>
-        <Text style={styles.infoText}>Videogames: {actualgame[0].name}</Text>
-        <Text style={styles.infoText}>Date: {videoG.date}</Text>
+        <Text style={styles.infoText}>Date: {formattedDate}</Text>
       </View>
     </View>
   );
