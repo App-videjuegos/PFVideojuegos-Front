@@ -8,6 +8,8 @@ import { ChangeButtonContext } from "../../utils/changeContextButton/ChangeConte
 import { useContext } from "react";
 import MenuButtonSubItem from "./MenuButtonSubItem";
 import { useSelector } from "react-redux";
+import { obtenerPrimerNombre } from "../../helpers/Primernombre";
+
 
 const MenuItems = ({ navigation }) => {
   //esta linea debo de llamar en cada componente
@@ -20,25 +22,32 @@ const MenuItems = ({ navigation }) => {
       style={{ backgroundColor: StringsDark.menuDrawner_f }}
     >
       <View style={{ backgroundColor: StringsDark.menuDrawner_c }}>
-        <View style={styles.cabeceraimg}>
-          <TouchableOpacity onPress={() => navigation.navigate("UserProfile")} >
-          <Image
-            source={loged.image ? {uri:loged.image} : require("../../../../assets/imageUser.png")}
-            style={styles.imgmenu}
-          />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.cabeceraText}>
-          <Text
-            style={[styles.textoUsr, { color: StringsDark.menuDrawner_t }]}
-          >{loged.user ? loged.user : "Welcome"}</Text>
-        </View>
-        <View
-          style={[
-            styles.separator,
-            { borderColor: StringsDark.menuDrawner_sep },
-          ]}
-        ></View>
+      <View style={styles.cabeceraimg}>
+  <TouchableOpacity
+    onPress={loged.user ? () => navigation.navigate("UserProfile") : () => navigation.navigate("RenderLogin")}
+    style={styles.container}
+  >
+    <View style={styles.cabeceraText}>
+      <Text style={[styles.textoFullname, { color: StringsDark.menuDrawner_t }]}>
+        {loged.fullname ? `Welcome ${obtenerPrimerNombre(loged.fullname)}` : "Welcome User"}
+      </Text>
+      <Text style={[styles.textoUsr, { color: StringsDark.menuDrawner_t }]}>
+        {loged.user ? loged.user : ""}
+      </Text>
+    </View>
+    <View>
+      <Image
+        source={
+          loged.image
+            ? { uri: loged.image }
+            : require("../../../../assets/imageUser.png")
+        }
+        style={styles.imgmenu}
+      />
+    </View>
+  </TouchableOpacity>
+</View>
+
       </View>
       <MenuBottonItem
         // nombre={StringsLanguaje.Landing}
@@ -54,7 +63,7 @@ const MenuItems = ({ navigation }) => {
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Shopping_Car}
-       nombre={"Shopping Cart"}
+        nombre={"Shopping Cart"}
         onPress={() => navigation.navigate("Cart")}
         icon="cart-variant"
       />
@@ -66,9 +75,9 @@ const MenuItems = ({ navigation }) => {
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Login}
-        nombre={loged ? "Logout": "Login"}
+        nombre={loged.user ? "Logout" : "Login"}
         onPress={() => navigation.navigate("RenderLogin")}
-        icon={loged ? "logout" : "login"}
+        icon={loged.user ? "logout" : "login"}
       />
       {/* {loged.user&&<MenuBottonItem
         // nombre={StringsLanguaje.Login}
@@ -76,17 +85,21 @@ const MenuItems = ({ navigation }) => {
         // onPress={() => navigation.navigate("Login")}
         icon="view-dashboard"
       />} */}
-      {loged.user&&<MenuBottonItem
-              nombre= {'User Profile'}
-              onPress={()=> navigation.navigate('UserProfile')}
-              icon="account-eye-outline"
-            />}
-{      !loged.user && <MenuBottonItem
-        // nombre={StringsLanguaje.Login}
-        nombre={"Register"}
-        onPress={() => navigation.navigate("Register")}
-        icon="account-plus"
-      />}
+      {loged.user && (
+        <MenuBottonItem
+          nombre={"User Profile"}
+          onPress={() => navigation.navigate("UserProfile")}
+          icon="account-eye-outline"
+        />
+      )}
+      {!loged.user && (
+        <MenuBottonItem
+          // nombre={StringsLanguaje.Login}
+          nombre={"Register"}
+          onPress={() => navigation.navigate("Register")}
+          icon="account-plus"
+        />
+      )}
       {/* Botones para cambiar el modoDark o Idioma */}
       <ChangeButtonContext
         name={
@@ -109,18 +122,22 @@ const MenuItems = ({ navigation }) => {
 const styles = StyleSheet.create({
   cabeceraimg: {
     flexDirection: "row",
-    // alignContent: 'space-between',
-    alignItems: "center",
-    alignContent: "space-around",
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   imgmenu: {
-    marginLeft: 20,
-    padding: 20,
-    width: 120,
-    height: 80,
-    // justifyContent: '',
-
+    marginRight: 20,
+    marginTop: 24,
+    marginBottom: 20,
+    width: 52,
+    height: 52,
+    justifyContent: "flex-end",
     resizeMode: "contain",
+    borderRadius:100,
   },
   icon: {
     marginLeft: 70,
@@ -132,8 +149,11 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   cabeceraText: {
-    alignContent: "center",
-    alignItems: "center",
+    alignContent: "flex-end",
+    alignItems: "flex-end",
+    
+    marginRight:16,
+
   },
   btnIngresa: {
     margin: 3,
@@ -146,9 +166,15 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center",
   },
-  textoUsr: {
-    fontSize: 13,
-    // color:color_blanco,
+  textoFullname: {
+    fontSize: 16,
+    justifyContent:"flex-end",
+    fontWeight:"900",
+  },
+  textoUser: {
+    fontSize: 16,
+    justifyContent:"flex-end",
+    fontWeight:"600",
   },
 
   separator: {
