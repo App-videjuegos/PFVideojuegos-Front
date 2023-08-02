@@ -126,14 +126,14 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     padding: 16,
-    paddingTop: 28,
+    paddingTop: 16,
   },
   card: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 32,
     backgroundColor: '#FFF',
-    marginBottom: 72,
+    marginBottom: 16,
     borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

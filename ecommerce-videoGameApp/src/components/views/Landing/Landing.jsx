@@ -86,6 +86,7 @@ const Landing = ({ navigation }) => {
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: StringsDark.menuDrawner_c }]}>
+      <View style={styles.subContainer}>
       <StatusBar backgroundColor={StringsDark.status_bar} barStyle="light-content" />
 
       <View style={styles.gameStackButtonContainer}>
@@ -105,6 +106,8 @@ const Landing = ({ navigation }) => {
         initialNumToRender={5}
         maxToRenderPerBatch={5}
         windowSize={5}
+        snapToInterval={382}
+        decelerationRate="fast"
       />
 
       <View style={[styles.menuContainer, { backgroundColor: '#3F13A4' }]}>
@@ -156,7 +159,7 @@ const Landing = ({ navigation }) => {
           </TouchableOpacity>
         )}
       </View>
-
+          </View>
       {/* Resto del código... */}
     </ScrollView>
   );
@@ -165,41 +168,45 @@ const Landing = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
+  },
+  subContainer:{
+    alignItems:"center",
+
   },
   sliderContainer: {
-    marginBottom: 20,
-    marginTop: 20,
+    marginBottom: 16,
+    marginTop: 16,
   },
   sliderItem: {
-    width: 300,
-    height: 200,
+    width: 382,
+    height: 235,
     justifyContent: 'center',
-    marginRight: 10,
+    marginBottom:8
   },
   sliderImage: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   menuContainer: {
-    marginBottom: 20,
-    padding: 10,
+    width:352,
+    marginBottom: 24,
+    padding: 8,
     borderRadius: 8,
   },
   menuTitle: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   button: {
-    marginBottom: 10,
+    marginBottom: 8,
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: 5,
   },
   buttonText: {
     textAlign: 'center',
-    padding: 10,
-    fontSize: 20,
+    padding: 8,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   menuButton: {
@@ -207,16 +214,20 @@ const styles = StyleSheet.create({
   },
   gameStackButtonContainer: {
     alignItems: 'center',
-    marginBottom: 10,
-  },
+    marginTop:24,
+    marginBottom: 8,
+    width:315,
+    height:42.57,
+   },
   gameStackButton: {
-    // Estilo para el botón "Game Stack"
+    width:315,
+    height:42.57,
   },
   bestSellersTitle: {
-    fontSize: 27,
+    fontSize: 24,
   },
   lastestReleasesTitle: {
-    fontSize: 27,
+    fontSize: 24,
   },
   cardContainer: {
     marginHorizontal: 1,

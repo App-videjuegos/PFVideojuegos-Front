@@ -48,7 +48,7 @@ export default function App() {
                   name="Landing"
                   component={Landing}
                   options={{
-                    title: `Bienvenidos`,
+                    title: ``,
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -64,7 +64,7 @@ export default function App() {
                   component={Home}
                   initialParams={{ fromChild: "Initial" }}
                   options={{
-                    title: "Home",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -80,7 +80,7 @@ export default function App() {
                   name="Cart"
                   component={Cart}
                   options={{
-                    title: "Shopping Car",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -144,7 +144,7 @@ export default function App() {
                   name="Pasarella"
                   component={Pasarella}
                   options={{
-                    title: "Pasarella  Pagos",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -160,7 +160,7 @@ export default function App() {
                   name="UserProfile" //aqui va el nombre con el q lo vas a llamar dese el menu items
                   component={UserProfile}
                   options={{
-                    title: "User Profile",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
