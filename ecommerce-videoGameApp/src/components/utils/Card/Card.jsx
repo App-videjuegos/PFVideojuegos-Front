@@ -10,6 +10,7 @@ import React from "react";
 // import StarRating from "react-native-star-rating";
 import { AirbnbRating } from "react-native-ratings";
 import { InsertarItem } from "../../forms/Cart/CardCartController";
+
 import { updateCart } from "../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import GameRating from "../../views/Home/Detail/GameRating";

@@ -8,7 +8,9 @@ import {
   Button,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
+
 import { AirbnbRating } from "react-native-ratings";
 import GameRating from "./GameRating";
 import { useDispatch, useSelector } from "react-redux"; // Importamos useDispatch y useSelector
