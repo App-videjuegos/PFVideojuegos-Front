@@ -4,6 +4,7 @@ import {useState} from 'react'
 
 import { Searchbar } from 'react-native-paper';
 import {getvGamebyName,getvideoGames,clearAllFilters} from "../../../redux/videogamesActions"
+import { color_blanco, color_gris_595959, color_gris_c, color_gris_cdcdcd } from '../../utils/theme/stringsColors';
 
 const SearchBar = (props) => {
 
@@ -38,6 +39,7 @@ const SearchBar = (props) => {
     return (
         // <View style={[styles.Container, isDarkMode && styles.DarkContainer]}>
           <View style={[styles.Container,]}>
+            
           <Searchbar
             autoFocus={true}
             placeholder={"Search"}
@@ -48,7 +50,7 @@ const SearchBar = (props) => {
             inputStyle={[styles.SearchbarText, ]}
             style={[styles.Searchbarfondo,]}
             iconColor={'#FFFFFF'}
-            placeholderTextColor={'#000000'}
+            placeholderTextColor={color_gris_595959}
           />
         </View>
       )
@@ -56,31 +58,31 @@ const SearchBar = (props) => {
 const styles = StyleSheet.create({
   Container: {
     justifyContent: 'flex-start',
-    alignItems: 'flex-start', // Agrega esta línea
-    width: '85%',
+    alignItems: 'flex-end', // Agrega esta línea
     flexDirection: 'row',
-    
-    left: -46
+    marginRight:8
   },
 
     Searchbarfondo:{
         marginLeft:'5%', 
         height: 46,
-        width:'90%',
+        width:200,
+        marginRight:8,
         // backgroundColor: color_azul,
         // borderColor: color_blanco,
         borderRadius: 5,
         alignContent:'center',
-        backgroundColor: '#987BDC',
+        backgroundColor: '#987bdc',
         
 
     }
 
     ,SearchbarText:{
-        fontSize:25,
-        // color:color_blanco,
+        fontSize:16,
+        color:color_blanco,
         alignSelf: 'center',
-        fontWeight:'bold'
+        fontWeight:'bold',
+        
 
     },
 })

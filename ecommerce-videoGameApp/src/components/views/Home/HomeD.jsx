@@ -41,7 +41,7 @@ const handleResetFilter = () => {
     // console.log("rellamando a cabecera en home x redux");
     navigation.setOptions({
         // headerTitle: `${ StringsLanguaje.Home}`,
-        headerTitle: `Home`,
+        headerTitle: `All Videogames`,
         headerStyle: {
         backgroundColor: StringsDark.Titulo_Screen_fondo,
       },
@@ -61,8 +61,8 @@ const handleResetFilter = () => {
             headerStyle: {
               backgroundColor: StringsDark.Titulo_Screen_fondo
             },
-            headerLeft: () => (<SearchBar />),
-            headerRight: () => (
+            headerRight: () => (<SearchBar />),
+            headerLeft: () => (
               <TouchableOpacity onPress={handleOpenFilter} style={styles.filterButton}>
                 <Text style={styles.filterButtonText}>Filters</Text>
               </TouchableOpacity>
@@ -75,7 +75,7 @@ const handleResetFilter = () => {
           name='Detail'
           component={Detail}
           options={{
-            title: 'Detail',
+            title: '',
             // headerStyle: {
             //   backgroundColor: StringsDark.backgroundTittle,
             // },
@@ -107,10 +107,11 @@ const handleResetFilter = () => {
 const styles = StyleSheet.create({
   
   filterButton: {
-    backgroundColor: "#987BDC",
+    backgroundColor: "#622eda",
     paddingHorizontal: 30,
     paddingVertical: 13, // Aumentar el valor aquí según tus necesidades
     borderRadius: 5,
+    marginLeft:16
   },
   filterButtonText: {
     color: "white",

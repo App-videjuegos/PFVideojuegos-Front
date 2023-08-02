@@ -51,27 +51,21 @@ const MenuItems = ({ navigation }) => {
       </View>
       <MenuBottonItem
         // nombre={StringsLanguaje.Landing}
-        nombre={"Landing"}
+        nombre={"Home"}
         onPress={() => navigation.navigate("Landing")}
-        icon="airplane-landing"
+        icon="home-circle-outline"
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Home}
-        nombre={"Home"}
+        nombre={"All Videogames"}
         onPress={() => navigation.navigate("HomeStack")}
-        icon="home-circle-outline"
+        icon="gamepad-variant-outline"
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Shopping_Car}
         nombre={"Shopping Cart"}
         onPress={() => navigation.navigate("Cart")}
         icon="cart-variant"
-      />
-      <MenuBottonItem
-        // nombre={StringsLanguaje.CreateVideogame}
-        nombre={"Game Creation"}
-        onPress={() => navigation.navigate("CreateVideogame")}
-        icon="gamepad-variant-outline"
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Login}

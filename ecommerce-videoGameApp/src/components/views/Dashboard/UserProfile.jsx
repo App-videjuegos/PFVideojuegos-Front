@@ -1,18 +1,19 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React from "react";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Importar los componentes de las ventanas que hemos creado
-import Profile from './ScreenUserProfile/Profile';
-import Posts from './ScreenUserProfile/Posts';
-import Communications from './ScreenUserProfile/Communications';
-import Shoppings from './ScreenUserProfile/Shoppings';
-import Videogames from './ScreenUserProfile/Videogames';
-import Comments from './ScreenUserProfile/Comments';
-import MyFavoriteGames from './ScreenUserProfile/MyFavoriteGames';
-import Friends from './ScreenUserProfile/Friends';
+import Profile from "./ScreenUserProfile/Profile";
+import Posts from "./ScreenUserProfile/Posts";
+import Communications from "./ScreenUserProfile/Communications";
+import Shoppings from "./ScreenUserProfile/Shoppings";
+import Videogames from "./ScreenUserProfile/Videogames";
+import Comments from "./ScreenUserProfile/Comments";
+import MyFavoriteGames from "./ScreenUserProfile/MyFavoriteGames";
+import Friends from "./ScreenUserProfile/Friends";
+import CreateVideogame from "../Create/CreateVideoGame";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,10 +35,7 @@ const UserProfile = () => {
     <View style={styles.container}>
       <NavigationContainer independent={true}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen
-            name="UserProfile"
-            component={UserProfileComponent}
-          />
+          <Stack.Screen name="UserProfile" component={UserProfileComponent} />
           {/* Definir las rutas para cada componente */}
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Posts" component={Posts} />
@@ -47,6 +45,7 @@ const UserProfile = () => {
           <Stack.Screen name="Comments" component={Comments} />
           <Stack.Screen name="MyFavoriteGames" component={MyFavoriteGames} />
           <Stack.Screen name="Friends" component={Friends} />
+          <Stack.Screen name="CreateVideogame" component={CreateVideogame} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
@@ -99,43 +98,49 @@ const UserProfileComponent = ({ navigation }) => {
         description="My videogames"
         screenName="Videogames"
       /> */}
-      
+
       <Card
         iconName="heart"
         title="My favorite games"
         description="Favorites games"
         screenName="MyFavoriteGames"
       />
-       <Card
+      <Card
         iconName="comment"
         title="My reviews"
         description="My Comments"
         screenName="Comments"
-      /> 
+      />
+      <Card
+        iconName="gamepad-round"
+        title="Load Videogame"
+        description="Load video games"
+        screenName="CreateVideogame"
+      />
       {/* <Card
         iconName="account-group"
         title="Friends"
         description="Community"
         screenName="Friends"
       />*/}
-    </View> 
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    height: "100%",
     padding: 16,
     paddingTop: 16,
   },
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 32,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     marginBottom: 16,
     borderRadius: 8,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -149,12 +154,12 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
   },
   cardDescription: {
     fontSize: 14,
-    color: '#606060',
+    color: "#606060",
   },
 });
 
