@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { AirbnbRating } from "react-native-ratings";
 import axios from "axios";
 import { StyleSheet } from "react-native";
 
+import { ThemeContext } from '../../../utils/theme/ThemeProvider';
+import { LanguajeContext } from '../../../utils/languaje/languajeProvider';
 const GameRating = ({ gameId, initialRating, updateCardRating }) => {
   const [rating, setRating] = useState(initialRating);
-
+  //linea para setear el modo dark
+  const {isDarkMode, StringsDark } = useContext(ThemeContext);
+  //linea para setear el lenguaje /obtener palabras de lenguaje
+  const { locale,StringsLanguaje } = useContext(LanguajeContext);
   useEffect(() => {
     const getActualRating = async (id) => {
       const game = await axios.get(
@@ -48,7 +53,7 @@ const GameRating = ({ gameId, initialRating, updateCardRating }) => {
 
   return (
     <View>
-      <Text>Rating: {rating}</Text>
+      <Text style={{color:StringsDark.text}}>Rating: {rating}</Text>
       <AirbnbRating
         count={5}
         defaultRating={rating}
@@ -57,7 +62,7 @@ const GameRating = ({ gameId, initialRating, updateCardRating }) => {
         selectedColor="gold"
         onFinishRating={handleRatingChange}
       />
-      <Text style={styles.ratingText}>{rating}</Text>
+      <Text style={[styles.ratingText,{color:StringsDark.text}]}>{rating}</Text>
     </View>
   );
 };

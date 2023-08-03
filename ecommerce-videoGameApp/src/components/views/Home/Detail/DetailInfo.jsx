@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext} from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -18,11 +18,18 @@ import {
   sendReview,
   getReviewsByVideogameId,
 } from "../../../../redux/reviewActions"; // Importamos la acción creada anteriormente
-import {convertirFecha} from "../../../helpers/InvertDate"
+import { convertirFecha } from "../../../helpers/InvertDate";
 import { InsertarItem } from "../../../forms/Cart/CardCartController";
 import { updateCart } from "../../../../redux/cartSlice";
+import { ThemeContext } from '../../../utils/theme/ThemeProvider';
+import { LanguajeContext } from '../../../utils/languaje/languajeProvider';
 
 const DetailInfo = (props) => {
+  //linea para setear el modo dark
+  const { isDarkMode, StringsDark } = useContext(ThemeContext);
+  //linea para setear el lenguaje /obtener palabras de lenguaje
+  const { locale, StringsLanguaje } = useContext(LanguajeContext);
+
   const [ratingV, setRating] = useState(0);
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
@@ -35,7 +42,7 @@ const DetailInfo = (props) => {
   const [errorComment, setErrorComment] = useState(false);
   const [errorHashtag, setErrorHashtag] = useState(false);
   const [comments, setComments] = useState([]);
-  
+
   // Obtenemos el estado isLogged para verificar si el usuario está logueado
   const isLogged = useSelector((state) => state.usersState.isLogged);
   const token = useSelector((state) => state.usersState.userToken);
@@ -57,8 +64,6 @@ const DetailInfo = (props) => {
       setShouldLoadComments(false); // Reiniciamos el estado para futuras actualizaciones
     }
   }, [dispatch, currentVideogameId, shouldLoadComments]);
-
-
 
   const { name, description, price, rating, image } = props.propInfo;
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -205,116 +210,117 @@ const DetailInfo = (props) => {
 
   const submitComment = () => {
     if (isLogged && token) {
-    if (validateForm() && !errorHashtag) {
-      // Generate a random playtime between 1 and 3000 hours
-      const randomPlaytime = Math.floor(Math.random() * 3000) + 1;
-      // Modify this line to remove double hashtags
-      const formattedHashtags = hashtags
-        .filter((tag) => tag.trim().startsWith("#"))
-        .map((tag) => tag.trim());
+      if (validateForm() && !errorHashtag) {
+        // Generate a random playtime between 1 and 3000 hours
+        const randomPlaytime = Math.floor(Math.random() * 3000) + 1;
+        // Modify this line to remove double hashtags
+        const formattedHashtags = hashtags
+          .filter((tag) => tag.trim().startsWith("#"))
+          .map((tag) => tag.trim());
 
-      const generateRandomToken = (length) => {
-        const characters =
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let token = "";
-        for (let i = 0; i < length; i++) {
-          const randomIndex = Math.floor(Math.random() * characters.length);
-          token += characters[randomIndex];
-        }
-        return token;
-      };
+        const generateRandomToken = (length) => {
+          const characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+          let token = "";
+          for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            token += characters[randomIndex];
+          }
+          return token;
+        };
 
-      const randomUserId = Math.floor(Math.random() * 3000) + 1;
+        const randomUserId = Math.floor(Math.random() * 3000) + 1;
 
-      const randomToken = generateRandomToken(10); // Puedes ajustar la longitud según tus necesidades
-      const videogameId = props.propInfo.id;
+        const randomToken = generateRandomToken(10); // Puedes ajustar la longitud según tus necesidades
+        const videogameId = props.propInfo.id;
 
-      // Create the new comment object
-      const newComment = {
-        id: reviews.length + 1, // Modificamos para usar el estado de Redux
-        userId: randomUserId, // Agregar el userId aleatorio aquí
-        videogameId: videogameId, // Agregar el videogameId aquí
-        title: title,
-        rating: ratingV,
-        comment: comment,
-        reviewDate: reviewDate,
-        recommendation: recommendation,
-        hashtags: formattedHashtags,
-        playtime: randomPlaytime,
-        token: generateRandomToken(10), // Puedes ajustar la longitud según tus necesidades
-        user: isLogged.user, // Agrega el nombre de usuario al objeto del comentario
+        // Create the new comment object
+        const newComment = {
+          id: reviews.length + 1, // Modificamos para usar el estado de Redux
+          userId: randomUserId, // Agregar el userId aleatorio aquí
+          videogameId: videogameId, // Agregar el videogameId aquí
+          title: title,
+          rating: ratingV,
+          comment: comment,
+          reviewDate: reviewDate,
+          recommendation: recommendation,
+          hashtags: formattedHashtags,
+          playtime: randomPlaytime,
+          token: generateRandomToken(10), // Puedes ajustar la longitud según tus necesidades
+          user: isLogged.user, // Agrega el nombre de usuario al objeto del comentario
+        };
 
-      };
+        // Update the comments array with the new comment
+        dispatch(sendReview(newComment));
 
-      // Update the comments array with the new comment
-      dispatch(sendReview(newComment));
-
-      // Reset the rating, title, comment, and hashtags state for the next comment
-      setRating(0);
-      setTitle("");
-      setComment("");
-      setReviewDate(new Date().toISOString().slice(0, 10));
-      setRecommendation(true);
-      setHashtags([""]);
-      setErrorTitle(false);
-      setErrorComment(false);
-      setErrorHashtag(false);
+        // Reset the rating, title, comment, and hashtags state for the next comment
+        setRating(0);
+        setTitle("");
+        setComment("");
+        setReviewDate(new Date().toISOString().slice(0, 10));
+        setRecommendation(true);
+        setHashtags([""]);
+        setErrorTitle(false);
+        setErrorComment(false);
+        setErrorHashtag(false);
+      } else {
+        setErrorHashtag(true);
+      }
     } else {
-      setErrorHashtag(true);
+      console.log("User not logged in. Unable to submit review.");
     }
-  } else {
-    console.log("User not logged in. Unable to submit review.");
-  }
-};
+  };
 
-let objeto = {
-  id: props.propInfo.id,
-  title: props.propInfo.name,
-  price: props.propInfo.price,
-  img: props.propInfo.image,
-  stock: 5,
-  amount: Number(1),
-};
-const objString = JSON.stringify(objeto);
+  let objeto = {
+    id: props.propInfo.id,
+    title: props.propInfo.name,
+    price: props.propInfo.price,
+    img: props.propInfo.image,
+    stock: 5,
+    amount: Number(1),
+  };
+  const objString = JSON.stringify(objeto);
 
-const key = "cart" + props.propInfo.id;
+  const key = "cart" + props.propInfo.id;
 
-// console.log("esto es lo q tengo en OBJ",objeto)
-// console.log("esto es lo q tengo en key",key)
+  // console.log("esto es lo q tengo en OBJ",objeto)
+  // console.log("esto es lo q tengo en key",key)
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={[styles.container,{backgroundColor:StringsDark.Titulo_Screen_fondo}]}>
       <Image style={styles.image} source={{ uri: image }} />
       <View style={styles.infoContainer}>
-        <Text style={styles.gameName}>{name}</Text>
+        <Text style={[styles.gameName,{color:StringsDark.tit_det_extra}]}>{name}</Text>
         {/* Aquí pasamos la función updateCardRating como una prop a GameRating */}
         <GameRating
           rating={rating}
           gameId={props.propInfo.id}
           // updateCardRating={updateCardRating}
         />
-        
-        <Text style={[styles.gamePrice, { color: "#1B063E" }]}>$ {price}</Text>
-        <TouchableOpacity onPress={() => {
+
+        <Text style={[styles.gamePrice, { color: StringsDark.price }]}>$ {price}</Text>
+        <TouchableOpacity
+          onPress={() => {
             InsertarItem(key, objString);
             dispatch(updateCart());
             // getKeysCount();
             // console.log("key guardada", objString);
-          }}>
-          <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
-            <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
+          }}
+        >
+          <View style={[styles.button, { backgroundColor: StringsDark.boton_fondo }]}>
+            <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>
               Add to Cart
             </Text>
           </View>
         </TouchableOpacity>
-        <Text style={styles.gameDescription}>
+        <Text style={[styles.gameDescription,{color:StringsDark.text}]}>
           {showFullDescription
             ? description
             : `${description.substring(0, 300)}...`}
         </Text>
         {!showFullDescription && (
           <TouchableOpacity onPress={toggleDescription}>
-            <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
-              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
+            <View style={[styles.button, { backgroundColor:  StringsDark.boton_fondo }]}>
+              <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>
                 Read More
               </Text>
             </View>
@@ -322,8 +328,8 @@ const key = "cart" + props.propInfo.id;
         )}
         {showFullDescription && (
           <TouchableOpacity onPress={toggleDescription}>
-            <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
-              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
+            <View style={[styles.button, {  backgroundColor:  StringsDark.boton_fondo  }]}>
+              <Text style={[styles.buttonText, { color:StringsDark.boton_texto }]}>
                 Retract
               </Text>
             </View>
@@ -331,16 +337,16 @@ const key = "cart" + props.propInfo.id;
         )}
 
         {/* Comentarios */}
-        <View style={styles.commentsContainer}>
-          <Text style={styles.commentsHeaderText}>Comments</Text>
+        <View style={[styles.commentsContainer,{backgroundColor:StringsDark.fondo_comments}]}>
+          <Text style={[styles.commentsHeaderText,{color:StringsDark.text}]}>Comments</Text>
           {/* Botón para cargar los comentarios */}
-      <TouchableOpacity onPress={handleLoadComments}>
-        <View style={[styles.button, { backgroundColor: "#622EDA" }]}>
-          <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
-          Add a comment to this game
-          </Text>
-        </View>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={handleLoadComments}>
+            <View style={[styles.button, { backgroundColor:  StringsDark.boton_fondo }]}>
+              <Text style={[styles.buttonText, { color:StringsDark.boton_texto }]}>
+                Add a comment to this game
+              </Text>
+            </View>
+          </TouchableOpacity>
           <View style={styles.commentsListContainer}>
             {commentsForCurrentVideogame.length > 0 ? (
               commentsForCurrentVideogame.map((comment) => (
@@ -350,13 +356,16 @@ const key = "cart" + props.propInfo.id;
                 >
                   <View style={styles.commentTitleContainer}>
                     <Text style={styles.commentTitle}>{comment.title}</Text>
-                    <Text style={styles.commentDate}>{convertirFecha(comment.reviewDate)}</Text>
+                    <Text style={styles.commentDate}>
+                      {convertirFecha(comment.reviewDate)}
+                    </Text>
                   </View>
                   <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>By:</Text>{" "}
                     {comment.user}
                   </Text>
-                  <Text style={styles.commentDetailsBold}>Comment:</Text><Text style={styles.commentText}>{comment.comment}</Text>
+                  <Text style={styles.commentDetailsBold}>Comment:</Text>
+                  <Text style={styles.commentText}>{comment.comment}</Text>
                   <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
                     {comment.playtime} hours -
@@ -381,7 +390,7 @@ const key = "cart" + props.propInfo.id;
             )}
           </View>
           <View style={styles.recommendationContainer}>
-            <Text style={styles.recommendationText}>
+            <Text style={[styles.recommendationText,{color:StringsDark.text}]}>
               ¿Do you recommend this game?
             </Text>
             <TouchableOpacity onPress={handleRecommendationChange}>
@@ -391,24 +400,20 @@ const key = "cart" + props.propInfo.id;
             </TouchableOpacity>
           </View>
 
-
           {/* Las estrellas papurri */}
-          <Text style={styles.textRating} onPress={putRating}>
+          <Text style={[styles.textRating,{color:StringsDark.text}]} onPress={putRating}>
             Add your rating
           </Text>
-          <View style={styles.ratingContainer}>
-          <AirbnbRating
-            count={5}
-            defaultRating={ratingV}
-            size={20}
-            showRating={false}
-            selectedColor="gold"
-            onFinishRating={handleRating}
-          />
-        
-        </View>
-
-
+          <View style={[styles.ratingContainer,{backgroundColor:StringsDark.fondo_stars}]}>
+            <AirbnbRating
+              count={5}
+              defaultRating={ratingV}
+              size={20}
+              showRating={false}
+              selectedColor="gold"
+              onFinishRating={handleRating}
+            />
+          </View>
 
           <TextInput
             style={[styles.commentInput, errorTitle ? styles.errorInput : null]}
@@ -424,6 +429,7 @@ const key = "cart" + props.propInfo.id;
               styles.commentInput,
               styles.wideInput,
               errorComment ? styles.errorInput : null,
+              
             ]}
             placeholder="*Comment"
             value={comment}
@@ -461,8 +467,10 @@ const key = "cart" + props.propInfo.id;
             </Text>
           )}
           <TouchableOpacity onPress={addHashtagInput}>
-            <View style={[styles.button, styles.addHashtagButton]}>
-              <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>Add a hashtag</Text>
+            <View style={[styles.button, styles.addHashtagButton,{backgroundColor:StringsDark.boton_fondo}]}>
+              <Text style={[styles.buttonText, { color:StringsDark.boton_texto} ]}>
+                Add a hashtag
+              </Text>
             </View>
           </TouchableOpacity>
 
@@ -478,7 +486,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: "center",
     alignContent: "center",
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: 5,
     borderRadius: 10,
     shadowColor: "#000",
@@ -504,7 +512,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   gameName: {
-    color: "#1B063E",
+    // color: "#1B063E",
     fontSize: 32,
     fontStyle: "normal",
     fontWeight: 700,
@@ -518,6 +526,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 5,
     padding: 5,
+    borderRadius:8
   },
   gamePrice: {
     color: "#1B063E",
@@ -661,7 +670,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   addHashtagButton: {
-    backgroundColor: "#622EDA",
+    // backgroundColor: "#622EDA",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -691,7 +700,7 @@ const styles = StyleSheet.create({
   commentsHeaderText: {
     fontSize: 24, // Tamaño de fuente aumentado
     fontWeight: "bold", // Texto en negrita
-    color: "#1B063E", // Color de texto de los comentarios
+    // color: "#1B063E", // Color de texto de los comentarios
     paddingLeft: 5, // Espaciado izquierdo para el texto "Comments"
   },
 });
