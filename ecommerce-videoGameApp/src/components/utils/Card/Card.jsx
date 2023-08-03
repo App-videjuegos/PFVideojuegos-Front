@@ -32,6 +32,7 @@ const Card = (props) => {
   }
   const [isFavorite, setIsFavorite] = useState(false); // Estado para controlar si el juego es favorito o no
   const heartRef = useRef(null); // Referencia para la animación del corazón
+  const cartRef = useRef(null); // Referencia para la animación del corazón
   const handleToggleFavorite = () => {
     setIsFavorite(!isFavorite);
     // Hacemos que el corazón tiemble cada vez que se toque
@@ -134,13 +135,14 @@ const Card = (props) => {
               // console.log("key guardada", objString);
             }}
           >
-
+            <Animatable.View ref={cartRef}>
               <MaterialCommunityIcons
                 style={styles.AddCartContainer}
                 name={"cart-plus"}
                 size={28}
                 color={color_gris_c}
               />
+            </Animatable.View>
           </TouchableOpacity>
         </View>
       </View>
@@ -173,12 +175,10 @@ const styles = StyleSheet.create({
   },
 
   imageContainer: {
-    alignItems:"flex-start",
-    marginHorizontal:16,
+    alignItems: "flex-start",
+    marginHorizontal: 16,
     marginTop: 12,
-    marginBottom: 12,    
-
-
+    marginBottom: 12,
   },
   image: {
     borderRadius: 5,
@@ -187,37 +187,37 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   detailsContainer: {
-    marginTop:8,
+    marginTop: 8,
     alignContent: "flex-start",
   },
   name: {
     fontSize: 16,
-    marginTop:4,
-    textAlignVertical:"top",
+    marginTop: 4,
+    textAlignVertical: "top",
     textAlign: "left",
     fontWeight: "bold",
     width: 120,
-    height:42,
+    height: 42,
     color: color_morado_o,
   },
   rating: {
     fontSize: 16,
-
   },
   heart: {
+    elevation:10,
     position: "absolute",
     left: 150,
-    bottom: 64,
+    bottom: 68,
     color: color_blanco,
   },
   AddCartContainer: {
-    position:"absolute",
+    elevation:10,
+    position: "absolute",
     left: 150,
     bottom: 24,
-
   },
   price: {
-    marginTop:4,
+    marginTop: 4,
     fontSize: 26,
     textAlign: "left",
     justifyContent: "flex-start",

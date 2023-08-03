@@ -260,7 +260,7 @@ const showUserData = () => {
                     name={showPassword ? "eye" : "eye-off"}
                     size={20}
                     color="#000"
-                    style={{marginTop:-50, left:260, padding:10}}
+                    style={{marginTop:-50, left:260, padding:10,elevation:10}}
                   />
                 </TouchableOpacity>
               </View>
