@@ -31,6 +31,7 @@ import {
   color_morado_sc1,
   color_rojo,
   color_gris_cdcdcd,
+  color_blanco,
 } from "../../../utils/theme/stringsColors";
 
 import axios from "axios";
@@ -186,13 +187,12 @@ const Profile = ({ navigation }) => {
       </View>
     );
   return (
-    <ScrollView>
+    <View style={styles.containerFather}>
       <View style={[styles.bgCont]}>
-        <View style={styles.imageContainer}>
           <TouchableOpacity onPress={pickImage} style={[styles.ImageButton]}>
             <Image
               source={{ uri: image.length ? image : imageUser }}
-              style={{ borderRadius: 100, margin: 5, width: 200, height: 200 }}
+              style={{ borderRadius: 100, width: 200, height: 200 }}
             />
           </TouchableOpacity>
 
@@ -208,7 +208,6 @@ const Profile = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
       </View>
 
       <Formik
@@ -259,7 +258,7 @@ const Profile = ({ navigation }) => {
           touched,
           image,
         }) => (
-          <View>
+         
             <View style={[styles.container]}>
               <View style={[styles.containerLogin]}>
                 <View>
@@ -381,8 +380,8 @@ const Profile = ({ navigation }) => {
                   )}
                 </View>
 
-                <View style={styles.boxcontainercheckbox}>
-                  <View style={styles.checkboxSection}>
+                <View style={styles.boxboxcontainercheckbox}>
+                  {!loged.tac && <View style={styles.checkboxSection}>
                     <Checkbox
                       style={styles.checkbox}
                       value={acceptTac}
@@ -397,7 +396,7 @@ const Profile = ({ navigation }) => {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                  </View>
+                  </View>}
 
                   <View style={styles.checkboxSection}>
                     <Checkbox
@@ -417,11 +416,11 @@ const Profile = ({ navigation }) => {
                   style={[styles.miniButton]}
                   onPress={handleSubmit}
                 >
-                  <Text style={[styles.buttonText]}>Submit</Text>
+                  <Text style={[styles.buttonText]}>Change date</Text>
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
+          
         )}
       </Formik>
       {/* Modal */}
@@ -559,11 +558,15 @@ const Profile = ({ navigation }) => {
         </View>
       </Modal>
       {/* Modal */}
-    </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   /////
+  containerFather:{
+    flex:1,
+    backgroundColor:color_blanco
+  },
   header: {
     alignContent: "center",
     justifyContent: "center",
@@ -581,15 +584,16 @@ const styles = StyleSheet.create({
   },
 
   bgCont: {
-    flex: 1,
+    height:200,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: color_gris_c,
+    backgroundColor: color_blanco,
   },
 
   container: {
-    marginTop: 0,
-    backgroundColor: color_gris_c,
+    flex:1,
+    marginTop: 8,
+    backgroundColor: color_blanco,
     alignItems: "center",
     padding: 8,
   },
@@ -622,11 +626,9 @@ const styles = StyleSheet.create({
     borderRadius: 125,
   },
   miniButton: {
-    marginTop: 15,
     marginBottom: 32,
     height: 42,
     width: 315,
-    padding: 0,
     backgroundColor: color_morado_sc1,
     borderRadius: 5,
   },
@@ -657,7 +659,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: color_gris_c,
   },
-
+  boxboxcontainercheckbox: {
+    height:100,
+    marginTop: 5,
+    alignItems: "flex-start",
+  },
   boxcontainercheckbox: {
     flex: 1,
     marginTop: 5,
@@ -680,27 +686,19 @@ const styles = StyleSheet.create({
     margin: 8,
   },
 
-  bgCont: {
-    flex: 1,
-    alignItems: "center", // Alineación al centro horizontalmente
-    justifyContent: "flex-start", // Alineación en la parte superior
-    backgroundColor: color_gris_c,
-    padding: 16, // Ajusta el espaciado del componente
-    position: "relative", // Agregar position:relative al contenedor para permitir position:absolute en los hijos
-  },
 
   circleContainer: {
     position: "absolute",
     top: 160, // Ajustar posición vertical del círculo
-    left: 150, // Alinear a la izquierda
+    left: 220, // Alinear a la izquierda
     alignItems: "center", // Centrar horizontalmente el círculo en el contenedor
   },
 
   circle: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: 20,
-    backgroundColor: "#CDCDCD",
+    backgroundColor: color_blanco,
     alignItems: "center", // Alineación horizontal del contenido dentro del círculo
     justifyContent: "center", // Alineación vertical del contenido dentro del círculo
   },

@@ -160,7 +160,6 @@ const Landing = ({ navigation }) => {
         )}
       </View>
           </View>
-      {/* Resto del código... */}
     </ScrollView>
   );
 };
@@ -189,14 +188,17 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     width:352,
+    justifyContent:"center",
+    alignItems:"center",
     marginBottom: 24,
-    padding: 8,
+
     borderRadius: 8,
   },
   menuTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginTop: 16,
+    marginBottom:8
   },
   button: {
     marginBottom: 8,
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     padding: 8,
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   menuButton: {
@@ -223,18 +225,11 @@ const styles = StyleSheet.create({
     width:315,
     height:42.57,
   },
-  bestSellersTitle: {
-    fontSize: 24,
-  },
-  lastestReleasesTitle: {
-    fontSize: 24,
-  },
+
   cardContainer: {
-    marginHorizontal: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    width:'100%',
+
+    justifyContent: "center",
+
   },
 });
 

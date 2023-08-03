@@ -17,7 +17,11 @@ import GameRating from "../../views/Home/Detail/GameRating";
 import { useState, useRef, useSelector } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable"; // Importamos la librería para las animaciones
-import { color_blanco, color_morado_o } from "../theme/stringsColors";
+import {
+  color_blanco,
+  color_gris_c,
+  color_morado_o,
+} from "../theme/stringsColors";
 import { color } from "react-native-reanimated";
 
 const Card = (props) => {
@@ -89,14 +93,14 @@ const Card = (props) => {
 
           {/* Rating del videojuego */}
           <View style={styles.rating}>
-          <AirbnbRating
-            count={5}
-            defaultRating={videoG.rating}
-            size={20}
-            showRating={false}
-            selectedColor="gold"
-            isDisabled={true}
-          />
+            <AirbnbRating
+              count={5}
+              defaultRating={videoG.rating}
+              size={20}
+              showRating={false}
+              selectedColor="gold"
+              isDisabled={true}
+            />
           </View>
 
           {/* Fila que contiene el precio y el corazón */}
@@ -109,16 +113,16 @@ const Card = (props) => {
 
             {/* Botón de favoritos */}
             <View style={styles.heart}>
-            <TouchableOpacity onPress={handleToggleFavorite}>
-              <Animatable.View ref={heartRef}>
-                <MaterialCommunityIcons
-                  style={styles.heartIcon}
-                  name={isFavorite ? "heart" : "heart-outline"}
-                  size={30}
-                  color={isFavorite ? "#622EDA" : "#595959"}
-                />
-              </Animatable.View>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={handleToggleFavorite}>
+                <Animatable.View ref={heartRef}>
+                  <MaterialCommunityIcons
+                    style={styles.heartIcon}
+                    name={isFavorite ? "heart" : "heart-outline"}
+                    size={28}
+                    color={isFavorite ? "#622EDA" : "#595959"}
+                  />
+                </Animatable.View>
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -130,13 +134,13 @@ const Card = (props) => {
               // console.log("key guardada", objString);
             }}
           >
-            <View
-              style={[styles.AddCartContainer, { backgroundColor: "#622EDA" }]}
-            >
-              <Text style={[styles.addItemCar, { color: "#ffffff" }]}>
-                {"Add to cart"}
-              </Text>
-            </View>
+
+              <MaterialCommunityIcons
+                style={styles.AddCartContainer}
+                name={"cart-plus"}
+                size={28}
+                color={color_gris_c}
+              />
           </TouchableOpacity>
         </View>
       </View>
@@ -149,20 +153,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  space: {
-    width: 30, // Ajusta este valor según el espaciado deseado
-  },
+
   container: {
-    marginVertical:4,
-  
+    marginVertical: 8,
   },
-  subContainer:{
-    padding: 3,
+  subContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
+
+    width: 312,
+    height: 138,
     // marginHorizontal: 10,
-    marginVertical: 5,
     borderRadius: 10,
     // shadowColor: 'black',
     shadowOpacity: 0.23,
@@ -173,66 +173,57 @@ const styles = StyleSheet.create({
   },
 
   imageContainer: {
-    alignItems: "center",
-    // flex:1
-    width: "45%",
-    // height: '100%',
-    // marginRight: 10 ,
-    marginLeft: 5,
-    // backgroundColor:'blue
+    alignItems:"flex-start",
+    marginHorizontal:16,
+    marginTop: 12,
+    marginBottom: 12,    
+
+
   },
   image: {
-    marginTop: 10,
-    marginBottom: 10,
-    // marginLeft: -10,
-    width: 140,
-    height: 140,
-    borderRadius: 8,
-    // alignSelf:'center',
-    alignContent: "center",
+    borderRadius: 5,
+    width: 92,
+    height: 112,
     resizeMode: "cover",
   },
   detailsContainer: {
-    width: "50%",
-    // height:'100%',
+    marginTop:8,
     alignContent: "flex-start",
-    padding: 5,
   },
   name: {
-    fontSize: 15,
-    justifyContent:"flex-start",
-    alignItems: "center",
+    fontSize: 16,
+    marginTop:4,
+    textAlignVertical:"top",
     textAlign: "left",
-    verticalAlign: "middle",
     fontWeight: "bold",
-    height: 37,
-    color:color_morado_o
+    width: 120,
+    height:42,
+    color: color_morado_o,
   },
   rating: {
     fontSize: 16,
-    marginLeft:-30
+
   },
-  heart:{
-    justifyContent:"flex-end",
-    left:50,
-    bottom:40,
-    color:color_blanco
-  },
-  price: {
-    fontSize: 26,
-    textAlign: "left",
-    justifyContent:"flex-start",
-    fontWeight: "bold",
-    height: 28,
+  heart: {
+    position: "absolute",
+    left: 150,
+    bottom: 64,
     color: color_blanco,
   },
   AddCartContainer: {
-    justifyContent:"flex-end",
-    borderRadius: 8,
-    alignItems: "center",
-    width: "100%",
-    marginTop: 15,
-    // textAlign:'center'
+    position:"absolute",
+    left: 150,
+    bottom: 24,
+
+  },
+  price: {
+    marginTop:4,
+    fontSize: 26,
+    textAlign: "left",
+    justifyContent: "flex-start",
+    fontWeight: "bold",
+    height: 28,
+    color: color_blanco,
   },
   addItemCar: {
     margin: 5,

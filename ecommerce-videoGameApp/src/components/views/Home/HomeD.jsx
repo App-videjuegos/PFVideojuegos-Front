@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import Filter from "../../utils/Filters/Filter";
 
 import {clearAllFilters,} from "../../../redux/videogamesActions"
+import { color_blanco, color_morado_c2 } from "../../utils/theme/stringsColors";
 const Stack = createNativeStackNavigator();
 
 const HomeD =({ navigation, route})=>{
@@ -107,23 +108,22 @@ const handleResetFilter = () => {
 const styles = StyleSheet.create({
   
   filterButton: {
-    backgroundColor: "#622eda",
+    backgroundColor: color_morado_c2,
     paddingHorizontal: 30,
     paddingVertical: 13, // Aumentar el valor aquí según tus necesidades
     borderRadius: 5,
     marginLeft:16
   },
   filterButtonText: {
-    color: "white",
+    color: color_blanco,
     fontWeight: "bold",
   },
 
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#622EDA",
+    backgroundColor: color_morado_c2,
   },
-  // ...
 });
 
 

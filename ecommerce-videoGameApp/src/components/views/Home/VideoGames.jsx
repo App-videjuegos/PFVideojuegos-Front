@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getvideoGames } from "../../../redux/videogamesActions";
 
 import Card from "../../utils/Card/Card";
-import { color_gris_c } from "../../utils/theme/stringsColors";
+import { color_blanco, color_gris_c } from "../../utils/theme/stringsColors";
 
 const VideoGames = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     width: 382,
+    backgroundColor:color_blanco
   },
   subContainer: {
     backgroundColor: color_gris_c,
