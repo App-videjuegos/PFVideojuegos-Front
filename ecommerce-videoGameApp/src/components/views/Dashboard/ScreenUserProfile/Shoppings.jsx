@@ -23,6 +23,10 @@ const Shoppings = () => {
 
   useEffect(() => {
     dispatch(getAllSalesUser(loged.id));
+
+    return ()=>{
+      dispatch(getAllSlsUser(''))
+    }
   }, []);
 
   const [showPurchaseDetails, setShowPurchaseDetails] = useState(false);
