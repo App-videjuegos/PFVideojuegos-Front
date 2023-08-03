@@ -46,6 +46,7 @@ export const strings = {
     tabBarback:color_morado_sc2,
     tabBarbackText:color_blanco,
     tabBarIcono: color_blanco,
+    modalTitle: color_morado_o,
   },
   dark: {//combinacion de colores modo Dark
     Titulo_Screen:color_blanco,
@@ -69,5 +70,6 @@ export const strings = {
     tabBarback:color_morado_c,
     tabBarbackText:color_gris_c,
     tabBarIcono: color_gris_c,
+    modalTitle: color_blanco,
   },
 };

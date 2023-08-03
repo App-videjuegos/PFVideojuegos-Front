@@ -1,4 +1,6 @@
-import React from "react";
+//linea para llamar a modo DARK
+import { ThemeContext } from "../../../utils/theme/ThemeProvider";
+import { useContext } from "react";
 import {
   View,
   Text,
@@ -6,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  ScrollView
 } from "react-native";
 
 const GameItem = ({ image, videoGameName, quantity, unitPrice }) => (
@@ -20,6 +23,9 @@ const GameItem = ({ image, videoGameName, quantity, unitPrice }) => (
 );
 
 const PurchaseDetails = ({ visible, closeModal, purchaseDetails }) => {
+  //linea para setear el lenguaje /obtener palabras de lenguaje
+  const { StringsDark } = useContext(ThemeContext);
+
   if (visible && closeModal && purchaseDetails) {
     const { id, date, salesStatus, items } = purchaseDetails;
     return (
@@ -30,7 +36,14 @@ const PurchaseDetails = ({ visible, closeModal, purchaseDetails }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Sale Detail</Text>
+            <ScrollView>
+
+            
+            <Text
+              style={[styles.modalTitle, { color: StringsDark.modalTitle }]}
+            >
+              Sale Detail
+            </Text>
             {items.map((item) => (
               <View key={item.videogameName} style={styles.gameItemContainer}>
                 <GameItem
@@ -62,6 +75,7 @@ const PurchaseDetails = ({ visible, closeModal, purchaseDetails }) => {
             <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
+            </ScrollView>
           </View>
         </View>
       </Modal>
@@ -82,15 +96,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo oscuro semi-transparente
     width: "100%",
-    height: "100%",
+    // height: "100%",
+    
   },
   modalContent: {
     backgroundColor: "#FFFFFF", // Color de fondo BLANCO
     borderRadius: 8,
-    padding: 16,
-    width: "50%",
-    height: "80%",
+    // padding: 12,
+    marginBottom: 10,
+    marginTop: 10,
+    width: "88%",
+    // height: "80%",
     alignItems: "center",
+    alignContent: "center",
     shadowColor: "#000", // sombra
     shadowOffset: {
       width: 0,
@@ -107,7 +125,7 @@ const styles = StyleSheet.create({
     lineHeight: 39,
     marginTop: 16,
     marginBottom: 50,
-    color: "#1B063E", // Color del texto en tono morado oscuro;
+    // color: "#1B063E", // Color del texto en tono morado oscuro;
   },
   itemContainer: {
     flexDirection: "row",
@@ -187,13 +205,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 16,
-    marginLeft: 90,
+    marginBottom: 10,
+    // marginLeft: 90,
+    width: "97%",
   },
   leftAlignedContainer: {
     alignItems: "flex-start",
     marginBottom: 16,
-    marginLeft: 16,
+    // marginLeft: 10,
   },
 });
 
