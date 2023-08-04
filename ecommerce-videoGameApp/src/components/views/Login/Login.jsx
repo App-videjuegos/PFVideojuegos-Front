@@ -45,6 +45,12 @@ export const Login = ({ navigation }) => {
 //AUTH GOOGLE
 const [accessToken, setAccessToken] = useState()
 const [userInfo, setUserInfo] = useState();
+const [loginUser, setLogingUser] = useState(null);
+// const [password, setPassword] = useState("");
+const [errorMsg, setErrorMsg] = useState(false);
+const [errorMessage, setErrorMessage] = useState("");
+const [showPassword, setShowPassword] = useState(false);
+
 
 const [request,response,promptAsync] = Google.useAuthRequest({
   androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
@@ -64,14 +70,31 @@ useEffect(()=>{
 useEffect(() => {
   const handleLoginAuth = async () => {
     console.log("DESDE USER", userInfo);
-    try {
       const user = await loginService.authLogin({
-        user: userInfo.email,
+        email:userInfo.email,
+        family_name:userInfo.family_name,
+        given_name:userInfo.given_name,
+        google_id:userInfo.id,
+        locale:userInfo.locale,
+        name:userInfo.name,
+        picture:userInfo.picture,
+        verified_email:userInfo.verified_email
       });
-      console.log(user);
-    } catch (e) {
-      console.log("ERRRROR", e);
-    }
+      console.log("supuesto user",user.data);
+      
+      if(user){
+        console.log('PASO 1');
+        setLogingUser(user.data);
+        console.log('PASO 2');
+        saveItemAsyncStorage("logedGameStack", user.data);
+        console.log('PASO 3');
+        showAsyncStorageData();
+        console.log('PASO 4');
+        dispatch(checkLogedUser());
+      } else {
+        setErrorMessage("Wrong credentials");
+      }
+
   }
 
   if (accessToken && userInfo) {
@@ -98,19 +121,7 @@ const getUserData = async  () => {
 }
 
 
-const showUserData = () => {
-  console.log(userInfo)
-  if(userInfo) {
-    return (
-      <View style={styles.userInfo}>
-        <Image source={{ uri: userInfo.picture}} style ={styles.profilePic}/>
-        <Text>welcome {userInfo.name}</Text>
-        <Text> {userInfo.email}</Text>
 
-      </View>
-    )
-  }
-}
 
   // ----------- FIN AUTH GOOGLE ------
 
@@ -140,11 +151,6 @@ const showUserData = () => {
     loadUserFromAsyncStorage();
   }, [loginUser, handleUnlogin]);
 
-  const [loginUser, setLogingUser] = useState(null);
-  // const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
 
   const handleLogin = async (values) => {
@@ -326,7 +332,6 @@ const showUserData = () => {
                 </TouchableOpacity>
               </View>
 
-              {showUserData()}
 
               <View style={styles.containerLogin}>
                 {/* <Text style={[{ fontSize: 45 }]}>Welcome</Text>
