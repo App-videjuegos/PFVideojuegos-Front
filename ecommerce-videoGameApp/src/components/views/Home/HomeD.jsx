@@ -41,8 +41,9 @@ const handleResetFilter = () => {
   useEffect(()=>{
     // console.log("rellamando a cabecera en home x redux");
     navigation.setOptions({
-        // headerTitle: `${ StringsLanguaje.Home}`,
-        headerTitle: `All Videogames`,
+        headerTitle: `${StringsLanguaje.allVideoG}`,
+        // headerTitle: `All Videogames`,
+        headerTintColor: `${StringsDark.Titulo_Screen}`,
         headerStyle: {
         backgroundColor: StringsDark.Titulo_Screen_fondo,
       },
@@ -57,6 +58,7 @@ const handleResetFilter = () => {
         <Stack.Screen
           name='VideoGames'
           component={VideoGames}
+          
           options={{
             title: '',//va en blanco xq va la search bar
             headerStyle: {
@@ -68,6 +70,7 @@ const handleResetFilter = () => {
                 <Text style={styles.filterButtonText}>Filters</Text>
               </TouchableOpacity>
             ),
+            
 
           }}
         >
@@ -86,6 +89,7 @@ const handleResetFilter = () => {
               fontSize: 25
             }
           }}
+  
         >
         </Stack.Screen>
 

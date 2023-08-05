@@ -26,7 +26,7 @@ import { color } from "react-native-reanimated";
 
 const Card = (props) => {
   const { videoG, nav } = props;
-
+// console.log("que me llega de nav???",nav.navigate)
   {
     /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
   }
@@ -78,7 +78,8 @@ const Card = (props) => {
           {/* Imagen del videojuego */}
           <TouchableOpacity
             onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-          >
+
+>
             <Image
               style={styles.image}
               source={{ uri: videoG.image }}

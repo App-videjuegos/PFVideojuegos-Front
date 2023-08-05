@@ -49,6 +49,11 @@ export const strings = {
     modalTitle: color_morado_o,
     fondo_comments:color_blanco,
     fondo_stars:color_blanco,
+    cart_b:color_gris_c,
+    cart_c_f:color_blanco,
+    cart_clear: color_rojoNeon,
+    cart_pay:color_celeste,
+
   },
   dark: {//combinacion de colores modo Dark
     Titulo_Screen:color_blanco,
@@ -59,7 +64,7 @@ export const strings = {
     text: color_blanco,
     menuDrawner_f: color_morado_sc1,
     menuDrawner_t:color_blanco,
-    menuDrawner_c:color_morado_sc1,
+    menuDrawner_c:color_morado_sc2,
     menuDrawner_ico: color_blanco,
     menuDrawner_sep: color_blanco,
     cartButton:color_morado_sc2 ,
@@ -75,5 +80,9 @@ export const strings = {
     modalTitle: color_blanco,
     fondo_comments:color_morado_sc1,
     fondo_stars:color_gris_c,
+    cart_b:color_morado_sc1,
+    cart_c_f:color_morado_sc2,
+    cart_clear: color_crema,
+    cart_pay:color_morado_sc2,
   },
 };

@@ -10,7 +10,6 @@ import MenuButtonSubItem from "./MenuButtonSubItem";
 import { useSelector } from "react-redux";
 import { obtenerPrimerNombre } from "../../helpers/Primernombre";
 
-
 const MenuItems = ({ navigation }) => {
   //esta linea debo de llamar en cada componente
   const { StringsDark } = useContext(ThemeContext);
@@ -22,32 +21,44 @@ const MenuItems = ({ navigation }) => {
       style={{ backgroundColor: StringsDark.menuDrawner_f }}
     >
       <View style={{ backgroundColor: StringsDark.menuDrawner_c }}>
-      <View style={styles.cabeceraimg}>
-  <TouchableOpacity
-    onPress={loged.user ? () => navigation.navigate("UserProfile") : () => navigation.navigate("RenderLogin")}
-    style={styles.container}
-  >
-    <View style={styles.cabeceraText}>
-      <Text style={[styles.textoFullname, { color: StringsDark.menuDrawner_t }]}>
-        {loged.fullname ? `Welcome ${obtenerPrimerNombre(loged.fullname)}` : "Welcome User"}
-      </Text>
-      <Text style={[styles.textoUsr, { color: StringsDark.menuDrawner_t }]}>
-        {loged.user ? loged.user : ""}
-      </Text>
-    </View>
-    <View>
-      <Image
-        source={
-          loged.image
-            ? { uri: loged.image }
-            : require("../../../../assets/imageUser.png")
-        }
-        style={styles.imgmenu}
-      />
-    </View>
-  </TouchableOpacity>
-</View>
-
+        <View style={styles.cabeceraimg}>
+          <TouchableOpacity
+            onPress={
+              loged.user
+                ? () => navigation.navigate("UserProfile")
+                : () => navigation.navigate("RenderLogin")
+            }
+            style={styles.container}
+          >
+            <View style={styles.cabeceraText}>
+              <Text
+                style={[
+                  styles.textoFullname,
+                  { color: StringsDark.menuDrawner_t },
+                ]}
+              >
+                {loged.fullname
+                  ? `Welcome ${obtenerPrimerNombre(loged.fullname)}`
+                  : "Welcome User"}
+              </Text>
+              <Text
+                style={ { color: StringsDark.menuDrawner_t }}
+              >
+                {loged.user ? loged.user : ""}
+              </Text>
+            </View>
+            <View>
+              <Image
+                source={
+                  loged.image
+                    ? { uri: loged.image }
+                    : require("../../../../assets/imageUser.png")
+                }
+                style={styles.imgmenu}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
       <MenuBottonItem
         // nombre={StringsLanguaje.Landing}
@@ -116,12 +127,12 @@ const MenuItems = ({ navigation }) => {
 const styles = StyleSheet.create({
   cabeceraimg: {
     flexDirection: "row",
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   imgmenu: {
     marginRight: 20,
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: "flex-end",
     resizeMode: "contain",
-    borderRadius:100,
+    borderRadius: 100,
   },
   icon: {
     marginLeft: 70,
@@ -145,9 +156,8 @@ const styles = StyleSheet.create({
   cabeceraText: {
     alignContent: "flex-end",
     alignItems: "flex-end",
-    
-    marginRight:16,
 
+    marginRight: 16,
   },
   btnIngresa: {
     margin: 3,
@@ -162,13 +172,13 @@ const styles = StyleSheet.create({
   },
   textoFullname: {
     fontSize: 20,
-    justifyContent:"flex-end",
-    fontWeight:"900",
+    justifyContent: "flex-end",
+    fontWeight: "900",
   },
   textoUser: {
     fontSize: 20,
-    justifyContent:"flex-end",
-    fontWeight:"600",
+    justifyContent: "flex-end",
+    fontWeight: "600",
   },
 
   separator: {
