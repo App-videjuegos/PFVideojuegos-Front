@@ -24,27 +24,29 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 const Pasarella = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
   const { StringsDark, isDarkMode } = useContext(ThemeContext);
   const { StringsLanguaje, locale } = useContext(LanguajeContext);
   const { Cart, tot, userid, userName } = route.params;
   const cardFieldRef = useRef(null);
   const currentDate = new Date().toLocaleDateString();
   const currentTime = new Date().toLocaleTimeString();
-  const [numOrder, setNumOrder] = useState('vacio');
+  const [numOrder, setNumOrder] = useState("vacio");
 
   const closeModalAndPerformActions = () => {
+    // Realiza las acciones necesarias
+    cleanCart();
+    dispatch(updateCart());
+    navigation.navigate("HomeStack");
     // Cerrar el modal
     setModalVisible(false);
-    // Realizar las acciones necesarias
-    cleanCart(); // Limpia el carrito
-    dispatch(updateCart()); // Actualiza el estado del carrito en el Redux store
-    navigation.navigate("HomeStack"); // Navega a la pantalla 'HomeStack'
   };
+
   // console.log("esto me llega en cart ojo a cntidd", Cart);
   useEffect(() => {
     // console.log("esta entrando ?")
     navigation.setOptions({
-      headerTitle: "Payment Gateway", //`${StringsLanguaje.Pasarella}`,
+      headerTitle: `${StringsLanguaje.Pasarella}`,
       headerTintColor: "#280657",
       headerStyle: {
         backgroundColor: StringsDark.backgroundContainer,
@@ -68,7 +70,7 @@ const Pasarella = ({ navigation, route }) => {
   }
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
-  let num_order='vacio';
+  let num_order = "vacio";
   const subscribe = async () => {
     try {
       const response = await fetch(
@@ -81,11 +83,11 @@ const Pasarella = ({ navigation, route }) => {
           },
         }
       );
-      
+
       const data = await response.json();
-      
-       num_order=data.clientSecret.substring(0,27)
-      
+
+      num_order = data.clientSecret.substring(0, 27);
+
       if (!response.ok) return Alert.alert(data.message);
       const clientSecret = data.clientSecret;
 
@@ -182,8 +184,9 @@ const Pasarella = ({ navigation, route }) => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          setModalVisible(false);
+          // Esto evita que el usuario pueda cerrar el modal tocando fuera de él
         }}
+        backdropOpacity={1} // Hace que el fondo no sea interactivo
       >
         <View style={styles.centeredView}>
           <View
@@ -377,26 +380,35 @@ const Pasarella = ({ navigation, route }) => {
                   ))}
                 </View>
               )}
-                <View
+              <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-between",
                 }}
               >
-                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                Total:
-              </Text>
-              <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                $ {datos.amount && (datos.amount / 100).toFixed(2)}
-              </Text>
+                <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
+                  Total:
+                </Text>
+                <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
+                  $ {datos.amount && (datos.amount / 100).toFixed(2)}
+                </Text>
               </View>
-             
             </View>
             <TouchableOpacity
-              onPress={() => closeModalAndPerformActions()}
-              style={[styles.closeButton,{backgroundColor:StringsDark.boton_fondo}]}
+              onPress={closeModalAndPerformActions}
+              style={[
+                styles.closeButton,
+                { backgroundColor: StringsDark.boton_fondo },
+              ]}
             >
-              <Text style={[styles.closeButtonText,{color:StringsDark.boton_texto}]}>Close</Text>
+              <Text
+                style={[
+                  styles.closeButtonText,
+                  { color: StringsDark.boton_texto },
+                ]}
+              >
+                Close
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -531,6 +543,15 @@ const styles = StyleSheet.create({
     // margin: 5,
     width: 100,
     height: 30,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
 

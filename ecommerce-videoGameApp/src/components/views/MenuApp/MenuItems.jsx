@@ -61,26 +61,26 @@ const MenuItems = ({ navigation }) => {
         </View>
       </View>
       <MenuBottonItem
-        // nombre={StringsLanguaje.Landing}
-        nombre={"Home"}
+        nombre={StringsLanguaje.Home}
+        // nombre={"Home"}
         onPress={() => navigation.navigate("Landing")}
         icon="home-circle-outline"
       />
       <MenuBottonItem
-        // nombre={StringsLanguaje.Home}
-        nombre={"All Videogames"}
+        nombre={StringsLanguaje.allVideoG}
+        // nombre={"All Videogames"}
         onPress={() => navigation.navigate("HomeStack")}
         icon="gamepad-variant-outline"
       />
       <MenuBottonItem
-        // nombre={StringsLanguaje.Shopping_Car}
-        nombre={"Shopping Cart"}
+        nombre={StringsLanguaje.Shopping_Car}
+        // nombre={"Shopping Cart"}
         onPress={() => navigation.navigate("Cart")}
         icon="cart-variant"
       />
       <MenuBottonItem
         // nombre={StringsLanguaje.Login}
-        nombre={loged.user ? "Logout" : "Login"}
+        nombre={loged.user ? StringsLanguaje.Logout : StringsLanguaje.Login}
         onPress={() => navigation.navigate("RenderLogin")}
         icon={loged.user ? "logout" : "login"}
       />
@@ -92,15 +92,15 @@ const MenuItems = ({ navigation }) => {
       />} */}
       {loged.user && (
         <MenuBottonItem
-          nombre={"User Profile"}
+          nombre={StringsLanguaje.MyProfile}
           onPress={() => navigation.navigate("UserProfile")}
           icon="account-eye-outline"
         />
       )}
       {!loged.user && (
         <MenuBottonItem
-          // nombre={StringsLanguaje.Login}
-          nombre={"Register"}
+          nombre={StringsLanguaje.Register}
+          // nombre={"Register"}
           onPress={() => navigation.navigate("Register")}
           icon="account-plus"
         />

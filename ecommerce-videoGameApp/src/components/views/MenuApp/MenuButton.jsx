@@ -34,7 +34,7 @@ const styles=StyleSheet.create({
         marginLeft:10
     },
     text:{
-        fontSize:22,
+        fontSize:21,
         fontWeight: 'bold',
         marginLeft:20,
         fontFamily: 'Roboto',
