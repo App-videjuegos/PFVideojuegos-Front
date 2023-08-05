@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-
+import {updateStock} from "../../../redux/stockSlice";
 import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
 import { removeItem, cleanCart } from "./CardCartController";
 import { useDispatch } from "react-redux";
@@ -24,7 +24,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 const Pasarella = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(true);
+  // const [showOverlay, setShowOverlay] = useState(true);
   const { StringsDark, isDarkMode } = useContext(ThemeContext);
   const { StringsLanguaje, locale } = useContext(LanguajeContext);
   const { Cart, tot, userid, userName } = route.params;
@@ -119,7 +119,7 @@ const Pasarella = ({ navigation, route }) => {
           // console.log(' esta la 2da respuesta del server', data);
 
           if (data.message === "ok") {
-            // console.log("esto hay en este estado", cardDetails);
+            dispatch(updateStock());
             setNumOrder(num_order);
             setModalVisible(true);
           } else {

@@ -16,6 +16,7 @@ import { color_blanco, color_gris_c } from "../../utils/theme/stringsColors";
 const VideoGames = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const videoGames = useSelector((state) => state.videogamesState.videoGames);
+  const stockFlag = useSelector((state) => state.stockState);
   const filteredVideoGames = useSelector(
     (state) => state.videogamesState.filteredVideoGames
   );
@@ -25,7 +26,7 @@ const VideoGames = ({ navigation, route }) => {
 
   useEffect(() => {
     dispatch(getvideoGames());
-  }, []);
+  }, [stockFlag]);
 
   // Función para cargar más videojuegos
   const fetchMoreVideoGames = () => {

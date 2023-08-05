@@ -276,7 +276,7 @@ const DetailInfo = (props) => {
     title: props.propInfo.name,
     price: props.propInfo.price,
     img: props.propInfo.image,
-    stock: 5,
+    stock: props.propInfo.stock,
     amount: Number(1),
   };
   const objString = JSON.stringify(objeto);

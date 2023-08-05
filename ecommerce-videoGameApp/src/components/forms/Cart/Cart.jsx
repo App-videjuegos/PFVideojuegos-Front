@@ -150,7 +150,7 @@ const Cart = ({ navigation }) => {
       } else {
         alert(StringsLanguaje.CartValidate);
 
-        navigation.navigate("Login");
+        navigation.navigate("RenderLogin");
       }
     };
 

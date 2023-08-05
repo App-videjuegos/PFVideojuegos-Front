@@ -93,10 +93,14 @@ const CartItems = (props) => {
           >
             <Ionicons name="md-remove" size={24} color={StringsDark.text} />
           </TouchableOpacity>
-          <Text style={[styles.cartItemAmountText,{color:StringsDark.text}]}>{amount}</Text>
+          <Text
+            style={[styles.cartItemAmountText, { color: StringsDark.text }]}
+          >
+            {amount}
+          </Text>
           <TouchableOpacity
             onPress={() => {
-              amountAdd(cartKEy, amount);
+              amountAdd(cartKEy, amount, stock);
               dispatch(updateCart());
             }}
           >
@@ -128,9 +132,11 @@ const CartItems = (props) => {
             <Ionicons name="md-trash" size={15} color={StringsDark.text} />
             <Text style={{ color: StringsDark.text }}>
               {StringsLanguaje.remove}
-              {/* Delete */}
             </Text>
           </TouchableOpacity>
+          <Text style={[styles.cartItemStock, { color: StringsDark.text }]}>
+            Stock ({stock})
+            </Text>
         </View>
       </View>
     </View>
@@ -199,5 +205,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  cartItemStock: {
+    textAlign: 'center',
+    fontSize: 13,
+    color: 'coral',
+    fontWeight: 'bold',
   },
 });

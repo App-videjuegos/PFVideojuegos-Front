@@ -50,22 +50,31 @@ export const InsertarItem = async (key, objString) => {
 };
 
 // Agregar cantidad de item en AsyncStorage
-export const amountAdd = async (key, newValue) => {
+export const amountAdd = async (key, newValue,stock ) => {
   try {
     // Obtener el valor actual del item
     // console.log("cantida enviada", newValue)
     const currentValue = await AsyncStorage.getItem(key);
     if (currentValue !== null) {
-      // if (newValue === 3) {
-      //   alert("Sorry, the maximum number of purchases per title is 3.");
-      // } else {
+      if (newValue === stock) {
+        Alert.alert(
+          " ",
+          "Sorry, quantity cannot exceed stock",
+          [
+            // { text: "OK", onPress: () => console.log("OK Pressed") }
+          ],
+          {
+            cancelable: true, // Permite cerrar el cuadro de alerta al tocar fuera de él (predeterminado: true)
+          }
+        );
+      } else {
         const parsedValue = JSON.parse(currentValue);
         parsedValue.amount = newValue + 1; // Aquí puedes realizar las modificaciones necesarias en el valor
         // Convertir el objeto modificado a una cadena de texto
         const updatedValue = JSON.stringify(parsedValue);
         await AsyncStorage.setItem(key, updatedValue);
         // dispatch(updateCart());
-
+      }
         console.log("Item modificado exitosamente");
       // }
     } else {
