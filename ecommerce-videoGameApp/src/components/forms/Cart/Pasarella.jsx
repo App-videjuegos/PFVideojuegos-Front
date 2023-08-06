@@ -86,8 +86,9 @@ const Pasarella = ({ navigation, route }) => {
 
       const data = await response.json();
 
-      num_order = data.clientSecret.substring(0, 27);
-
+      num_order=data.clientSecret.substring(18,27);
+//       console.log("num_order original", num_order);
+// console.log("num_order", num_order.substring(15,27));
       if (!response.ok) return Alert.alert(data.message);
       const clientSecret = data.clientSecret;
 
@@ -203,16 +204,16 @@ const Pasarella = ({ navigation, route }) => {
                 color={"#3F13A4"}
               />
               <Text style={[styles.modalText, { color: "#6B35E8" }]}>
-                Congratulations
+              {StringsLanguaje.congrats}
               </Text>
               <Text style={[styles.modalText, { color: "#6B35E8" }]}>
-                Payment Accepted !!!
+              {StringsLanguaje.paymAceppt}
               </Text>
             </View>
 
             <View style={[styles.p2, { borderColor: "#6B35E8" }]}>
               <Text style={[styles.m_titulos, { color: "#6B35E8" }]}>
-                Transaction Details
+              {StringsLanguaje.transDet}
               </Text>
               <View
                 style={{
@@ -221,7 +222,7 @@ const Pasarella = ({ navigation, route }) => {
                 }}
               >
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                  Order Number:
+                 {StringsLanguaje.ordNum}:
                 </Text>
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
                   {numOrder}
@@ -234,7 +235,7 @@ const Pasarella = ({ navigation, route }) => {
                 }}
               >
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                  Date and time:
+                {StringsLanguaje.date_Time}:
                 </Text>
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
                   {currentDate} {currentTime}
@@ -247,7 +248,7 @@ const Pasarella = ({ navigation, route }) => {
                 }}
               >
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                  User:
+                {StringsLanguaje.usr}:
                 </Text>
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
                   {userName}
@@ -256,7 +257,7 @@ const Pasarella = ({ navigation, route }) => {
             </View>
             <View style={[styles.p2, { borderColor: "#6B35E8" }]}>
               <Text style={[styles.m_titulos, { color: "#6B35E8" }]}>
-                Card Details and Amount
+              {StringsLanguaje.cardet}
               </Text>
               <View
                 style={{
@@ -265,7 +266,7 @@ const Pasarella = ({ navigation, route }) => {
                 }}
               >
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                  Number:
+                {StringsLanguaje.carNum}:
                 </Text>
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
                   **** **** ****{" "}
@@ -280,7 +281,7 @@ const Pasarella = ({ navigation, route }) => {
                 }}
               >
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                  Card:
+                {StringsLanguaje.proc_pay}:
                 </Text>
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
                   {cardDetails && cardDetails.brand ? cardDetails.brand : ""}
@@ -293,7 +294,7 @@ const Pasarella = ({ navigation, route }) => {
                 }}
               >
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                  Import:
+                {StringsLanguaje.import}:
                 </Text>
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
                   {datos.amount && (datos.amount / 100).toFixed(2)}
@@ -306,16 +307,16 @@ const Pasarella = ({ navigation, route }) => {
                 }}
               >
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                  Currency:
+                {StringsLanguaje.currency}:
                 </Text>
                 <Text style={[styles.m_Subtitulos, { color: "#987BDC" }]}>
-                  Dollar
+                {StringsLanguaje.dollar}
                 </Text>
               </View>
             </View>
             <View style={[styles.p2, { borderColor: "#6B35E8" }]}>
               <Text style={[styles.m_titulos, { color: "#6B35E8" }]}>
-                Products Detail
+              {StringsLanguaje.prod_det}
               </Text>
               {datos && (
                 <View>
@@ -327,25 +328,25 @@ const Pasarella = ({ navigation, route }) => {
                         { marginLeft: 20 },
                       ]}
                     >
-                      Name
+                      {StringsLanguaje.title}
                     </Text>
                     <Text
                       style={[
                         styles.m_Subtitulos_i,
                         { color: "#987BDC" },
-                        { marginLeft: 50 },
+                        { marginLeft: 40 },
                       ]}
                     >
-                      Price
+                      {StringsLanguaje.price}
                     </Text>
                     <Text
                       style={[
                         styles.m_Subtitulos_i,
                         { color: "#987BDC" },
-                        { marginLeft: 50 },
+                        { marginLeft: 40 },
                       ]}
                     >
-                      Quantity
+                      {StringsLanguaje.qtty}
                     </Text>
                   </View>
                   {datos.items.map((item) => (
@@ -407,7 +408,7 @@ const Pasarella = ({ navigation, route }) => {
                   { color: StringsDark.boton_texto },
                 ]}
               >
-                Close
+                {StringsLanguaje.clse}
               </Text>
             </TouchableOpacity>
           </View>

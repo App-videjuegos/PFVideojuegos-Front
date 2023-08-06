@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import React from "react";
+
 // import StarRating from "react-native-star-rating";
 import { AirbnbRating } from "react-native-ratings";
 import { InsertarItem } from "../../forms/Cart/CardCartController";
@@ -14,7 +14,7 @@ import { InsertarItem } from "../../forms/Cart/CardCartController";
 import { updateCart } from "../../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import GameRating from "../../views/Home/Detail/GameRating";
-import { useState, useRef, useSelector } from "react";
+import { useState, useRef, useSelector, useContext } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable"; // Importamos la librería para las animaciones
 import {
@@ -23,10 +23,11 @@ import {
   color_morado_o,
 } from "../theme/stringsColors";
 import { color } from "react-native-reanimated";
-
+//linea para modificar el contexto de localizacion para el lenaguje
+import { LanguajeContext } from "../../utils/languaje/languajeProvider";
 const Card = (props) => {
   const { videoG, nav } = props;
-// console.log("que me llega de nav???",nav.navigate)
+  // console.log("que me llega de nav???",nav.navigate)
   {
     /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
   }
@@ -41,7 +42,8 @@ const Card = (props) => {
   {
     /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
   }
-
+  //linea para setear el lenguaje /obtener palabras de lenguaje
+  const { StringsLanguaje, locale } = useContext(LanguajeContext);
   const dispatch = useDispatch();
   // Función para actualizar el rating del videojuego en la tarjeta inicial (Home)
   const [videoGames, setVideoGames] = useState([]);
@@ -78,8 +80,7 @@ const Card = (props) => {
           {/* Imagen del videojuego */}
           <TouchableOpacity
             onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-
->
+          >
             <Image
               style={styles.image}
               source={{ uri: videoG.image }}
@@ -131,7 +132,15 @@ const Card = (props) => {
           {/* Botón "Add to cart" */}
           <TouchableOpacity
             onPress={() => {
-              InsertarItem(key, objString);
+              InsertarItem(
+                key,
+                objString,
+                videoG.stock,
+                StringsLanguaje.AddingItem,
+                StringsLanguaje.Item_added,
+                StringsLanguaje.stockOut,
+                StringsLanguaje.warning,
+              );
               dispatch(updateCart());
               // console.log("key guardada", objString);
             }}
@@ -205,14 +214,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   heart: {
-    elevation:10,
+    elevation: 10,
     position: "absolute",
     left: 150,
     bottom: 68,
     color: color_blanco,
   },
   AddCartContainer: {
-    elevation:10,
+    elevation: 10,
     position: "absolute",
     left: 150,
     bottom: 24,

@@ -72,8 +72,8 @@ const CartItems = (props) => {
             onPress={() => {
               if (amount === 1) {
                 Alert.alert(
-                  `${StringsLanguaje.delItemCart}`,
                   "",
+                  `${StringsLanguaje.delItemCart}`,
                   [
                     {
                       text: `${StringsLanguaje.optCancel}`,
@@ -100,7 +100,13 @@ const CartItems = (props) => {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              amountAdd(cartKEy, amount, stock);
+              amountAdd(
+                cartKEy,
+                amount,
+                stock,
+                StringsLanguaje.stockOut,
+                StringsLanguaje.warning
+              );
               dispatch(updateCart());
             }}
           >
@@ -111,8 +117,8 @@ const CartItems = (props) => {
           <TouchableOpacity
             onPress={() => {
               Alert.alert(
-                `${StringsLanguaje.delItemCart}`,
                 "",
+                `${StringsLanguaje.delItemCart}`,
                 [
                   {
                     text: `${StringsLanguaje.optCancel}`,
@@ -136,7 +142,7 @@ const CartItems = (props) => {
           </TouchableOpacity>
           <Text style={[styles.cartItemStock, { color: StringsDark.text }]}>
             Stock ({stock})
-            </Text>
+          </Text>
         </View>
       </View>
     </View>
@@ -207,9 +213,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cartItemStock: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 13,
-    color: 'coral',
-    fontWeight: 'bold',
+    color: "coral",
+    fontWeight: "bold",
   },
 });

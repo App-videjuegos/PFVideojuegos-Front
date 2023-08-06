@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -21,8 +21,8 @@ import {
 import { convertirFecha } from "../../../helpers/InvertDate";
 import { InsertarItem } from "../../../forms/Cart/CardCartController";
 import { updateCart } from "../../../../redux/cartSlice";
-import { ThemeContext } from '../../../utils/theme/ThemeProvider';
-import { LanguajeContext } from '../../../utils/languaje/languajeProvider';
+import { ThemeContext } from "../../../utils/theme/ThemeProvider";
+import { LanguajeContext } from "../../../utils/languaje/languajeProvider";
 
 const DetailInfo = (props) => {
   //linea para setear el modo dark
@@ -286,10 +286,17 @@ const DetailInfo = (props) => {
   // console.log("esto es lo q tengo en OBJ",objeto)
   // console.log("esto es lo q tengo en key",key)
   return (
-    <ScrollView contentContainerStyle={[styles.container,{backgroundColor:StringsDark.Titulo_Screen_fondo}]}>
+    <ScrollView
+      contentContainerStyle={[
+        styles.container,
+        { backgroundColor: StringsDark.Titulo_Screen_fondo },
+      ]}
+    >
       <Image style={styles.image} source={{ uri: image }} />
       <View style={styles.infoContainer}>
-        <Text style={[styles.gameName,{color:StringsDark.tit_det_extra}]}>{name}</Text>
+        <Text style={[styles.gameName, { color: StringsDark.tit_det_extra }]}>
+          {name}
+        </Text>
         {/* Aquí pasamos la función updateCardRating como una prop a GameRating */}
         <GameRating
           rating={rating}
@@ -297,30 +304,54 @@ const DetailInfo = (props) => {
           // updateCardRating={updateCardRating}
         />
 
-        <Text style={[styles.gamePrice, { color: StringsDark.price }]}>$ {price}</Text>
+        <Text style={[styles.gamePrice, { color: StringsDark.price }]}>
+          $ {price}
+        </Text>
         <TouchableOpacity
           onPress={() => {
-            InsertarItem(key, objString);
+            InsertarItem(
+              key,
+              objString,
+              props.propInfo.stock,
+              StringsLanguaje.AddingItem,
+              StringsLanguaje.Item_added,
+              StringsLanguaje.stockOut,
+              StringsLanguaje.warning,
+            );
             dispatch(updateCart());
             // getKeysCount();
             // console.log("key guardada", objString);
           }}
         >
-          <View style={[styles.button, { backgroundColor: StringsDark.boton_fondo }]}>
-            <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>
+          <View
+            style={[
+              styles.button,
+              { backgroundColor: StringsDark.boton_fondo },
+            ]}
+          >
+            <Text
+              style={[styles.buttonText, { color: StringsDark.boton_texto }]}
+            >
               Add to Cart
             </Text>
           </View>
         </TouchableOpacity>
-        <Text style={[styles.gameDescription,{color:StringsDark.text}]}>
+        <Text style={[styles.gameDescription, { color: StringsDark.text }]}>
           {showFullDescription
             ? description
             : `${description.substring(0, 300)}...`}
         </Text>
         {!showFullDescription && (
           <TouchableOpacity onPress={toggleDescription}>
-            <View style={[styles.button, { backgroundColor:  StringsDark.boton_fondo }]}>
-              <Text style={[styles.buttonText, { color: StringsDark.boton_texto }]}>
+            <View
+              style={[
+                styles.button,
+                { backgroundColor: StringsDark.boton_fondo },
+              ]}
+            >
+              <Text
+                style={[styles.buttonText, { color: StringsDark.boton_texto }]}
+              >
                 Read More
               </Text>
             </View>
@@ -328,8 +359,15 @@ const DetailInfo = (props) => {
         )}
         {showFullDescription && (
           <TouchableOpacity onPress={toggleDescription}>
-            <View style={[styles.button, {  backgroundColor:  StringsDark.boton_fondo  }]}>
-              <Text style={[styles.buttonText, { color:StringsDark.boton_texto }]}>
+            <View
+              style={[
+                styles.button,
+                { backgroundColor: StringsDark.boton_fondo },
+              ]}
+            >
+              <Text
+                style={[styles.buttonText, { color: StringsDark.boton_texto }]}
+              >
                 Retract
               </Text>
             </View>
@@ -337,12 +375,28 @@ const DetailInfo = (props) => {
         )}
 
         {/* Comentarios */}
-        <View style={[styles.commentsContainer,{backgroundColor:StringsDark.fondo_comments}]}>
-          <Text style={[styles.commentsHeaderText,{color:StringsDark.text}]}>Comments</Text>
+        <View
+          style={[
+            styles.commentsContainer,
+            { backgroundColor: StringsDark.fondo_comments },
+          ]}
+        >
+          <Text
+            style={[styles.commentsHeaderText, { color: StringsDark.text }]}
+          >
+            Comments
+          </Text>
           {/* Botón para cargar los comentarios */}
           <TouchableOpacity onPress={handleLoadComments}>
-            <View style={[styles.button, { backgroundColor:  StringsDark.boton_fondo }]}>
-              <Text style={[styles.buttonText, { color:StringsDark.boton_texto }]}>
+            <View
+              style={[
+                styles.button,
+                { backgroundColor: StringsDark.boton_fondo },
+              ]}
+            >
+              <Text
+                style={[styles.buttonText, { color: StringsDark.boton_texto }]}
+              >
                 Add a comment to this game
               </Text>
             </View>
@@ -390,7 +444,9 @@ const DetailInfo = (props) => {
             )}
           </View>
           <View style={styles.recommendationContainer}>
-            <Text style={[styles.recommendationText,{color:StringsDark.text}]}>
+            <Text
+              style={[styles.recommendationText, { color: StringsDark.text }]}
+            >
               ¿Do you recommend this game?
             </Text>
             <TouchableOpacity onPress={handleRecommendationChange}>
@@ -401,10 +457,18 @@ const DetailInfo = (props) => {
           </View>
 
           {/* Las estrellas papurri */}
-          <Text style={[styles.textRating,{color:StringsDark.text}]} onPress={putRating}>
+          <Text
+            style={[styles.textRating, { color: StringsDark.text }]}
+            onPress={putRating}
+          >
             Add your rating
           </Text>
-          <View style={[styles.ratingContainer,{backgroundColor:StringsDark.fondo_stars}]}>
+          <View
+            style={[
+              styles.ratingContainer,
+              { backgroundColor: StringsDark.fondo_stars },
+            ]}
+          >
             <AirbnbRating
               count={5}
               defaultRating={ratingV}
@@ -429,7 +493,6 @@ const DetailInfo = (props) => {
               styles.commentInput,
               styles.wideInput,
               errorComment ? styles.errorInput : null,
-              
             ]}
             placeholder="*Comment"
             value={comment}
@@ -467,8 +530,16 @@ const DetailInfo = (props) => {
             </Text>
           )}
           <TouchableOpacity onPress={addHashtagInput}>
-            <View style={[styles.button, styles.addHashtagButton,{backgroundColor:StringsDark.boton_fondo}]}>
-              <Text style={[styles.buttonText, { color:StringsDark.boton_texto} ]}>
+            <View
+              style={[
+                styles.button,
+                styles.addHashtagButton,
+                { backgroundColor: StringsDark.boton_fondo },
+              ]}
+            >
+              <Text
+                style={[styles.buttonText, { color: StringsDark.boton_texto }]}
+              >
                 Add a hashtag
               </Text>
             </View>
@@ -526,7 +597,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 5,
     padding: 5,
-    borderRadius:8
+    borderRadius: 8,
   },
   gamePrice: {
     color: "#1B063E",

@@ -1,26 +1,25 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
-//linea para modificar el contexto de localizacion para el lenaguje
-
-//inserta o agrega cantidad de item
-export const InsertarItem = async (key, objString) => {
+export const InsertarItem = async (
+  key,
+  objString,
+  stock,
+  addingItem,
+  ItemAdd,
+  stockOut,
+  warning
+) => {
   try {
     const currentValue = await AsyncStorage.getItem(key);
     if (currentValue !== null) {
       const parsedValue = JSON.parse(currentValue);
-      // if (parsedValue.amount === 3) {
-      //   alert("Sorry, the maximum number of purchases per title is 3.");
-      // } else {
-        parsedValue.amount = parsedValue.amount + 1; // Aquí puedes realizar las modificaciones necesarias en el valor
-        // Convertir el objeto modificado a una cadena de texto
-        const updatedValue = JSON.stringify(parsedValue);
-        await AsyncStorage.setItem(key, updatedValue);
-
-        // alert('One unit was added to the current item')
+      // console.log("valor actual en carrito",parsedValue.amount)
+      // console.log("stock ",stock)
+      if (parsedValue.amount >= stock) {
         Alert.alert(
-          " ",
-          "One unit was added to the current item",
+          warning,
+          stockOut,
           [
             // { text: "OK", onPress: () => console.log("OK Pressed") }
           ],
@@ -28,14 +27,31 @@ export const InsertarItem = async (key, objString) => {
             cancelable: true, // Permite cerrar el cuadro de alerta al tocar fuera de él (predeterminado: true)
           }
         );
-        // console.log('Item modificado exitosamente');
-      // }
+      } else {
+      parsedValue.amount = parsedValue.amount + 1; // Aquí puedes realizar las modificaciones necesarias en el valor
+      // Convertir el objeto modificado a una cadena de texto
+      const updatedValue = JSON.stringify(parsedValue);
+      await AsyncStorage.setItem(key, updatedValue);
+
+      // alert('One unit was added to the current item')
+      Alert.alert(
+        "",
+        `${addingItem}`,
+        [
+          // { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        {
+          cancelable: true, // Permite cerrar el cuadro de alerta al tocar fuera de él (predeterminado: true)
+        }
+      );
+      console.log('Item modificado exitosamente');
+      }
     } else {
       await AsyncStorage.setItem(key, objString);
 
       Alert.alert(
-        " ",
-        "Item Added",
+        "",
+        `${ItemAdd}`,
         [
           // { text: "OK", onPress: () => console.log("OK Pressed") }
         ],
@@ -50,16 +66,16 @@ export const InsertarItem = async (key, objString) => {
 };
 
 // Agregar cantidad de item en AsyncStorage
-export const amountAdd = async (key, newValue,stock ) => {
+export const amountAdd = async (key, newValue, stock,stockOut, warning) => {
   try {
     // Obtener el valor actual del item
     // console.log("cantida enviada", newValue)
     const currentValue = await AsyncStorage.getItem(key);
     if (currentValue !== null) {
-      if (newValue === stock) {
+      if (newValue>= stock) {
         Alert.alert(
-          " ",
-          "Sorry, quantity cannot exceed stock",
+          warning,
+          stockOut,
           [
             // { text: "OK", onPress: () => console.log("OK Pressed") }
           ],
@@ -75,7 +91,7 @@ export const amountAdd = async (key, newValue,stock ) => {
         await AsyncStorage.setItem(key, updatedValue);
         // dispatch(updateCart());
       }
-        console.log("Item modificado exitosamente");
+      console.log("Item modificado exitosamente");
       // }
     } else {
       console.log("No se encontró un item para la clave especificada");
@@ -93,7 +109,7 @@ export const amountSub = async (key, newValue) => {
     if (currentValue !== null) {
       // Analizar el valor obtenido para convertirlo en un objeto
       const parsedValue = JSON.parse(currentValue);
-      console.log("newValue", newValue);
+      // console.log("newValue", newValue);
       parsedValue.amount = newValue - 1; // Aquí puedes realizar las modificaciones necesarias en el valor
       // Convertir el objeto modificado a una cadena de texto
       const updatedValue = JSON.stringify(parsedValue);
