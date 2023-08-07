@@ -162,6 +162,8 @@ const getUserData = async  () => {
 
       console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
 
+      if(user.deleted === true)
+      return setErrorMessage('Banned Account')  
       if(user.user){
         setLogingUser(user);
         saveItemAsyncStorage("logedGameStack", user);

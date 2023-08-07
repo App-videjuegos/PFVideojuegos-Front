@@ -32,8 +32,23 @@ import { Login } from "./src/components/views/Login/Login";
 import { ForgotPassword } from "./src/components/views/ForgotPasword/ForgotPassword";
 import { StartedSession } from "./src/components/views/Login/SessionInit";
 import { RenderLogin } from "./src/components/views/Login/RenderingLogin";
+import { loadItemAsyncStorage } from "./src/components/helpers/functionsAsyncStorage";
+import { checkLogedUser } from "./src/redux/userActions";
+import { useEffect } from "react";
 
 export default function App() {
+
+
+  useEffect(() => {
+    async function fetchData() {
+      const logedData = await loadItemAsyncStorage("logedGameStack");
+      if(logedData.user)
+      checkLogedUser(logedData); 
+
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <LanguajeProvider>
