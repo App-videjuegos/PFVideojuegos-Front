@@ -49,7 +49,7 @@ const Shoppings = () => {
   // Este ordena las compras por fecha
   let sortedUserSales = [];
 
-  if (userSales) {
+  if (userSales && userSales.length > 0) {
     sortedUserSales = userSales
       .filter((item) => item.date) // Filtra elementos con fecha válida
       .sort((a, b) => {
@@ -58,6 +58,7 @@ const Shoppings = () => {
         return dateB - dateA;
       });
   }
+
 
   return (
     <View style={styles.container}>

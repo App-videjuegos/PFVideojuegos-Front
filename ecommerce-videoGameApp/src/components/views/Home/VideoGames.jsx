@@ -25,6 +25,7 @@ const VideoGames = ({ navigation, route }) => {
   );
 
   useEffect(() => {
+    console.log("REllamando a getVidegames x cambios en stock")
     dispatch(getvideoGames());
   }, [stockFlag]);
 
@@ -36,7 +37,7 @@ const VideoGames = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        {console.log(notFoundGames)}
+        {console.log("notFoundGames",notFoundGames)}
         {notFoundGames ? (
           <View style={styles.notFoundContainer}>
             <Text style={styles.notFoundText1}>We're sorry!</Text>

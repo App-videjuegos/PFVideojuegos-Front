@@ -27,14 +27,14 @@ export const  getvideoGames = () =>(dispatch)=>{
   
 
 //  dispatch(getAllVideogames(videogames))
-     axios("https://pfvideojuegos-back-production.up.railway.app/games/admin")
+     axios("https://pfvideojuegos-back-production.up.railway.app/games")
      .then(res => dispatch(getAllVideogames(res.data)))
      .catch(e=>console.log("error en la ruta" ,e))
 }
 
 export const getvGamebyName =(query)=> (dispatch=>{
     // console.log("esto me llega de query",query)
-    fetch(`https://pfvideojuegos-back-production.up.railway.app/games/admin?name=${query}`)
+    fetch(`https://pfvideojuegos-back-production.up.railway.app/games?name=${query}`)
             .then(response =>{
                 estado= response.status
                 return response.json()

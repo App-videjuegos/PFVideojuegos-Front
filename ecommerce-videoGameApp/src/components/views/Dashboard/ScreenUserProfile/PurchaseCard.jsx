@@ -29,6 +29,14 @@ const PurchaseCard = ({ videoG }) => {
 
   const formattedDate = formatDate(videoG.date);
 
+  if (!videoG) {
+    return (
+      <View style={styles.cardContainer}>
+        <Text>No data available.</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.leftContainer}>
