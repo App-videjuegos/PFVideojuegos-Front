@@ -58,6 +58,12 @@ const Comments = () => {
       }
     };
 
+    if (!gameInfo) {
+      // Si gameInfo no existe, el juego no está disponible en videoGames
+      // Puedes devolver null o cualquier otro componente vacío
+      return  null;
+    }
+
     return (
       <TouchableOpacity onPress={() => handleReviewPress(item.videogameId)}>
         <View style={styles.reviewCard}>

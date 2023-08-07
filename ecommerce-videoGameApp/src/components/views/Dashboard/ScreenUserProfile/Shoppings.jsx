@@ -59,6 +59,7 @@ const Shoppings = () => {
       });
   }
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>My Shoppings</Text>
