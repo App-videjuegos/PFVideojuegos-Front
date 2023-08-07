@@ -5,16 +5,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from "react-native";
-
+import React from "react";
 // import StarRating from "react-native-star-rating";
 import { AirbnbRating } from "react-native-ratings";
 import { InsertarItem } from "../../forms/Cart/CardCartController";
-
 import { updateCart } from "../../../redux/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector  } from "react-redux";
 import GameRating from "../../views/Home/Detail/GameRating";
-import { useState, useRef, useSelector, useContext } from "react";
+import { useState, useRef, useEffect  } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable"; // Importamos la librería para las animaciones
 import {
@@ -23,27 +23,59 @@ import {
   color_morado_o,
 } from "../theme/stringsColors";
 import { color } from "react-native-reanimated";
-//linea para modificar el contexto de localizacion para el lenaguje
-import { LanguajeContext } from "../../utils/languaje/languajeProvider";
+import { toggleFavorite } from "../../../redux/favoriteActions";
+
 const Card = (props) => {
-  const { videoG, nav } = props;
-  // console.log("que me llega de nav???",nav.navigate)
+  const { videoG, nav, showButtons = true } = props;
+// console.log("que me llega de nav???",nav.navigate)
+
+
   {
     /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
   }
   const [isFavorite, setIsFavorite] = useState(false); // Estado para controlar si el juego es favorito o no
   const heartRef = useRef(null); // Referencia para la animación del corazón
   const cartRef = useRef(null); // Referencia para la animación del corazón
+  const isLogged = useSelector((state) => state.usersState.isLogged);
+ // Obtener la lista de favoritos del estado global
+ const favorites = useSelector((state) => state.favoriteState.favorites);
+
+ // Verificar si el juego actual está en la lista de favoritos
+ useEffect(() => {
+   const favoriteGameIds = favorites.map((favorite) => favorite.videogameId);
+   const isFav = favoriteGameIds.includes(videoG.id);
+   setIsFavorite(isFav);
+ }, [favorites, videoG.id]);
+
+
   const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    // Hacemos que el corazón tiemble cada vez que se toque
-    heartRef.current?.rubberBand(500); // 500ms para completar la animación
+    if (isLogged.id === undefined) {
+      // Mostrar una alerta si el usuario no está logueado
+      Alert.alert("Login Required", "Please log in to add this game to favorites.");
+      console.log("No se puede agregar a favoritos: Usuario no logueado.");
+      return;
+    }
+
+    setIsFavorite((prevState) => !prevState); // Cambiar el estado de favorito
+    heartRef.current?.rubberBand(500);
+    console.log("Agrego a favorito:", !isFavorite);
+    console.log("ID del juego:", videoG.id);
+    console.log("ID del usuario:", isLogged.id);
+
+    // Enviar información a la API para agregar/quitar el juego de favoritos
+    const data = {
+      videogameId: videoG.id,
+      userId: isLogged.id,
+      isFav: !isFavorite,
+    };
+    dispatch(toggleFavorite(data.videogameId, data.userId, data.isFav));
   };
+
+
   {
     /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
   }
-  //linea para setear el lenguaje /obtener palabras de lenguaje
-  const { StringsLanguaje, locale } = useContext(LanguajeContext);
+
   const dispatch = useDispatch();
   // Función para actualizar el rating del videojuego en la tarjeta inicial (Home)
   const [videoGames, setVideoGames] = useState([]);
@@ -53,7 +85,7 @@ const Card = (props) => {
     title: videoG.name,
     price: videoG.price,
     img: videoG.image,
-    stock: videoG.stock,
+    stock: 5,
     amount: Number(1),
   };
   const objString = JSON.stringify(objeto);
@@ -80,7 +112,8 @@ const Card = (props) => {
           {/* Imagen del videojuego */}
           <TouchableOpacity
             onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-          >
+
+>
             <Image
               style={styles.image}
               source={{ uri: videoG.image }}
@@ -106,54 +139,49 @@ const Card = (props) => {
             />
           </View>
 
-          {/* Fila que contiene el precio y el corazón */}
-          <View style={styles.priceAndFavoriteContainer}>
+        {/* Fila que contiene el precio y el corazón */}
+        <View style={styles.priceAndFavoriteContainer}>
             {/* Precio del videojuego */}
             <Text style={styles.price}>$ {videoG.price}</Text>
 
             {/* Espacio entre el precio y el corazón */}
             <View style={styles.space} />
 
-            {/* Botón de favoritos */}
-            <View style={styles.heart}>
-              <TouchableOpacity onPress={handleToggleFavorite}>
-                <Animatable.View ref={heartRef}>
-                  <MaterialCommunityIcons
-                    style={styles.heartIcon}
-                    name={isFavorite ? "heart" : "heart-outline"}
-                    size={28}
-                    color={isFavorite ? "#622EDA" : "#595959"}
-                  />
-                </Animatable.View>
-              </TouchableOpacity>
-            </View>
+            {/* Botón de favoritos (si showButtons es verdadero) */}
+            {showButtons && (
+              <View style={styles.heart}>
+                <TouchableOpacity onPress={handleToggleFavorite}>
+                  <Animatable.View ref={heartRef}>
+                    <MaterialCommunityIcons
+                      style={styles.heartIcon}
+                      name={isFavorite ? "heart" : "heart-outline"}
+                      size={28}
+                      color={isFavorite ? "#622EDA" : "#595959"}
+                    />
+                  </Animatable.View>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
 
-          {/* Botón "Add to cart" */}
-          <TouchableOpacity
-            onPress={() => {
-              InsertarItem(
-                key,
-                objString,
-                videoG.stock,
-                StringsLanguaje.AddingItem,
-                StringsLanguaje.Item_added,
-                StringsLanguaje.stockOut,
-                StringsLanguaje.warning,
-              );
-              dispatch(updateCart());
-              // console.log("key guardada", objString);
-            }}
-          >
-            <Animatable.View ref={cartRef}>
-              <MaterialCommunityIcons
-                style={styles.AddCartContainer}
-                name={"cart-plus"}
-                size={28}
-                color={color_gris_c}
-              />
-            </Animatable.View>
-          </TouchableOpacity>
+          {/* Botón "Add to cart" (si showButtons es verdadero) */}
+          {showButtons && (
+            <TouchableOpacity
+              onPress={() => {
+                InsertarItem(key, objString);
+                dispatch(updateCart());
+              }}
+            >
+              <Animatable.View ref={cartRef}>
+                <MaterialCommunityIcons
+                  style={styles.AddCartContainer}
+                  name={"cart-plus"}
+                  size={28}
+                  color={color_gris_c}
+                />
+              </Animatable.View>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
@@ -214,14 +242,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   heart: {
-    elevation: 10,
+    elevation:10,
     position: "absolute",
     left: 150,
     bottom: 68,
     color: color_blanco,
   },
   AddCartContainer: {
-    elevation: 10,
+    elevation:10,
     position: "absolute",
     left: 150,
     bottom: 24,

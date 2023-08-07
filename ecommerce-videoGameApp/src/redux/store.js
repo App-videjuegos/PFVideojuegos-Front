@@ -4,7 +4,8 @@ import userReducer from "./userSlices"
 import cartReducer from "./cartSlice"
 import salesReducer from "./salesSlice"
 import reviewsReducer from './reviewSlice';
-import stockReducer from './stockSlice';
+import favoriteReducer from "./favoriteSlice";
+
 
 export default configureStore({
     reducer:{
@@ -13,6 +14,6 @@ export default configureStore({
         cartState: cartReducer,
         salesState: salesReducer,
         reviews: reviewsReducer,
-        stockState: stockReducer,
+        favoriteState: favoriteReducer,
     }
 })
