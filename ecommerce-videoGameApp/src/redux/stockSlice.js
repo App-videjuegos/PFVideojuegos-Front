@@ -7,7 +7,7 @@ export const stockSlice = createSlice({
   initialState,
   reducers: {
     updateStock: (state) => {
-      console.log("cambiando estado ----> redux");
+      // console.log("cambiando estado ----> redux para actualizar");
       return !state; // Alternar el valor booleano entre true y false
     },
   },
