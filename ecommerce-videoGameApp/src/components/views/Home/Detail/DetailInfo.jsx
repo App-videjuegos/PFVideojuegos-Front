@@ -443,6 +443,7 @@ const DetailInfo = (props) => {
               <Text>There are no comments available.</Text>
             )}
           </View>
+          <View style={styles.separator} />
           <View style={styles.recommendationContainer}>
             <Text
               style={[styles.recommendationText, { color: StringsDark.text }]}
@@ -457,7 +458,7 @@ const DetailInfo = (props) => {
           </View>
 
           {/* Las estrellas papurri */}
-          <Text
+          {/* <Text
             style={[styles.textRating, { color: StringsDark.text }]}
             onPress={putRating}
           >
@@ -477,7 +478,7 @@ const DetailInfo = (props) => {
               selectedColor="gold"
               onFinishRating={handleRating}
             />
-          </View>
+          </View> */}
 
           <TextInput
             style={[styles.commentInput, errorTitle ? styles.errorInput : null]}
@@ -605,6 +606,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 400,
     marginBottom: 10,
+    textAlign: 'center',
   },
   gameDescription: {
     fontSize: 15,
@@ -773,6 +775,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold", // Texto en negrita
     // color: "#1B063E", // Color de texto de los comentarios
     paddingLeft: 5, // Espaciado izquierdo para el texto "Comments"
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "black",
+    marginVertical: 10,
   },
 });
 
