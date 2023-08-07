@@ -13,13 +13,11 @@ const PurchaseCard = ({ videoG }) => {
   const [orderNumber] = useState(generateOrderNumber());
 
   const totalQuantity = videoG.items.reduce(
-    (total, item) => total + item.quantity,
+    (total, item) => total + parseFloat(item.quantity),
     0
   );
 
-  // Función para formatear la fecha en formato "dia-mes-año"
   const formatDate = (dateString) => {
-    // nativa de JS
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -29,7 +27,7 @@ const PurchaseCard = ({ videoG }) => {
 
   const formattedDate = formatDate(videoG.date);
 
-  if (!videoG) {
+  if (!videoG || !videoG.items || videoG.items.length === 0) {
     return (
       <View style={styles.cardContainer}>
         <Text>No data available.</Text>
@@ -50,12 +48,7 @@ const PurchaseCard = ({ videoG }) => {
         <Text style={styles.infoText}>
           Videogames:{" "}
           {videoG.items
-            .map((item) => {
-              const game = videoGames.find(
-                (game) => game.id === item.videogameId
-              );
-              return game.name;
-            })
+            .map((item) => `${item.videogameName} (${item.quantity})`)
             .join(", ")}
         </Text>
         <Text style={styles.infoText}>Date: {formattedDate}</Text>
