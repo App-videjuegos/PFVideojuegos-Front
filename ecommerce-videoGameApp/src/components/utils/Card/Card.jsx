@@ -168,6 +168,7 @@ const Card = (props) => {
           {/* Botón "Add to cart" (si showButtons es verdadero) */}
           {showButtons && (
             <TouchableOpacity
+            style={styles.AddCartContainer}
               onPress={() => {
                 InsertarItem(
                   key,
@@ -183,7 +184,6 @@ const Card = (props) => {
             >
               <Animatable.View ref={cartRef}>
                 <MaterialCommunityIcons
-                  style={styles.AddCartContainer}
                   name={"cart-plus"}
                   size={28}
                   color={color_gris_c}
@@ -258,10 +258,10 @@ const styles = StyleSheet.create({
     color: color_blanco,
   },
   AddCartContainer: {
-    elevation:10,
+    elevation:999,
     position: "absolute",
     left: 150,
-    bottom: 24,
+    bottom: 48,
   },
   price: {
     marginTop: 4,
