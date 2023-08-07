@@ -117,7 +117,7 @@ const Pasarella = ({ navigation, route }) => {
             }
           );
           const data = await response.json();
-          // console.log(' esta la 2da respuesta del server', data);
+           console.log(' esta la 2da respuesta del server', data);
 
           if (data.message === "ok") {
             dispatch(updateStock());

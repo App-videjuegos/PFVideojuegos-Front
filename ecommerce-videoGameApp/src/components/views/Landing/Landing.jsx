@@ -10,10 +10,23 @@ import {
   applyRatingSortDesc
 } from '../../../redux/videogamesActions';
 import Card from '../../utils/Card/Card';
+import { loadItemAsyncStorage } from '../../helpers/functionsAsyncStorage';
+import { checkLogedUser } from '../../../redux/userActions';
 
 const Landing = ({ navigation }) => {
   const { isDarkMode, StringsDark } = useContext(ThemeContext);
   const { StringsLanguaje, locale } = useContext(LanguajeContext);
+
+
+  useEffect(() => {
+    async function fetchData() {
+      const logedData = await loadItemAsyncStorage("logedGameStack");
+      if(logedData.user)
+      dispatch(checkLogedUser(logedData)); 
+
+    }
+    fetchData();
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -27,8 +40,8 @@ const Landing = ({ navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
-      // headerTitle: `${StringsLanguaje.Welcome}`,
-      headerTitle: `Welcome`,
+      headerTitle: `${StringsLanguaje.Welcome}`,
+      // headerTitle: `Welcome`,
       headerTintColor: StringsDark.Titulo_Screen,
       headerStyle: {
         backgroundColor: StringsDark.Titulo_Screen_fondo,

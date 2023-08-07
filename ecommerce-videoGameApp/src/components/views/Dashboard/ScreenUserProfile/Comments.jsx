@@ -58,6 +58,14 @@ const Comments = () => {
       }
     };
 
+    if (!gameInfo) {
+      return (
+        <View>
+          <Text>No data available.</Text>
+        </View>
+      );
+    }
+
     return (
       <TouchableOpacity onPress={() => handleReviewPress(item.videogameId)}>
         <View style={styles.reviewCard}>

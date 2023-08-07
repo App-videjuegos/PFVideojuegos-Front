@@ -53,7 +53,6 @@ const GameRating = ({ gameId, initialRating, updateCardRating }) => {
 
   return (
     <View>
-      <Text style={{color:StringsDark.text}}>Rating: {rating}</Text>
       <AirbnbRating
         count={5}
         defaultRating={rating}
@@ -62,7 +61,6 @@ const GameRating = ({ gameId, initialRating, updateCardRating }) => {
         selectedColor="gold"
         onFinishRating={handleRatingChange}
       />
-      <Text style={[styles.ratingText,{color:StringsDark.text}]}>{rating}</Text>
     </View>
   );
 };

@@ -14,8 +14,11 @@ export const InsertarItem = async (
     const currentValue = await AsyncStorage.getItem(key);
     if (currentValue !== null) {
       const parsedValue = JSON.parse(currentValue);
-      // console.log("valor actual en carrito",parsedValue.amount)
-      // console.log("stock ",stock)
+      // console.log("cantidad actual",parsedValue.amount)
+      //  console.log("warning ",warning)
+      //  console.log("ItemAdd ",ItemAdd)
+      //  console.log("addingItem ",addingItem)
+      //  console.log("stock",stock)
       if (parsedValue.amount >= stock) {
         Alert.alert(
           warning,
