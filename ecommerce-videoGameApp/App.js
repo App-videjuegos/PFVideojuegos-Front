@@ -2,9 +2,9 @@ import "react-native-gesture-handler";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();//Ignore all log notifications
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const Drawer = createDrawerNavigator();
 // variables proveedoras del tema y cambiode lenguaje
@@ -24,7 +24,7 @@ import Cart from "./src/components/forms/Cart/Cart";
 import Pasarella from "./src/components/forms/Cart/Pasarella";
 import UserProfile from "./src/components/views/Dashboard/UserProfile.jsx";
 import { StripeProvider } from "@stripe/stripe-react-native";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./src/redux/store";
 import CreateVideogame from "./src/components/views/Create/CreateVideoGame";
 import Register from "./src/components/views/Create/RegisterUser";
@@ -37,14 +37,11 @@ import { checkLogedUser } from "./src/redux/userActions";
 import { useEffect } from "react";
 
 export default function App() {
-
-
+  const dispatch = useDispatch;
   useEffect(() => {
     async function fetchData() {
       const logedData = await loadItemAsyncStorage("logedGameStack");
-      if(logedData.user)
-      checkLogedUser(logedData); 
-
+      if (logedData.user && logedData.deleted=== false) dispatch(checkLogedUser(logedData));
     }
     fetchData();
   }, []);
@@ -53,7 +50,7 @@ export default function App() {
     <>
       <LanguajeProvider>
         <ThemeProvider>
-        <StripeProvider publishableKey="pk_test_51N7eXtIEe9GBUqtLHqAuwlTor3giWSzd60ooicGwoYQysemKeOM288y3908V2pTq2KCwBkYotvhMnRRPQ2WStRLZ00SfULJJhC"/>
+          <StripeProvider publishableKey="pk_test_51N7eXtIEe9GBUqtLHqAuwlTor3giWSzd60ooicGwoYQysemKeOM288y3908V2pTq2KCwBkYotvhMnRRPQ2WStRLZ00SfULJJhC" />
           <Provider store={store}>
             <NavigationContainer>
               <Drawer.Navigator
@@ -143,7 +140,7 @@ export default function App() {
                   }}
                 />
 
-<Drawer.Screen
+                <Drawer.Screen
                   name="ForgotPassword"
                   component={ForgotPassword}
                   options={{
@@ -155,7 +152,7 @@ export default function App() {
                     headerTitleStyle: { fontWeight: "bold", fontSize: 25 },
                   }}
                 />
-                  <Drawer.Screen
+                <Drawer.Screen
                   name="Pasarella"
                   component={Pasarella}
                   options={{
@@ -171,7 +168,7 @@ export default function App() {
                   }}
                 />
 
-            <Drawer.Screen
+                <Drawer.Screen
                   name="UserProfile" //aqui va el nombre con el q lo vas a llamar dese el menu items
                   component={UserProfile}
                   options={{
@@ -185,9 +182,9 @@ export default function App() {
                       fontSize: 25,
                     },
                   }}
-                />  
+                />
 
-<Drawer.Screen
+                <Drawer.Screen
                   name="StartedSession" //aqui va el nombre con el q lo vas a llamar dese el menu items
                   component={StartedSession}
                   options={{
@@ -201,9 +198,9 @@ export default function App() {
                       fontSize: 25,
                     },
                   }}
-                /> 
+                />
 
-<Drawer.Screen
+                <Drawer.Screen
                   name="RenderLogin" //aqui va el nombre con el q lo vas a llamar dese el menu items
                   component={RenderLogin}
                   options={{
@@ -217,7 +214,7 @@ export default function App() {
                       fontSize: 25,
                     },
                   }}
-                /> 
+                />
                 {/*
                 <Drawer.Screen
                   name="Dashboard"
