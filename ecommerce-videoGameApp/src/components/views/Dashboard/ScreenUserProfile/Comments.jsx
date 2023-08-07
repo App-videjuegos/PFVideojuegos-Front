@@ -59,9 +59,11 @@ const Comments = () => {
     };
 
     if (!gameInfo) {
-      // Si gameInfo no existe, el juego no está disponible en videoGames
-      // Puedes devolver null o cualquier otro componente vacío
-      return  null;
+      return (
+        <View>
+          <Text>No data available.</Text>
+        </View>
+      );
     }
 
     return (
