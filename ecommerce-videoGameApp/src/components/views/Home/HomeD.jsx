@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import Filter from "../../utils/Filters/Filter";
 
 import {clearAllFilters,} from "../../../redux/videogamesActions"
+import { color_blanco, color_morado_c2 } from "../../utils/theme/stringsColors";
 const Stack = createNativeStackNavigator();
 
 const HomeD =({ navigation, route})=>{
@@ -40,8 +41,9 @@ const handleResetFilter = () => {
   useEffect(()=>{
     // console.log("rellamando a cabecera en home x redux");
     navigation.setOptions({
-        // headerTitle: `${ StringsLanguaje.Home}`,
-        headerTitle: `Home`,
+        headerTitle: `${StringsLanguaje.allVideoG}`,
+        // headerTitle: `All Videogames`,
+        headerTintColor: `${StringsDark.Titulo_Screen}`,
         headerStyle: {
         backgroundColor: StringsDark.Titulo_Screen_fondo,
       },
@@ -56,17 +58,19 @@ const handleResetFilter = () => {
         <Stack.Screen
           name='VideoGames'
           component={VideoGames}
+          
           options={{
             title: '',//va en blanco xq va la search bar
             headerStyle: {
               backgroundColor: StringsDark.Titulo_Screen_fondo
             },
-            headerLeft: () => (<SearchBar />),
-            headerRight: () => (
+            headerRight: () => (<SearchBar />),
+            headerLeft: () => (
               <TouchableOpacity onPress={handleOpenFilter} style={styles.filterButton}>
                 <Text style={styles.filterButtonText}>Filters</Text>
               </TouchableOpacity>
             ),
+            
 
           }}
         >
@@ -75,7 +79,7 @@ const handleResetFilter = () => {
           name='Detail'
           component={Detail}
           options={{
-            title: 'Detail',
+            title: '',
             // headerStyle: {
             //   backgroundColor: StringsDark.backgroundTittle,
             // },
@@ -85,6 +89,7 @@ const handleResetFilter = () => {
               fontSize: 25
             }
           }}
+  
         >
         </Stack.Screen>
 
@@ -107,22 +112,22 @@ const handleResetFilter = () => {
 const styles = StyleSheet.create({
   
   filterButton: {
-    backgroundColor: "#987BDC",
+    backgroundColor: color_morado_c2,
     paddingHorizontal: 30,
     paddingVertical: 13, // Aumentar el valor aquí según tus necesidades
     borderRadius: 5,
+    marginLeft:16
   },
   filterButtonText: {
-    color: "white",
+    color: color_blanco,
     fontWeight: "bold",
   },
 
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#622EDA",
+    backgroundColor: color_morado_c2,
   },
-  // ...
 });
 
 

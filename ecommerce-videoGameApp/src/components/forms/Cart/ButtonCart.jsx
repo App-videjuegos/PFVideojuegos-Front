@@ -2,13 +2,29 @@ import { Badge } from "react-native-paper";
 import { View, Text,TouchableOpacity,StyleSheet} from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from "../../utils/theme/ThemeProvider";
-import { useContext} from 'react'
+import { useContext,useState,useEffect} from 'react'
+import { useSelector} from "react-redux"
+import {getKeysCount} from '../../forms/Cart/CardCartController'
 
 const CartButton = ({ navigation }) => {
-    // const [countBadge, setCountBadge]=useState(0);
-    const countBadge=5 //hardcodeado
-     //linea para setear el modo dark
-    const { isDarkMode, StringsDark } = useContext(ThemeContext);
+    const [countBadge, setCountBadge]=useState(0);
+    const cartG = useSelector((state) => state.cartState);
+    const {  StringsDark } = useContext(ThemeContext);
+
+    useEffect(() => {
+      //  console.log("llamdo a CarButton una vez mas", cartG);
+      const GetCountItemCart = async () => {
+        try {
+          const count = await getKeysCount();
+          // console.log("Cantidad de claves en AsyncStorage:", count);
+          setCountBadge(count)
+        } catch (error) {
+          console.log("Error al obtener las claves de AsyncStorage:", error);
+        }
+      }
+        GetCountItemCart();
+    }, [cartG]);
+
     return (
       <View style={[styles.container,{borderColor:StringsDark.cartButton}] }>
         <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
@@ -44,6 +60,8 @@ const CartButton = ({ navigation }) => {
       position: "absolute",
       top: -10,
       right: -10, 
+      fontSize:15,
+      fontWeight:'bold'
     }
    
   })

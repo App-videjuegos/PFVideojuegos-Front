@@ -43,8 +43,8 @@ const Detail = ({ route, navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: `Back`,
-      // headerTitle: `${StringsLanguaje.back}`,
+      // headerTitle: `Back`,
+      headerTitle: `${StringsLanguaje.back}`,
       headerTintColor: StringsDark.Titulo_Screen,
       headerStyle: {
         backgroundColor: StringsDark.Titulo_Screen_fondo,
@@ -73,8 +73,8 @@ const Detail = ({ route, navigation }) => {
       <Tab.Screen
         name={`information`} //detalle de CARD
         options={({ route }) => ({
-          // title: `${StringsLanguaje.Information}`,
-          title: `Information`,
+          title: `${StringsLanguaje.Information}`,
+          // title: `Information`,
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons
               name="information-circle-outline"
@@ -91,8 +91,8 @@ const Detail = ({ route, navigation }) => {
       <Tab.Screen
         name="Capturas de Pantalla"
         options={{
-          // title: `${StringsLanguaje.Screenshot}`,
-          title: `Screenshot`,
+          title: `${StringsLanguaje.Screenshot}`,
+          // title: `Screenshot`,
           tabBarIcon: ({ size }) => (
             <MaterialCommunityIcons
               name="images-outline"
@@ -113,8 +113,8 @@ const Detail = ({ route, navigation }) => {
       <Tab.Screen
         name="Extra"
         options={{
-          // title: `${StringsLanguaje.Extra}`,
-          title: `Extra`,
+          title: `${StringsLanguaje.Extra}`,
+          // title: `Extra`,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="file-tray-stacked-outline"

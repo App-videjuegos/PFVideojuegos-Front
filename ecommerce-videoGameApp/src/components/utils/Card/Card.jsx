@@ -5,18 +5,77 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import React from "react";
 // import StarRating from "react-native-star-rating";
 import { AirbnbRating } from "react-native-ratings";
 import { InsertarItem } from "../../forms/Cart/CardCartController";
 import { updateCart } from "../../../redux/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector  } from "react-redux";
 import GameRating from "../../views/Home/Detail/GameRating";
-import { useState } from "react";
+import { useState, useRef, useEffect  } from "react";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Animatable from "react-native-animatable"; // Importamos la librería para las animaciones
+import {
+  color_blanco,
+  color_gris_c,
+  color_morado_o,
+} from "../theme/stringsColors";
+import { color } from "react-native-reanimated";
+import { toggleFavorite } from "../../../redux/favoriteActions";
 
 const Card = (props) => {
-  const { videoG, nav } = props;
+  const { videoG, nav, showButtons = true } = props;
+// console.log("que me llega de nav???",nav.navigate)
+
+
+  {
+    /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
+  }
+  const [isFavorite, setIsFavorite] = useState(false); // Estado para controlar si el juego es favorito o no
+  const heartRef = useRef(null); // Referencia para la animación del corazón
+  const cartRef = useRef(null); // Referencia para la animación del corazón
+  const isLogged = useSelector((state) => state.usersState.isLogged);
+ // Obtener la lista de favoritos del estado global
+ const favorites = useSelector((state) => state.favoriteState.favorites);
+
+ // Verificar si el juego actual está en la lista de favoritos
+ useEffect(() => {
+   const favoriteGameIds = favorites.map((favorite) => favorite.videogameId);
+   const isFav = favoriteGameIds.includes(videoG.id);
+   setIsFavorite(isFav);
+ }, [favorites, videoG.id]);
+
+
+  const handleToggleFavorite = () => {
+    if (isLogged.id === undefined) {
+      // Mostrar una alerta si el usuario no está logueado
+      Alert.alert("Login Required", "Please log in to add this game to favorites.");
+      console.log("No se puede agregar a favoritos: Usuario no logueado.");
+      return;
+    }
+
+    setIsFavorite((prevState) => !prevState); // Cambiar el estado de favorito
+    heartRef.current?.rubberBand(500);
+    console.log("Agrego a favorito:", !isFavorite);
+    console.log("ID del juego:", videoG.id);
+    console.log("ID del usuario:", isLogged.id);
+
+    // Enviar información a la API para agregar/quitar el juego de favoritos
+    const data = {
+      videogameId: videoG.id,
+      userId: isLogged.id,
+      isFav: !isFavorite,
+    };
+    dispatch(toggleFavorite(data.videogameId, data.userId, data.isFav));
+  };
+
+
+  {
+    /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
+  }
+
   const dispatch = useDispatch();
   // Función para actualizar el rating del videojuego en la tarjeta inicial (Home)
   const [videoGames, setVideoGames] = useState([]);
@@ -27,7 +86,7 @@ const Card = (props) => {
     price: videoG.price,
     img: videoG.image,
     stock: 5,
-    amount: 1,
+    amount: Number(1),
   };
   const objString = JSON.stringify(objeto);
 
@@ -45,79 +104,105 @@ const Card = (props) => {
     });
     setVideoGames(updatedVideoGames);
   };
-  console.log("id", videoG.id);
-  /*////////////////////////////////////////// */
+
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <TouchableOpacity
-          onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-        >
-          <Image
-            style={styles.image}
-            source={{ uri: videoG.image }}
-            PlaceholderContent={
-              <ActivityIndicator color={"#FFFFFF"} size={"large"} />
-            }
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.detailsContainer}>
-        <Text style={styles.name}>{videoG.name}</Text>
+      <View style={styles.subContainer}>
+        <View style={styles.imageContainer}>
+          {/* Imagen del videojuego */}
+          <TouchableOpacity
+            onPress={() => nav.navigate("Detail", { videoGames: videoG })}
 
-        {/* Aquí pasamos la función updateCardRating y la variable videoGames como props a GameRating */}
-        {/* <GameRating
-          initialRating={videoG.rating}
-          gameId={videoG.id}
-          // updateCardRating={updateCardRating}
-          // videoGames={videoGames}
-          // setVideoGames={setVideoGames}
-        />
-        */}
-        <AirbnbRating
-          count={5}
-          defaultRating={videoG.rating}
-          size={20}
-          showRating={false}
-          selectedColor="gold"
-          isDisabled={true}
-        />
-        <Text style={styles.price}>$ {videoG.price}</Text>
-        {/* <TouchableOpacity
-          onPress={() => nav.navigate("Detail", { videoGames: videoG })}
-        >
-          <Text style={styles.detail}>See Detail</Text>
-        </TouchableOpacity> */}
+>
+            <Image
+              style={styles.image}
+              source={{ uri: videoG.image }}
+              PlaceholderContent={
+                <ActivityIndicator color={"#FFFFFF"} size={"large"} />
+              }
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.detailsContainer}>
+          {/* Nombre del videojuego */}
+          <Text style={styles.name}>{videoG.name}</Text>
 
-        <TouchableOpacity
-          onPress={() => {
-            InsertarItem(key, objString);
-            dispatch(updateCart());
-            // getKeysCount();
-            console.log("key guardada", objString);
-          }}
-        >
-          <View
-            style={[styles.AddCartContainer, { backgroundColor: "#622EDA" }]}
-          >
-            <Text style={[styles.addItemCar, { color: "#ffffff" }]}>
-              {"Add to cart"}
-            </Text>
+          {/* Rating del videojuego */}
+          <View style={styles.rating}>
+            <AirbnbRating
+              count={5}
+              defaultRating={videoG.rating}
+              size={20}
+              showRating={false}
+              selectedColor="gold"
+              isDisabled={true}
+            />
           </View>
-        </TouchableOpacity>
+
+        {/* Fila que contiene el precio y el corazón */}
+        <View style={styles.priceAndFavoriteContainer}>
+            {/* Precio del videojuego */}
+            <Text style={styles.price}>$ {videoG.price}</Text>
+
+            {/* Espacio entre el precio y el corazón */}
+            <View style={styles.space} />
+
+            {/* Botón de favoritos (si showButtons es verdadero) */}
+            {showButtons && (
+              <View style={styles.heart}>
+                <TouchableOpacity onPress={handleToggleFavorite}>
+                  <Animatable.View ref={heartRef}>
+                    <MaterialCommunityIcons
+                      style={styles.heartIcon}
+                      name={isFavorite ? "heart" : "heart-outline"}
+                      size={28}
+                      color={isFavorite ? "#622EDA" : "#595959"}
+                    />
+                  </Animatable.View>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+
+          {/* Botón "Add to cart" (si showButtons es verdadero) */}
+          {showButtons && (
+            <TouchableOpacity
+              onPress={() => {
+                InsertarItem(key, objString);
+                dispatch(updateCart());
+              }}
+            >
+              <Animatable.View ref={cartRef}>
+                <MaterialCommunityIcons
+                  style={styles.AddCartContainer}
+                  name={"cart-plus"}
+                  size={28}
+                  color={color_gris_c}
+                />
+              </Animatable.View>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 3,
+  priceAndFavoriteContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
+    alignItems: "center",
+  },
+
+  container: {
+    marginVertical: 8,
+  },
+  subContainer: {
+    flexDirection: "row",
+
+    width: 312,
+    height: 138,
     // marginHorizontal: 10,
-    marginVertical: 5,
     borderRadius: 10,
     // shadowColor: 'black',
     shadowOpacity: 0.23,
@@ -126,64 +211,57 @@ const styles = StyleSheet.create({
     elevation: 3,
     backgroundColor: "#987BDC",
   },
+
   imageContainer: {
-    alignItems: "center",
-    // flex:1
-    width: "45%",
-    // height: '100%',
-    // marginRight: 10 ,
-    marginLeft: 5,
-    // backgroundColor:'blue
+    alignItems: "flex-start",
+    marginHorizontal: 16,
+    marginTop: 12,
+    marginBottom: 12,
   },
   image: {
-    marginTop: 10,
-    marginBottom: 10,
-    // marginLeft: -10,
-    width: 140,
-    height: 140,
-    borderRadius: 8,
-    // alignSelf:'center',
-    alignContent: "center",
+    borderRadius: 5,
+    width: 92,
+    height: 112,
     resizeMode: "cover",
   },
   detailsContainer: {
-    width: "50%",
-    // height:'100%',
-    alignContent: "space-between",
-    alignItems: "center",
-    padding: 5,
+    marginTop: 8,
+    alignContent: "flex-start",
   },
   name: {
-    fontSize: 15,
-    alignContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    verticalAlign: "middle",
+    fontSize: 16,
+    marginTop: 4,
+    textAlignVertical: "top",
+    textAlign: "left",
     fontWeight: "bold",
-    height: 37,
+    width: 120,
+    height: 42,
+    color: color_morado_o,
   },
   rating: {
     fontSize: 16,
-    textAlign: "center",
   },
-  price: {
-    fontSize: 22,
-    textAlign: "center",
-    fontWeight: "bold",
-    height: 28,
-    color: "white",
-  },
-  detail: {
-    fontSize: 18,
-    textAlign: "center",
+  heart: {
+    elevation:10,
+    position: "absolute",
+    left: 150,
+    bottom: 68,
+    color: color_blanco,
   },
   AddCartContainer: {
-    alignContent: "center",
-    borderRadius: 8,
-    alignItems: "center",
-    width: "100%",
-    marginTop: 15,
-    // textAlign:'center'
+    elevation:10,
+    position: "absolute",
+    left: 150,
+    bottom: 24,
+  },
+  price: {
+    marginTop: 4,
+    fontSize: 26,
+    textAlign: "left",
+    justifyContent: "flex-start",
+    fontWeight: "bold",
+    height: 28,
+    color: color_blanco,
   },
   addItemCar: {
     margin: 5,

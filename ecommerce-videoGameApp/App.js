@@ -2,6 +2,9 @@ import "react-native-gesture-handler";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const Drawer = createDrawerNavigator();
 // variables proveedoras del tema y cambiode lenguaje
@@ -29,8 +32,23 @@ import { Login } from "./src/components/views/Login/Login";
 import { ForgotPassword } from "./src/components/views/ForgotPasword/ForgotPassword";
 import { StartedSession } from "./src/components/views/Login/SessionInit";
 import { RenderLogin } from "./src/components/views/Login/RenderingLogin";
+import { loadItemAsyncStorage } from "./src/components/helpers/functionsAsyncStorage";
+import { checkLogedUser } from "./src/redux/userActions";
+import { useEffect } from "react";
 
 export default function App() {
+
+
+  useEffect(() => {
+    async function fetchData() {
+      const logedData = await loadItemAsyncStorage("logedGameStack");
+      if(logedData.user)
+      checkLogedUser(logedData); 
+
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <LanguajeProvider>
@@ -45,7 +63,7 @@ export default function App() {
                   name="Landing"
                   component={Landing}
                   options={{
-                    title: `Bienvenidos`,
+                    title: ``,
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -61,7 +79,7 @@ export default function App() {
                   component={Home}
                   initialParams={{ fromChild: "Initial" }}
                   options={{
-                    title: "Home",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -77,7 +95,7 @@ export default function App() {
                   name="Cart"
                   component={Cart}
                   options={{
-                    title: "Shopping Car",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -141,7 +159,7 @@ export default function App() {
                   name="Pasarella"
                   component={Pasarella}
                   options={{
-                    title: "Pasarella  Pagos",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },
@@ -157,7 +175,7 @@ export default function App() {
                   name="UserProfile" //aqui va el nombre con el q lo vas a llamar dese el menu items
                   component={UserProfile}
                   options={{
-                    title: "User Profile",
+                    title: "",
                     headerStyle: {
                       backgroundColor: color_blanco,
                     },

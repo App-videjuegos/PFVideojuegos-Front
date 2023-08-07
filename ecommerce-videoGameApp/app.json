@@ -2,13 +2,13 @@
   "expo": {
     "name": "GameStack",
     "slug": "ecommerce-videoGameApp",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icono.png",
     "userInterfaceStyle": "light",
-    "scheme":"com.gameStack.gamsestack",
+    "scheme": "com.gameStack.gamsestack",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logoDark.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,21 +17,29 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier":"com.gameStack.gamsestack"
+      "bundleIdentifier": "com.gameStack.gamsestack"
     },
     "android": {
       "package": "com.gameStack.gamsestack",
-      "versionCode": 1
+      "versionCode": 2
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icono.png"
+    },
+    "fonts": {
+      "Poppins-Black": "./assets/fonts/Poppins-Black.ttf",
+      "Poppins-Bold": "./assets/fonts/Poppins-Bold.ttf",
+      "Poppins-Italic": "./assets/fonts/Poppins-Italic.ttf",
+      "Poppins-Light": "./assets/fonts/Poppins-Light.ttf",
+      "Poppins-Medium": "./assets/fonts/Poppins-Medium.ttf",
+      "Poppins-Regular": "./assets/fonts/Poppins-Regular.ttf"
     },
     "plugins": [
       "expo-localization"
     ],
     "extra": {
       "eas": {
-        "projectId": "d484256a-95bd-4f19-9537-11b653df05a5"
+        "projectId": "845def10-19e5-4fb3-a4bf-402d9abcdfd0"
       }
     }
   }

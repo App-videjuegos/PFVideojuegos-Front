@@ -7,13 +7,15 @@ import Register from "../Create/RegisterUser";
 import { ForgotPassword } from "../ForgotPasword/ForgotPassword";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { loadItemAsyncStorage } from "../../helpers/functionsAsyncStorage";
 
 export const RenderLogin = ({ navigation }) => {
 
+  
   const loged = useSelector((state) => state.usersState.isLogged);
   const token = useSelector((state) => state.usersState.userToken);
-  console.log('------------------------------->',loged.user)
+  console.log('------------------------------->',loged)
   console.log('------------------------------->',token)
 
 

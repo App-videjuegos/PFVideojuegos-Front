@@ -12,6 +12,9 @@ import {
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loadItemAsyncStorage } from "../components/helpers/functionsAsyncStorage";
+import AlertDialog from "../components/helpers/Alert"
+
+
 
 
 export const getUserByID = (id) => {
@@ -105,8 +108,8 @@ export const postUser = (data) => {
       const response = await axios.put(
         'https://pfvideojuegos-back-production.up.railway.app/user/update',
         newData
-      );
-  
+        );
+
       const changedFields = [];
       console.log(response);
       for (const key in newData) {
@@ -114,6 +117,7 @@ export const postUser = (data) => {
           changedFields.push(key);
         }
       }
+
   
       if (changedFields.length > 0) {
         // Obtén los datos existentes del AsyncStorage
@@ -141,8 +145,7 @@ export const postUser = (data) => {
         }
       }
     } catch (error) {
-      Alert.alert("Something went wrong", "error updating data");
-      console.log("error updating data", err);
+      Alert.alert("Something went wrong", error.response.data.message );
     }
   };
 

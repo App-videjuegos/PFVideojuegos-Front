@@ -19,21 +19,9 @@ const CardExtra = (videogame) => {
   const windowWidth = useWindowDimensions().width;
 
   //linea para setear el modo dark
-  const { StringsDark } = useContext(ThemeContext);
+  const {isDarkMode, StringsDark } = useContext(ThemeContext);
   //linea para setear el lenguaje /obtener palabras de lenguaje
-  const { StringsLanguaje } = useContext(LanguajeContext);
-
-  // useEffect(()=>{
-
-  //  navigation.setOptions({
-
-  //      headerTitle: `${StringsLanguaje.Welcome}`,
-  //      headerTintColor:  StringsDark.Titulo_Screen,
-  //      headerStyle: {
-  //        backgroundColor: StringsDark.Titulo_Screen_fondo,
-  //      },
-  //    })
-  // },[isDarkMode,locale])
+  const { locale,StringsLanguaje } = useContext(LanguajeContext);
 
   let Req = videogame.propExtra.requeriments_en;
   
@@ -52,9 +40,9 @@ const CardExtra = (videogame) => {
   const getIconName = (item) => {
     let iconName = 'help-circle-outline'; // Icono por defecto
 
-    if (item.length >= 3) {
+    if (item.length >= 2) {
       const platformPrefix = item.substring(0, 2).toLowerCase();
-      // console.log("platformPrefix",item)
+      console.log("platformPrefix",item)
       // Asigna el nombre del icono en función de las tres primeras letras
       if (platformPrefix === 'pl') {
         iconName = 'sony-playstation';
@@ -77,7 +65,7 @@ const CardExtra = (videogame) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.containerS}>
       <View
         style={[
           styles.Container,
@@ -87,9 +75,8 @@ const CardExtra = (videogame) => {
 
         {Req.length > 0 && (
           <Text style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}>
-            {/* {StringsLanguaje.systemRequeriments} */}
-            {"System Requeriments"}
-
+            {StringsLanguaje.systemRequeriments}
+          
           </Text>
         )}
       {typeof(Req)==='string' &&
@@ -127,8 +114,8 @@ const CardExtra = (videogame) => {
             <Text
               style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}
             >
-              {/* {StringsLanguaje.Plataformas} */}
-              {"Platforms"}
+              {StringsLanguaje.Plataformas}
+              {/* {"Platforms"} */}
             </Text>
           )}
 
@@ -149,8 +136,8 @@ const CardExtra = (videogame) => {
             <Text
               style={[styles.reqtitle, { color: StringsDark.tit_det_extra }]}
             >
-              {/* {StringsLanguaje.Genres} */}
-              {"Genres"}
+              {StringsLanguaje.Genres}
+              {/* {"Genres"} */}
             </Text>
           )}
           {videogame.propExtra.genre.length > 0 &&
@@ -173,7 +160,7 @@ const CardExtra = (videogame) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerS: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',

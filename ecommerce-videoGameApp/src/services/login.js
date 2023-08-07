@@ -1,9 +1,10 @@
 import axios from "axios";
 
 const baseUrl = "https://pfvideojuegos-back-production.up.railway.app/user/login"
+const baseUrlLogin = "https://pfvideojuegos-back-production.up.railway.app/loginGoogle"
 
-const login = async credentials =>{
-    const {data} = await axios.post(baseUrl,credentials)
+const login = async credentials => {
+    const { data } = await axios.post(baseUrl, credentials)
     return data
 }
 
@@ -12,62 +13,45 @@ const login = async credentials =>{
 
 const authLogin = async (user) => {
 
-    
-    function generarPasswordDesdeString(user) {
-        // Patrón constante para la contraseña
-        const patron = "MyPass123!";
+        console.log("DESDE LOGIN ", user)
 
-        // Concatenar el string original con el patrón constante
-        const password = user + patron;
-        console.log(password)
-        return password;
-      }
+        try {
+            const data = await axios.post(baseUrlLogin, user)
+            console.log("DATA", data)
 
-    const credentials = {
-        user:user,
-        password: generarPasswordDesdeString(user)
-    }
+            if (!data.user) {
+                const response = await axios.post(
+                    "https://pfvideojuegos-back-production.up.railway.app/loginGoogle",
+                    {
+                        email: user.email,
+                        family_name: user.family_name,
+                        given_name: user.given_name,
+                        google_id: user.google_id,
+                        locale: user.locale,
+                        name: user.name,
+                        picture: user.picture,
+                        verified_email: user.verified_email
 
-    console.log("DESDE LOGIN ",credentials)
+                    }
+                );
+                console.log("Respuesta del servidor:", response.data);
+            }
+            return data
 
-    try {
-        
-        const { data } = await axios.post(baseUrl,credentials)
-        console.log(data)
+        } catch (error) {
+            console.log("CATCH", error);
+            if (error.response) {
+                console.log("Response status:", error.response.status);
+                console.log("Response data:", error.response.data);
 
-        if(!data.user){
-            const response = await axios.post(
-                "https://pfvideojuegos-back-production.up.railway.app/user",
-                {
-                  user: credentials.user.slice(0,5),
-                  password: credentials.password,
-                  fullname: credentials.user.slice(0,5),
-                  email: credentials.user,
-                  date:"2020-12-12",
-                  tac: true,
-                  newsLetter: true,
-                  id: 1 + Math.floor(Math.random() * 999),
-                  userAdmin: false,
-
-                }
-              );
-              console.log("Respuesta del servidor:", response.data);
+                return error.response.data
+            }
         }
-        return data
 
-
-    } catch (error) {
-        console.log(error)
     }
-    
 
 
 
 
-      
 
-    
-
-         
-}
 export default { login, authLogin }

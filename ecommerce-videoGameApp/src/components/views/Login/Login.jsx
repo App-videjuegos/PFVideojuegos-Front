@@ -43,72 +43,85 @@ export const Login = ({ navigation }) => {
 
 
 //AUTH GOOGLE
-  const [accessToken, setAccessToken] = useState()
-  const [userInfo, setUserInfo] = useState();
-
-  const [request,response,promptAsync] = Google.useAuthRequest({
-    androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
-    iosClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
-    expoClientId:"992202978342-r97fm6970n55pdn6jsu5s2h8tme07qbe.apps.googleusercontent.com"
-  })
-
+const [accessToken, setAccessToken] = useState()
+const [userInfo, setUserInfo] = useState();
+const [loginUser, setLogingUser] = useState(null);
+// const [password, setPassword] = useState("");
+const [errorMsg, setErrorMsg] = useState(false);
+const [errorMessage, setErrorMessage] = useState("");
+const [showPassword, setShowPassword] = useState(false);
 
 
-  useEffect(()=>{
-    if(response?.type === "success"){
-      setAccessToken(response.authentication.accessToken)
+const [request,response,promptAsync] = Google.useAuthRequest({
+  androidClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+  iosClientId:"992202978342-to1fhbb86o68n536dsijlaiiedsruv8g.apps.googleusercontent.com",
+  expoClientId:"992202978342-r97fm6970n55pdn6jsu5s2h8tme07qbe.apps.googleusercontent.com"
+})
 
-     }
-  },[response])
 
-  useEffect(() => {
-    if (accessToken) {
-      getUserData();
 
-      handleLoginAuth()
+useEffect(()=>{
+  if(response?.type === "success"){
+    setAccessToken(response.authentication.accessToken)
 
-      const handleLoginAuth = async () => {
-        try {
+   }
+},[response])
 
-          const user = await loginService.authLogin({
-            user: userInfo.email,
-          });
-
-          console.log(user)
-
-        }catch(e){
-          console.log(e.error)
-        }
+useEffect(() => {
+  const handleLoginAuth = async () => {
+    console.log("DESDE USER", userInfo);
+      const user = await loginService.authLogin({
+        email:userInfo.email,
+        family_name:userInfo.family_name,
+        given_name:userInfo.given_name,
+        google_id:userInfo.id,
+        locale:userInfo.locale,
+        name:userInfo.name,
+        picture:userInfo.picture,
+        verified_email:userInfo.verified_email
+      });
+      console.log("supuesto user",user.data);
+      
+      if(user){
+        console.log('PASO 1');
+        setLogingUser(user.data);
+        console.log('PASO 2');
+        saveItemAsyncStorage("logedGameStack", user.data);
+        console.log('PASO 3');
+        showAsyncStorageData();
+        console.log('PASO 4');
+        dispatch(checkLogedUser());
+      } else {
+        setErrorMessage("Wrong credentials");
       }
 
-    }
-  }, [accessToken]);
-
-
-  const getUserData = async  () => {
-    let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me",
-    { headers: {Authorization: `Bearer ${accessToken}`}})
-
-      await userInfoResponse.json().then(data => {
-      setUserInfo(data)
-    })
-
   }
 
-
-  const showUserData = () => {
-    console.log(userInfo)
-    if(userInfo) {
-      return (
-        <View style={styles.userInfo}>
-          <Image source={{ uri: userInfo.picture}} style ={styles.profilePic}/>
-          <Text>welcome {userInfo.name}</Text>
-          <Text> {userInfo.email}</Text>
-
-        </View>
-      )
-    }
+  if (accessToken && userInfo) {
+    console.log("LLEGA");
+    handleLoginAuth();
   }
+}, [accessToken, userInfo]);
+
+useEffect(() => {
+  if (accessToken) {
+    getUserData();
+  }
+}, [accessToken]);
+
+
+const getUserData = async  () => {
+  let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me",
+  { headers: {Authorization: `Bearer ${accessToken}`}})
+
+    await userInfoResponse.json().then(data => {
+    setUserInfo(data)
+  })
+
+}
+
+
+
 
   // ----------- FIN AUTH GOOGLE ------
 
@@ -138,11 +151,6 @@ export const Login = ({ navigation }) => {
     loadUserFromAsyncStorage();
   }, [loginUser, handleUnlogin]);
 
-  const [loginUser, setLogingUser] = useState(null);
-  // const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
 
   const handleLogin = async (values) => {
@@ -154,6 +162,8 @@ export const Login = ({ navigation }) => {
 
       console.log("ACA ESTA LO QUE DEVUELVE LA PROMESA", user);
 
+      if(user.deleted === true)
+      return setErrorMessage('Banned Account')  
       if(user.user){
         setLogingUser(user);
         saveItemAsyncStorage("logedGameStack", user);
@@ -255,10 +265,10 @@ export const Login = ({ navigation }) => {
                   onPress={() => setShowPassword(!showPassword)}
                 >
                   <MaterialCommunityIcons
-                    name={showPassword ? "eye-off" : "eye"}
+                    name={showPassword ? "eye" : "eye-off"}
                     size={20}
                     color="#000"
-                    style={{marginTop:-50, left:260, padding:10}}
+                    style={{marginTop:-50, left:260, padding:10,elevation:10}}
                   />
                 </TouchableOpacity>
               </View>
@@ -324,7 +334,6 @@ export const Login = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
 
-              {showUserData()}
 
               <View style={styles.containerLogin}>
                 {/* <Text style={[{ fontSize: 45 }]}>Welcome</Text>

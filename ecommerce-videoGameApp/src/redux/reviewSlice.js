@@ -4,6 +4,7 @@ const initialState = {
   reviews: [],
   loading: false,
   error: null,
+  userId: null, // Agrega el campo userId al estado inicial
 };
 
 export const reviewsSlice = createSlice({

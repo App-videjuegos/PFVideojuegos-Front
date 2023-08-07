@@ -127,8 +127,8 @@ const {StringsLanguaje }= useContext(LanguajeContext)
                         style={styles.posterImage}
                         />
                 <Text style={[styles.name,{color:'#3F13A4'}]}>
-                  {"Screenshot"}
-                  {/* {StringsLanguaje.Screenshot} */}
+                  {/* {"Screenshot"} */}
+                  {StringsLanguaje.Screenshot}
                   ({Number(item.key)+1})</Text>
                </Animated.View> 
             </View> 
