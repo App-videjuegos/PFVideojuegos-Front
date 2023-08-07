@@ -14,7 +14,7 @@ import { InsertarItem } from "../../forms/Cart/CardCartController";
 import { updateCart } from "../../../redux/cartSlice";
 import { useDispatch, useSelector  } from "react-redux";
 import GameRating from "../../views/Home/Detail/GameRating";
-import { useState, useRef, useEffect  } from "react";
+import { useState, useRef, useEffect ,useContext  } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable"; // Importamos la librería para las animaciones
 import {
@@ -24,10 +24,11 @@ import {
 } from "../theme/stringsColors";
 import { color } from "react-native-reanimated";
 import { toggleFavorite } from "../../../redux/favoriteActions";
-
+//linea para modificar el contexto de localizacion para el lenaguje
+import { LanguajeContext } from "../../utils/languaje/languajeProvider";
 const Card = (props) => {
   const { videoG, nav, showButtons = true } = props;
-// console.log("que me llega de nav???",nav.navigate)
+
 
 
   {
@@ -39,7 +40,7 @@ const Card = (props) => {
   const isLogged = useSelector((state) => state.usersState.isLogged);
  // Obtener la lista de favoritos del estado global
  const favorites = useSelector((state) => state.favoriteState.favorites);
-
+ const { StringsLanguaje, locale } = useContext(LanguajeContext);
  // Verificar si el juego actual está en la lista de favoritos
  useEffect(() => {
    const favoriteGameIds = favorites.map((favorite) => favorite.videogameId);
@@ -85,7 +86,7 @@ const Card = (props) => {
     title: videoG.name,
     price: videoG.price,
     img: videoG.image,
-    stock: 5,
+    stock: videoG.stock,
     amount: Number(1),
   };
   const objString = JSON.stringify(objeto);
@@ -168,7 +169,15 @@ const Card = (props) => {
           {showButtons && (
             <TouchableOpacity
               onPress={() => {
-                InsertarItem(key, objString);
+                InsertarItem(
+                  key,
+                  objString,
+                  videoG.stock,
+                  StringsLanguaje.AddingItem,
+                  StringsLanguaje.Item_added,
+                  StringsLanguaje.stockOut,
+                  StringsLanguaje.warning,
+                );
                 dispatch(updateCart());
               }}
             >
