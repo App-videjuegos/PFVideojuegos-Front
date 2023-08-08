@@ -34,14 +34,16 @@ import { StartedSession } from "./src/components/views/Login/SessionInit";
 import { RenderLogin } from "./src/components/views/Login/RenderingLogin";
 import { loadItemAsyncStorage } from "./src/components/helpers/functionsAsyncStorage";
 import { checkLogedUser } from "./src/redux/userActions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
+
+
   const dispatch = useDispatch;
   useEffect(() => {
     async function fetchData() {
       const logedData = await loadItemAsyncStorage("logedGameStack");
-      if (logedData.user && logedData.deleted=== false) dispatch(checkLogedUser(logedData));
+      if (logedData.user && logedData.deleted=== false) dispatch(checkLogedUser());
     }
     fetchData();
   }, []);

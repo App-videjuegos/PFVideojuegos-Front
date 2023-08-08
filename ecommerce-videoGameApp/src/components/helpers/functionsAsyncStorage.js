@@ -43,4 +43,34 @@ export const showAsyncStorageData = async () => {
   }
 };
 
+
+export const updateAsyncStorage = async (key, newData) => {
+  try {
+    // Obtén los datos existentes del AsyncStorage
+    const storedData = await AsyncStorage.getItem(key);
+    if (storedData !== null) {
+      const parsedData = JSON.parse(storedData);
+      const updatedData = { ...parsedData };
+
+      const changedFields = [];
+      for (const field in newData) {
+        if (newData[field] !== updatedData[field]) {
+          updatedData[field] = newData[field];
+          changedFields.push(field);
+        }
+      }
+
+      // Actualiza solo los valores que han cambiado
+      if (changedFields.length > 0) {
+        await AsyncStorage.setItem(key, JSON.stringify(updatedData));
+      }
+
+      return changedFields;
+    }
+  } catch (error) {
+    console.error("Error updating AsyncStorage:", error);
+    return [];
+  }
+};
+
 // Llama a la función para mostrar los datos cuando sea necesario, por ejemplo, en un evento o en un botón

@@ -36,14 +36,15 @@ import {
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserByName, updateUser } from "../../../../redux/userActions";
+import { checkLogedUser, getUserByName, updateUser } from "../../../../redux/userActions";
+import { loadItemAsyncStorage } from "../../../helpers/functionsAsyncStorage";
 
 //Dark Mode:
 
 const Profile = ({ navigation }) => {
   const loged = useSelector((state) => state.usersState.isLogged);
-  const [acceptTac, setAcceptTac] = useState(true);
-  const [receibenewsLetter, setReceivenewsLetter] = useState(true);
+  const [acceptTac, setAcceptTac] = useState(false);
+  const [receibenewsLetter, setReceivenewsLetter] = useState(loged.tac);
   const [isLoading, setIsLoading] = useState(true);
   const [dataUser, setDataUser] = useState("");
   const dispatch = useDispatch();
@@ -82,6 +83,14 @@ const Profile = ({ navigation }) => {
       setImage(loged.image);
     }, 1000);
   }, []);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const logedData = await loadItemAsyncStorage("logedGameStack");
+  //     if (logedData.user && logedData.deleted=== false) dispatch(checkLogedUser(logedData));
+  //   }
+  //   fetchData();
+  // }, [loged]);
 
   console.log(dataUserdb);
 
@@ -168,7 +177,18 @@ const Profile = ({ navigation }) => {
 
       // Supongo que updateUser es una función que realiza una solicitud PUT al backend
       // pero aquí no se muestra cómo se implementa updateUser, asegúrate de que esté correctamente implementada
-      await updateUser(objupdatedUser);
+      try{
+      const response = await updateUser(objupdatedUser,navigation);
+      Alert.alert("Data update!", "", [
+        {
+          text: "Ok",
+          onPress: () => dispatch(checkLogedUser()),
+        },
+      ]);
+    }catch(error) {
+      Alert.alert("Something went wrong", error.response.data.message );
+    }
+  
 
       // Si la función updateUser es asíncrona, asegúrate de esperar su resultado con "await" o usar ".then()"
       // const response = await updateUser(objupdatedUser);
@@ -381,7 +401,7 @@ const Profile = ({ navigation }) => {
                 </View>
 
                 <View style={styles.boxboxcontainercheckbox}>
-                  {!loged.tac && <View style={styles.checkboxSection}>
+                  {/* {!loged.tac && <View style={styles.checkboxSection}>
                     <Checkbox
                       style={styles.checkbox}
                       value={acceptTac}
@@ -396,7 +416,7 @@ const Profile = ({ navigation }) => {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                  </View>}
+                  </View>} */}
 
                   <View style={styles.checkboxSection}>
                     <Checkbox

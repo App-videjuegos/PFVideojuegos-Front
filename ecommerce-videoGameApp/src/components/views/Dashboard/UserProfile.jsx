@@ -111,12 +111,12 @@ const UserProfileComponent = ({ navigation }) => {
         description="My Comments"
         screenName="Comments"
       />
-      <Card
+      {/* <Card
         iconName="gamepad-round"
         title="Load Videogame"
         description="Load video games"
         screenName="CreateVideogame"
-      />
+      /> */}
       {/* <Card
         iconName="account-group"
         title="Friends"

@@ -11,7 +11,7 @@ import {
 } from "./userSlices";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { loadItemAsyncStorage } from "../components/helpers/functionsAsyncStorage";
+import { loadItemAsyncStorage, saveItemAsyncStorage, updateAsyncStorage } from "../components/helpers/functionsAsyncStorage";
 import AlertDialog from "../components/helpers/Alert"
 
 
@@ -102,7 +102,7 @@ export const postUser = (data) => {
 
 
 
-  export const updateUser = async (newData) => {
+  export const updateUser = async (newData,navigation) => {
     const oldData = { ...newData };
     try {
       const response = await axios.put(
@@ -121,7 +121,7 @@ export const postUser = (data) => {
   
       if (changedFields.length > 0) {
         // Obtén los datos existentes del AsyncStorage
-        const storedData = await AsyncStorage.getItem('user');
+        const storedData = await AsyncStorage.getItem('logedGameStack');
         if (storedData !== null) {
           const parsedData = JSON.parse(storedData);
           const updatedData = { ...parsedData };
@@ -137,11 +137,17 @@ export const postUser = (data) => {
             message += `${field}: ${oldData[field]} -> ${response.data[field]}, `;
           }
           message = message.slice(0, -2); // Eliminar la coma y el espacio al final
-  
           // Guarda los datos actualizados en el AsyncStorage
-          await AsyncStorage.setItem('user', JSON.stringify(updatedData));
+          const actualizacion = updateAsyncStorage ('logedGameStack',updatedData)
+          dispatch(checkLogedUser())
+          console.log(actualizacion)
 
-          Alert.alert(message)
+          Alert.alert("Data update!", "", [
+            {
+              text: "Ok",
+              
+            },
+          ]);
         }
       }
     } catch (error) {

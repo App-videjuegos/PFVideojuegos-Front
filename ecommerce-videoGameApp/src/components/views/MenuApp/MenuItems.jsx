@@ -5,7 +5,7 @@ import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { LanguajeContext } from "../../utils/languaje/languajeProvider";
 import { ThemeContext } from "../../utils/theme/ThemeProvider";
 import { ChangeButtonContext } from "../../utils/changeContextButton/ChangeContextButton";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import MenuButtonSubItem from "./MenuButtonSubItem";
 import { useSelector } from "react-redux";
 import { obtenerPrimerNombre } from "../../helpers/Primernombre";
@@ -16,6 +16,8 @@ const MenuItems = ({ navigation }) => {
   const { StringsLanguaje } = useContext(LanguajeContext);
   const loged = useSelector((state) => state.usersState.isLogged);
 
+ 
+  
   return (
     <DrawerContentScrollView
       style={{ backgroundColor: StringsDark.menuDrawner_f }}

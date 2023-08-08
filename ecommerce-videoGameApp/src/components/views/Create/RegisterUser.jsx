@@ -450,7 +450,7 @@ const Register = ({ navigation }) => {
                 </View>
 
                 <View style={styles.boxcontainercheckbox}>
-                {!loged.tac && <View style={styles.checkboxSection}>
+                 <View style={styles.checkboxSection}>
                     <Checkbox
                       style={styles.checkbox}
                       value={acceptTac}
@@ -465,7 +465,7 @@ const Register = ({ navigation }) => {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                  </View>}
+                  </View>
 
                   <View style={styles.checkboxSection}>
                     <Checkbox
