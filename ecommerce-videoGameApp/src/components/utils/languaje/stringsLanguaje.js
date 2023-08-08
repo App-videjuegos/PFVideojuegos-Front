@@ -103,6 +103,7 @@ export const strings = {
     dollar:'Dollar',
     AddingItem: 'One unit was added to the current item',
     stockOut: 'Sorry, quantity cannot exceed stock',
+    stockOut2: 'Sorry, the Video Game is out of stock',
     warning:'Warning',
   },
   es: {
@@ -209,6 +210,7 @@ export const strings = {
     dollar:'Dolar',
     AddingItem: 'Se ha añadido una unidad al artículo actual',
     stockOut: 'Lo sentimos, la cantidad no puede exceder las existencias',
+    stockOut2: 'Lo sentimos, el Video Juego no tiene stock',
     warning:'Advertencia',
   }
 };

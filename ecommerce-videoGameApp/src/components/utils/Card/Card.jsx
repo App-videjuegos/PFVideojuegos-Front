@@ -170,6 +170,9 @@ const Card = (props) => {
             <TouchableOpacity
             style={styles.AddCartContainer}
               onPress={() => {
+                if(videoG.stock===0){
+                  alert(StringsLanguaje.stockOut2)
+                }else {
                 InsertarItem(
                   key,
                   objString,
@@ -180,6 +183,7 @@ const Card = (props) => {
                   StringsLanguaje.warning,
                 );
                 dispatch(updateCart());
+                }
               }}
             >
               <Animatable.View ref={cartRef}>

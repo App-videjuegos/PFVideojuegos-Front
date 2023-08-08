@@ -309,6 +309,9 @@ const DetailInfo = (props) => {
         </Text>
         <TouchableOpacity
           onPress={() => {
+            if(props.propInfo.stock===0){
+              alert(StringsLanguaje.stockOut2)
+            }else {
             InsertarItem(
               key,
               objString,
@@ -321,6 +324,7 @@ const DetailInfo = (props) => {
             dispatch(updateCart());
             // getKeysCount();
             // console.log("key guardada", objString);
+          }
           }}
         >
           <View
