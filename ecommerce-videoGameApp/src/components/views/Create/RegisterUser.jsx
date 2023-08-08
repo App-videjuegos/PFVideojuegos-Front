@@ -8,6 +8,7 @@ import {
   ScrollView,
   Image,
   Alert,
+  Modal,
 } from "react-native";
 import { Formik } from "formik";
 import Checkbox from "expo-checkbox";
@@ -95,6 +96,7 @@ const Register = ({ navigation }) => {
   const [receibenewsLetter, setReceivenewsLetter] = useState(false);
   const [image, setImage] = useState('https://res.cloudinary.com/deamondhero/image/upload/v1690180824/imageUser_g1mimk.png');
   const [showPurchase, setShowPurchase] = useState(false); // Variable de estado para mostrar el componente Purchase
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     convertirFecha();
@@ -135,24 +137,85 @@ const Register = ({ navigation }) => {
 
 
 
+  // const onSubmit = async (values) => {
+  //   const userData = {
+  //     ...values,
+  //     tac: acceptTac,
+  //     newsLetter: receibenewsLetter,
+  //     id: 1 + Math.floor(Math.random() * 999),
+  //     userAdmin: true,
+  //     image: image,
+  //     date: date,
+  //   };
+
+
+
+  //   console.log(`Antes del try ${userData}`);
+
+  //   try {
+  //     console.log(`Después del try ${userData}`);
+
+  //     const response = await axios.post(
+  //       "https://pfvideojuegos-back-production.up.railway.app/user",
+  //       {
+  //         user: userData.user,
+  //         password: userData.password,
+  //         fullname: userData.fullname,
+  //         email: userData.email,
+  //         date: userData.date,
+  //         phone: userData.phone,
+  //         tac: userData.tac,
+  //         newsLetter: userData.newsLetter,
+  //         id: userData.id,
+  //         userAdmin: userData.userAdmin,
+  //         image: userData.image,
+  //       }
+  //     );
+  //     console.log(`Respuesta del servidor:`, response.data);
+      
+      
+  //     const emailResponse = await axios.post(
+  //       "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
+
+  //       {
+  //         correo: userData.email,
+  //         user: userData.user,
+  //         fullname: userData.fullname,
+  //       }
+  //     );
+  //     console.log(`Respuesta del servidor:`, emailResponse.data);
+
+  //     Alert.alert("User Created!", "", [
+  //       {
+  //         text: "Go to login",
+  //         onPress: () => navigation.navigate("RenderLogin", { name: "RenderLogin" }),
+  //       },
+  //     ]);
+
+  //     // Mostrar el componente Purchase después de un registro exitoso
+  //     setShowPurchase(true);
+  //   } catch (error) {
+  //     console.log("Error en el backend:", error.response.data.message);
+  //     Alert.alert("Auch...Something went wrong", error.response.data.message);
+  //   }
+  // };
+
   const onSubmit = async (values) => {
     const userData = {
       ...values,
       tac: acceptTac,
       newsLetter: receibenewsLetter,
       id: 1 + Math.floor(Math.random() * 999),
-      userAdmin: true,
+      userAdmin: false,
       image: image,
       date: date,
     };
-
-
-
+  
     console.log(`Antes del try ${userData}`);
-
+  
     try {
       console.log(`Después del try ${userData}`);
-
+  
       const response = await axios.post(
         "https://pfvideojuegos-back-production.up.railway.app/user",
         {
@@ -169,27 +232,37 @@ const Register = ({ navigation }) => {
           image: userData.image,
         }
       );
+  
       console.log(`Respuesta del servidor:`, response.data);
+  
+      let emailAlertMessage = "Confirmation email has been sent successfully.";
       
-
-      const emailResponse = await axios.post(
-        "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
-
-        {
-          correo: userData.email,
-          user: userData.user,
-          fullname: userData.fullname,
-        }
-      );
-      console.log(`Respuesta del servidor:`, emailResponse.data);
-
+      try {
+        // Intentar enviar el correo solo si el primer POST fue exitoso
+        const emailResponse = await axios.post(
+          "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
+          {
+            correo: userData.email,
+            user: userData.user,
+            fullname: userData.fullname,
+          }
+        );
+  
+        console.log(`Respuesta del servidor (correo):`, emailResponse.data);
+      } catch (emailError) {
+        console.log("Error en el envío del correo:", emailError);
+        emailAlertMessage = "Confirmation email could not be sent.";
+      }
+  
       Alert.alert("User Created!", "", [
         {
           text: "Go to login",
           onPress: () => navigation.navigate("RenderLogin", { name: "RenderLogin" }),
         },
       ]);
-
+  
+      Alert.alert("User Created!", emailAlertMessage);
+  
       // Mostrar el componente Purchase después de un registro exitoso
       setShowPurchase(true);
     } catch (error) {
@@ -377,16 +450,22 @@ const Register = ({ navigation }) => {
                 </View>
 
                 <View style={styles.boxcontainercheckbox}>
-                  <View style={styles.checkboxSection}>
+                {!loged.tac && <View style={styles.checkboxSection}>
                     <Checkbox
-                      style={[styles.checkbox]}
+                      style={styles.checkbox}
                       value={acceptTac}
                       onValueChange={setAcceptTac}
                     />
-                    <Text style={[styles.checkboxParagraph]}>
-                      I accept the Terms and Conditions
-                    </Text>
-                  </View>
+                    <View style={styles.boxcontainercheckbox}>
+                      <TouchableOpacity
+                        onPress={() => setModalVisible(true)} // Abrir el modal al presionar el texto
+                      >
+                        <Text style={[styles.checkboxParagraph]}>
+                          I accept the Terms and Conditions
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>}
 
                   <View style={styles.checkboxSection}>
                     <Checkbox
@@ -413,7 +492,138 @@ const Register = ({ navigation }) => {
           </View>
         )}
       </Formik>
+      <Modal
+        visible={modalVisible}
+        animationType="fade"
+        transparent
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <ScrollView contentContainerStyle={styles.modalContentContainer}>
+            <View style={styles.modalContent}>
+              {/* Título del modal */}
+              <Text style={styles.modalTitle}>
+                User Registration Terms and Conditions - GameStack
+              </Text>
 
+              {/* Subtítulo del modal */}
+              <Text style={styles.modalSubtitle}>
+                Welcome to GameStack. Before using our services, we kindly ask
+                you to read these User Registration Terms and Conditions
+                carefully. By registering on GameStack, you agree to comply with
+                the following terms and conditions that govern our relationship
+                with users:
+              </Text>
+
+              {/* Lista enumerada */}
+              <View style={styles.listContainer}>
+                <Text style={styles.listItem}>
+                  1- Acceptance of Terms and Conditions:
+                </Text>
+                <Text style={styles.listDescription}>
+                  By creating an account on GameStack, you accept these terms
+                  and conditions in full. If you do not agree with any part of
+                  these terms, we recommend that you do not use our services.
+                </Text>
+
+                <Text style={styles.listItem}>
+                  2- User Registration and Account:
+                </Text>
+                <Text style={styles.listDescription}>
+                  a. To register on GameStack, you must be of legal age in your
+                  country of residence or have the consent of your parents or
+                  legal guardians. b. The information provided during
+                  registration must be accurate, up-to-date, and complete. It is
+                  the user's responsibility to keep this information updated at
+                  all times. c. The user is solely responsible for maintaining
+                  the confidentiality of their account and password. Any
+                  activity performed from their account will be their sole
+                  responsibility.
+                </Text>
+
+                <Text style={styles.listItem}>3- Acceptable Use:</Text>
+                <Text style={styles.listDescription}>
+                  a. By using GameStack, you agree not to violate any applicable
+                  laws or infringe on the rights of third parties. b. You will
+                  not use GameStack for illegal, fraudulent, or unauthorized
+                  purposes, including, but not limited to, sending offensive,
+                  defamatory, or inappropriate content.
+                </Text>
+
+                <Text style={styles.listItem}>4- Intellectual Property:</Text>
+                <Text style={styles.listDescription}>
+                  a. GameStack and all its content (logos, designs, text,
+                  graphics, images, software, etc.) are the exclusive property
+                  of GameStack or their respective licensed owners. b.
+                  Unauthorized reproduction, distribution, modification, public
+                  display, or any other unauthorized use of GameStack's content
+                  is not permitted without prior written consent from the
+                  owners.
+                </Text>
+
+                <Text style={styles.listItem}>
+                  5- Purchases and Transactions:
+                </Text>
+                <Text style={styles.listDescription}>
+                  a. By making purchases on GameStack, you acknowledge that you
+                  are responsible for providing accurate and valid payment
+                  information. b. All purchases are subject to product
+                  availability and applicable terms and conditions of sale.
+                </Text>
+
+                <Text style={styles.listItem}>
+                  6- Account Cancellation and Suspension:
+                </Text>
+                <Text style={styles.listDescription}>
+                  a. GameStack reserves the right to cancel or suspend user
+                  accounts that violate these terms and conditions or engage in
+                  fraudulent or malicious activities.
+                </Text>
+
+                <Text style={styles.listItem}>
+                  7- Modifications to Terms and Conditions:
+                </Text>
+                <Text style={styles.listDescription}>
+                  a. GameStack may modify these terms and conditions at any time
+                  without prior notice. Updated versions will be posted on our
+                  website. b. It is the user's responsibility to regularly
+                  review the updated terms and conditions.
+                </Text>
+
+                <Text style={styles.listItem}>8- Privacy Policy:</Text>
+                <Text style={styles.listDescription}>
+                  a. The collection and use of personal data are governed by our
+                  Privacy Policy, which is available on the GameStack website.
+                </Text>
+
+                <Text style={styles.listItem}>9- Applicable Law:</Text>
+                <Text style={styles.listDescription}>
+                  These terms and conditions shall be governed and interpreted
+                  in accordance with the laws of [Argentina]. Any dispute
+                  arising from these terms and conditions shall be subject to
+                  the exclusive jurisdiction of the courts of [Argentina].
+                </Text>
+
+                {/* Resto de los elementos de la lista enumerada */}
+              </View>
+
+              {/* Subtítulo final del modal */}
+              <Text style={styles.modalSubtitle}>
+                If you have any questions or concerns about these terms and
+                conditions, please contact us through the customer support
+                channels provided on our website.
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => setModalVisible(false)} // Cerrar el modal al presionar el texto
+                style={styles.modalClose}
+              >
+                <Text style={styles.modalCloseText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
+      </Modal>
       {/* Mostrar el componente Purchase si showPurchase es true */}
       {showPurchase && <Purchase />}
     </ScrollView>
@@ -531,6 +741,66 @@ const styles = StyleSheet.create({
   checkbox: {
     margin: 8,
   },
+
+  // Estilos para el Modal
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Color de fondo semitransparente
+  },
+  modalContentContainer: {
+    flexGrow: 1, // Permitir que el contenido del ScrollView crezca
+    justifyContent: "center", // Centrar verticalmente el contenido del ScrollView
+    paddingHorizontal: 20,
+  },
+
+  modalContent: {
+    backgroundColor: "#FFF",
+    padding: 20,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#3F16A7",
+    textAlign: "center",
+  },
+
+  modalSubtitle: {
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+
+  listContainer: {
+    marginLeft: 15,
+  },
+
+  listItem: {
+    fontWeight: "bold",
+  },
+
+  listDescription: {
+    marginLeft: 15,
+  },
+  modalClose: {
+    backgroundColor: "#622EDA", // Fondo de color #622EDA
+    fontWeight: "bold", // Negrita
+    paddingHorizontal: 10, // Agregar espaciado horizontal
+    paddingVertical: 5, // Agregar espaciado vertical
+    borderRadius: 8, // Agregar bordes redondeados
+    alignSelf: "center", // Centrar el botón horizontalmente dentro del modal
+    marginTop: 10, // Agregar margen superior
+  },
+  modalCloseText: {
+    color: "#FFF", // Letra blanca
+    fontSize: 18, // Aumentar el tamaño de la fuente
+  },
 });
+
 
 export default Register;
