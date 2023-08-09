@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, Image, StyleSheet, ScrollView, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFavorites } from "../../../../redux/favoriteActions";
 import Card from "../../../utils/Card/Card";
 import Loading from '../../../helpers/Loading'
-
+import { ThemeContext } from "../../../utils/theme/ThemeProvider";
 
 const MyFavoriteGames = () => {
   const isLogged = useSelector((state) => state.usersState.isLogged);
   const favorites = useSelector((state) => state.favoriteState.favorites);
   const videoGames = useSelector((state) => state.videogamesState.videoGames);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const { StringsDark, isDarkMode } = useContext(ThemeContext);
+
 
   const dispatch = useDispatch();
 
@@ -69,7 +70,10 @@ const MyFavoriteGames = () => {
     }
 
     return (
-      <View style={styles.container}>
+      <View style={[
+        styles.container,
+        { backgroundColor: StringsDark.Titulo_Screen_fondo },
+      ]}>
         
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: videoG.image }} />
@@ -84,7 +88,9 @@ const MyFavoriteGames = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+    <ScrollView contentContainerStyle={[styles.scrollViewContent,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>My favourites</Text>
       </View>

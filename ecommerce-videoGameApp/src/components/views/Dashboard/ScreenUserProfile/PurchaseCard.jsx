@@ -60,7 +60,7 @@ const PurchaseCard = ({ videoG }) => {
 const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "row",
-    backgroundColor: "#FFFFFF", // Color de fondo BLANCO
+    backgroundColor: "#987BDC", // Cambio del color de fondo
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
@@ -88,10 +88,11 @@ const styles = StyleSheet.create({
   infoText: {
     fontFamily: "Roboto", // Font family
     fontWeight: 400,
-    fontSize: 12,
     lineHeight: 14.52,
     marginBottom: 8,
-    color: "#606060", // Color gris
+    color: "#FFFFFF", 
+    fontSize: 14,
+    fontWeight: "bold",
   },
   boldText: {
     fontWeight: "bold",

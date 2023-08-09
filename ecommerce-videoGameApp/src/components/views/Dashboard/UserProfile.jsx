@@ -1,9 +1,8 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import React from "react";
+import React, {useContext} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 // Importar los componentes de las ventanas que hemos creado
 import Profile from "./ScreenUserProfile/Profile";
 import Posts from "./ScreenUserProfile/Posts";
@@ -14,10 +13,14 @@ import Comments from "./ScreenUserProfile/Comments";
 import MyFavoriteGames from "./ScreenUserProfile/MyFavoriteGames";
 import Friends from "./ScreenUserProfile/Friends";
 import CreateVideogame from "../Create/CreateVideoGame";
+import { ThemeContext } from "../../utils/theme/ThemeProvider";
 
 const Stack = createNativeStackNavigator();
 
 const UserProfile = () => {
+
+  const { StringsDark, isDarkMode } = useContext(ThemeContext);
+
   const Card = ({ iconName, title, description, screenName }) => (
     <TouchableOpacity
       onPress={() => navigation.navigate(screenName)}
@@ -32,7 +35,10 @@ const UserProfile = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
       <NavigationContainer independent={true}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="UserProfile" component={UserProfileComponent} />
@@ -65,9 +71,14 @@ const UserProfileComponent = ({ navigation }) => {
       </View>
     </TouchableOpacity>
   );
+  const { StringsDark, isDarkMode } = useContext(ThemeContext);
 
   return (
-    <View style={styles.container}>
+    
+    <View style={[
+      styles.container,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
       <Card
         iconName="account"
         title="Profile"

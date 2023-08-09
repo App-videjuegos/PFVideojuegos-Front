@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -15,12 +15,14 @@ import { getAllSalesUser } from "../../../../redux/salesActions";
 import PurchaseCard from "./PurchaseCard"; // Importa el nuevo componente
 import PurchaseDetails from "./PurchaseDetails"; // Importa el nuevo componente
 import Loading from "../../../helpers/Loading";
+import { ThemeContext } from "../../../utils/theme/ThemeProvider";
 
 const Shoppings = () => {
   const dispatch = useDispatch();
   const loged = useSelector((state) => state.usersState.isLogged);
   const userSales = useSelector((state) => state.salesState.allSlsUsr);
   const isLoading = useSelector((state) => state.salesState.loading);
+  const { StringsDark, isDarkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     dispatch(getAllSalesUser(loged.id));
@@ -53,7 +55,10 @@ const Shoppings = () => {
 
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>My Shoppings</Text>
       </View>

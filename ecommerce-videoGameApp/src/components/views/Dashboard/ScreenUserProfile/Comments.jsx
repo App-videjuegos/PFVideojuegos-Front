@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import { getAllReviews } from "../../../../redux/reviewActions";
 import { convertirFecha } from "../../../helpers/InvertDate";
 import { useNavigation } from "@react-navigation/native";
 import Loading from "../../../helpers/Loading";
+import { ThemeContext } from "../../../utils/theme/ThemeProvider";
 
 const Comments = () => {
   const navigation = useNavigation(); // Correctly using useNavigation hook
@@ -26,6 +27,7 @@ const Comments = () => {
   const isLogged = useSelector((state) => state.usersState.isLogged);
   //Boludaso el que lee aca.
   const dispatch = useDispatch();
+  const { StringsDark, isDarkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     // Llamar a la función que obtiene todas las reviews
@@ -95,7 +97,10 @@ const Comments = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[
+      styles.container,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
       <ScrollView>
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>My reviews</Text>
