@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,8 @@ import { getvideoGames } from "../../../redux/videogamesActions";
 
 import Card from "../../utils/Card/Card";
 import { color_blanco, color_gris_c } from "../../utils/theme/stringsColors";
+import { ThemeContext } from "../../utils/theme/ThemeProvider";
+
 
 const VideoGames = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -33,20 +35,27 @@ const VideoGames = ({ navigation, route }) => {
   const fetchMoreVideoGames = () => {
     // implementar la lógica para obtener más videojuegos desde API o fuente de datos
   };
+  const { StringsDark, isDarkMode } = useContext(ThemeContext);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.subContainer}>
+    <View style={[styles.container,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
+      <View style={[styles.subContainer,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
         {console.log("notFoundGames",notFoundGames)}
         {notFoundGames ? (
-          <View style={styles.notFoundContainer}>
+          <View style={[styles.notFoundContainer,
+            { backgroundColor: StringsDark.Titulo_Screen_fondo },
+          ]}>
             <Text style={styles.notFoundText1}>We're sorry!</Text>
             <Text style={styles.notFoundText}>
               No games found with that name.
             </Text>
           </View>
         ) : (
-          <FlatList
+          <FlatList 
             data={
               filteredVideoGames.length > 0 ? filteredVideoGames : videoGames
             }
@@ -71,7 +80,7 @@ const VideoGames = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    width: 382,
+    width: "100%",
     backgroundColor:color_blanco
   },
   subContainer: {

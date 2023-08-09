@@ -250,8 +250,9 @@ const DetailInfo = (props) => {
           user: isLogged.user, // Agrega el nombre de usuario al objeto del comentario
         };
 
-        // Update the comments array with the new comment
+        // Actualiza el array de comentarios con el nuevo comentario
         dispatch(sendReview(newComment));
+        // Llama a la función después de enviar el comentario
 
         // Reset the rating, title, comment, and hashtags state for the next comment
         setRating(0);
@@ -263,12 +264,17 @@ const DetailInfo = (props) => {
         setErrorTitle(false);
         setErrorComment(false);
         setErrorHashtag(false);
+        setTimeout(afterSubmitComment, 1000);
       } else {
         setErrorHashtag(true);
       }
     } else {
       console.log("User not logged in. Unable to submit review.");
     }
+  };
+
+  const afterSubmitComment = () => {
+    handleLoadComments();
   };
 
   let objeto = {
@@ -309,22 +315,22 @@ const DetailInfo = (props) => {
         </Text>
         <TouchableOpacity
           onPress={() => {
-            if(props.propInfo.stock===0){
-              alert(StringsLanguaje.stockOut2)
-            }else {
-            InsertarItem(
-              key,
-              objString,
-              props.propInfo.stock,
-              StringsLanguaje.AddingItem,
-              StringsLanguaje.Item_added,
-              StringsLanguaje.stockOut,
-              StringsLanguaje.warning,
-            );
-            dispatch(updateCart());
-            // getKeysCount();
-            // console.log("key guardada", objString);
-          }
+            if (props.propInfo.stock === 0) {
+              alert(StringsLanguaje.stockOut2);
+            } else {
+              InsertarItem(
+                key,
+                objString,
+                props.propInfo.stock,
+                StringsLanguaje.AddingItem,
+                StringsLanguaje.Item_added,
+                StringsLanguaje.stockOut,
+                StringsLanguaje.warning
+              );
+              dispatch(updateCart());
+              // getKeysCount();
+              // console.log("key guardada", objString);
+            }
           }}
         >
           <View
@@ -391,7 +397,7 @@ const DetailInfo = (props) => {
             Comments
           </Text>
           {/* Botón para cargar los comentarios */}
-          <TouchableOpacity onPress={handleLoadComments}>
+          {/* <TouchableOpacity onPress={handleLoadComments}>
             <View
               style={[
                 styles.button,
@@ -404,7 +410,7 @@ const DetailInfo = (props) => {
                 Add a comment to this game
               </Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={styles.commentsListContainer}>
             {commentsForCurrentVideogame.length > 0 ? (
               commentsForCurrentVideogame.map((comment) => (
@@ -460,7 +466,6 @@ const DetailInfo = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
-
           {/* Las estrellas papurri */}
           {/* <Text
             style={[styles.textRating, { color: StringsDark.text }]}
@@ -483,7 +488,6 @@ const DetailInfo = (props) => {
               onFinishRating={handleRating}
             />
           </View> */}
-
           <TextInput
             style={[styles.commentInput, errorTitle ? styles.errorInput : null]}
             placeholder="*Title"
@@ -549,8 +553,18 @@ const DetailInfo = (props) => {
               </Text>
             </View>
           </TouchableOpacity>
-
-          <Button title="Submit" onPress={submitComment} />
+          <TouchableOpacity onPress={submitComment}>
+            <View
+              style={[
+                styles.button,
+                { backgroundColor: StringsDark.boton_fondo },
+              ]}
+            >
+              <Text
+                style={[styles.buttonText, { color: StringsDark.boton_texto }]}
+              >Submit</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -610,7 +624,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 400,
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: "center",
   },
   gameDescription: {
     fontSize: 15,

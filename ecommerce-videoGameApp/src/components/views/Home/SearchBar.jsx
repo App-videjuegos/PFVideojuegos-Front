@@ -1,16 +1,18 @@
 import { View, Text,StyleSheet } from 'react-native'
 import { useDispatch } from "react-redux";
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 
 import { Searchbar } from 'react-native-paper';
 import {getvGamebyName,getvideoGames,clearAllFilters} from "../../../redux/videogamesActions"
 import { color_blanco, color_gris_595959, color_gris_c, color_gris_cdcdcd } from '../../utils/theme/stringsColors';
+import { ThemeContext } from '../../utils/theme/ThemeProvider';
 
 const SearchBar = (props) => {
 
     const dispatch = useDispatch()
 
     const [searchQuery, setSearchQuery] = useState('');
+    const { StringsDark, isDarkMode } = useContext(ThemeContext);
 
     //funcion de busqueda
 
@@ -38,7 +40,9 @@ const SearchBar = (props) => {
 
     return (
         // <View style={[styles.Container, isDarkMode && styles.DarkContainer]}>
-          <View style={[styles.Container,]}>
+          <View style={[styles.Container,
+            { backgroundColor: StringsDark.Titulo_Screen_fondo },
+          ]}>
             
           <Searchbar
             autoFocus={true}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Text,
@@ -40,6 +40,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserByName, updateUser } from "../../../../redux/userActions";
 import Loadingg from "../../../helpers/Loading";
+import { ThemeContext } from "../../../utils/theme/ThemeProvider";
 
 //Dark Mode:
 
@@ -53,6 +54,7 @@ const Profile = ({ navigation }) => {
   const dataUserdb = useSelector((state) => state.usersState.dataUser);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const { StringsDark, isDarkMode } = useContext(ThemeContext);
 
   const getDataFromAsyncStorage = async () => {
     try {
@@ -202,8 +204,12 @@ try{
       </View>
     );
   return (
-    <View style={styles.containerFather}>
-      <View style={[styles.bgCont]}>
+    <View style={[styles.containerFather,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
+      <View style={[styles.bgCont,
+      { backgroundColor: StringsDark.Titulo_Screen_fondo },
+    ]}>
           <TouchableOpacity onPress={pickImage} style={[styles.ImageButton]}>
             <Image
               source={{ uri: image.length ? image : imageUser }}
@@ -274,7 +280,9 @@ try{
           image,
         }) => (
          
-            <View style={[styles.container]}>
+            <View style={[styles.container,
+              { backgroundColor: StringsDark.Titulo_Screen_fondo },
+            ]}>
               <View style={[styles.containerLogin]}>
                 <View>
                   <TextInput

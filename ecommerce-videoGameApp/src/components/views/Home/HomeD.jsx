@@ -53,9 +53,12 @@ const handleResetFilter = () => {
   
 
   return (
-    <View style={{ flex: 1 }}>
-      <Stack.Navigator>
+    <View style={[{ flex: 1 },
+    { backgroundColor: StringsDark.Titulo_Screen_fondo },
+  ]}>
+      <Stack.Navigator >
         <Stack.Screen
+        
           name='VideoGames'
           component={VideoGames}
           
