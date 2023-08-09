@@ -130,7 +130,7 @@ const Landing = ({ navigation }) => {
         decelerationRate="fast"
       />
 
-      <View style={[styles.menuContainer, { backgroundColor: '#3F13A4' }]}>
+      <View style={[styles.menuContainer, { backgroundColor: '#280657' }]}>
         <Text style={[styles.menuTitle, styles.bestSellersTitle, { color: '#FFFFFF' }]}>Best sellers</Text>
         <View style={styles.cardContainer}>
           {videoGames.slice(0, menu1Index).map((item, index) => (
@@ -155,7 +155,7 @@ const Landing = ({ navigation }) => {
         )}
       </View>
 
-      <View style={[styles.menuContainer, { backgroundColor: '#622EDA' }]}>
+      <View style={[styles.menuContainer, { backgroundColor: '#3f13a4' }]}>
         <Text style={[styles.menuTitle, styles.lastestReleasesTitle, { color: '#FFFFFF' }]}>Lastest releases</Text>
         <View style={styles.cardContainer}>
           {videoGames.slice(5, menu2Index).map((item, index) => (

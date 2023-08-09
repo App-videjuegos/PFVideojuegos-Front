@@ -1,6 +1,7 @@
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
 
+export const color_morado_oo= '#1b063e' //morado mas oscuro
 export const color_morado_o= '#280657' //morado oscuro
 export const color_morado_c= '#3F13A4' //morado claro
 export const color_morado_sc1='#6B35E8' //morado super claro 1
@@ -57,14 +58,14 @@ export const strings = {
   },
   dark: {//combinacion de colores modo Dark
     Titulo_Screen:color_blanco,
-    Titulo_Screen_fondo:color_morado_o,
+    Titulo_Screen_fondo:color_morado_oo,
     status_bar:color_blanco,
     boton_fondo: color_morado_sc2,
     boton_texto:color_blanco,
     text: color_blanco,
-    menuDrawner_f: color_morado_sc1,
+    menuDrawner_f: color_morado_c,
     menuDrawner_t:color_blanco,
-    menuDrawner_c:color_morado_sc2,
+    menuDrawner_c:color_morado_oo,
     menuDrawner_ico: color_blanco,
     menuDrawner_sep: color_blanco,
     cartButton:color_morado_sc2 ,

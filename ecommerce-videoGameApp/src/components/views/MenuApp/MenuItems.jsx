@@ -22,7 +22,7 @@ const MenuItems = ({ navigation }) => {
     <DrawerContentScrollView
       style={{ backgroundColor: StringsDark.menuDrawner_f }}
     >
-      <View style={{ backgroundColor: StringsDark.menuDrawner_c }}>
+      <View style={{ backgroundColor: StringsDark.tabBarback }}>
         <View style={styles.cabeceraimg}>
           <TouchableOpacity
             onPress={
