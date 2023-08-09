@@ -21,6 +21,7 @@ import { convertirFecha } from "../../../helpers/InvertDate";
 import Reload from "../../../utils/theme/reload";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Loading from "../../../helpers/Loading";
+import { checkLogedUser } from "../../../../redux/userActions";
 
 import {
   color_gris_c,
@@ -168,13 +169,25 @@ const Profile = ({ navigation }) => {
       console.log("OBJUSR----------------------------------->", objupdatedUser);
       console.log(`Después del try`, userData);
 
-      // Supongo que updateUser es una función que realiza una solicitud PUT al backend
-      // pero aquí no se muestra cómo se implementa updateUser, asegúrate de que esté correctamente implementada
-      await updateUser(objupdatedUser);
 
-      // Si la función updateUser es asíncrona, asegúrate de esperar su resultado con "await" o usar ".then()"
-      // const response = await updateUser(objupdatedUser);
-      // console.log(`Respuesta del servidor:`, response.data);
+try{
+      const response = await updateUser(objupdatedUser);
+      Alert.alert("Data update!", "", [
+        {
+          text: "Ok",
+          onPress: () => {setTimeout(() => {
+            dispatch(checkLogedUser())
+          }, 2000); 
+
+          },
+        }
+      ]);
+    
+  
+} catch (error) {
+  Alert.alert("Something went wrong",error.response.data.message );
+}
+
 
 
 
@@ -383,7 +396,7 @@ const Profile = ({ navigation }) => {
                 </View>
 
                 <View style={styles.boxboxcontainercheckbox}>
-                  {!loged.tac && <View style={styles.checkboxSection}>
+                  {/* {!loged.tac && <View style={styles.checkboxSection}>
                     <Checkbox
                       style={styles.checkbox}
                       value={acceptTac}
@@ -398,7 +411,7 @@ const Profile = ({ navigation }) => {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                  </View>}
+                  </View>} */}
 
                   <View style={styles.checkboxSection}>
                     <Checkbox

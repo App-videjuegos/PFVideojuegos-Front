@@ -65,12 +65,34 @@ export const updateAsyncStorage = async (key, newData) => {
         await AsyncStorage.setItem(key, JSON.stringify(updatedData));
       }
 
-      return changedFields;
+      const result = {
+        createdAt: updatedData.createdAt,
+        date: updatedData.date,
+        deleted: updatedData.deleted,
+        email: updatedData.email,
+        fullname: updatedData.fullname,
+        id: updatedData.id,
+        image: updatedData.image,
+        newsLetter: updatedData.newsLetter,
+        password: updatedData.password,
+        phone: updatedData.phone,
+        tac: updatedData.tac,
+        token: updatedData.token,
+        updatedAt: updatedData.updatedAt,
+        user: updatedData.user,
+        userAdmin: updatedData.userAdmin
+      };
+
+      return result;
     }
   } catch (error) {
     console.error("Error updating AsyncStorage:", error);
-    return [];
+
+    const result = {
+      error: error.message || "Unknown error"
+    };
+
+    return result;
   }
 };
-
 // Llama a la función para mostrar los datos cuando sea necesario, por ejemplo, en un evento o en un botón

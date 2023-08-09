@@ -17,6 +17,7 @@ import AlertDialog from "../components/helpers/Alert"
 
 
 
+
 export const getUserByID = (id) => {
     return async (dispatch) => {
       try {
@@ -102,58 +103,19 @@ export const postUser = (data) => {
 
 
 
-  export const updateUser = async (newData,navigation) => {
-    const oldData = { ...newData };
-    try {
-      const response = await axios.put(
-        'https://pfvideojuegos-back-production.up.railway.app/user/update',
-        newData
-        );
-
-      const changedFields = [];
-      console.log(response);
-      for (const key in newData) {
-        if (oldData[key] !== response.data[key]) {
-          changedFields.push(key);
-        }
-      }
-
+export const updateUser = async (newData) => {
   
-      if (changedFields.length > 0) {
-        // Obtén los datos existentes del AsyncStorage
-        const storedData = await AsyncStorage.getItem('logedGameStack');
-        if (storedData !== null) {
-          const parsedData = JSON.parse(storedData);
-          const updatedData = { ...parsedData };
-  
-          console.log(changedFields)
-          // Actualiza las propiedades modificadas en el AsyncStorage
-          for (const field of changedFields) {
-            updatedData[field] = response.data[field];
-          }
+    const response = await axios.put(
+      'https://pfvideojuegos-back-production.up.railway.app/user/update',newData
+      );
 
-          let message = "Was modified: ";
-          for (const field of changedFields) {
-            message += `${field}: ${oldData[field]} -> ${response.data[field]}, `;
-          }
-          message = message.slice(0, -2); // Eliminar la coma y el espacio al final
-          // Guarda los datos actualizados en el AsyncStorage
-          const actualizacion = updateAsyncStorage ('logedGameStack',updatedData)
-          dispatch(checkLogedUser())
-          console.log(actualizacion)
+      
+      const actualizacion = await saveItemAsyncStorage('logedGameStack',response.data)
 
-          Alert.alert("Data update!", "", [
-            {
-              text: "Ok",
-              
-            },
-          ]);
-        }
-      }
-    } catch (error) {
-      Alert.alert("Something went wrong", error.response.data.message );
-    }
-  };
+
+
+
+};
 
 
   export const checkLogedUser  = () => async (dispatch) => {
