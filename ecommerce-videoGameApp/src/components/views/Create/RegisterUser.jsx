@@ -18,6 +18,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { convertirFecha } from "../../helpers/InvertDate";
 import imageUser from "../../../../assets/imageUser.png";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+// import validate from "./validate.js"
 
 import {
   color_gris_c,
@@ -137,85 +138,24 @@ const Register = ({ navigation }) => {
 
 
 
-  // const onSubmit = async (values) => {
-  //   const userData = {
-  //     ...values,
-  //     tac: acceptTac,
-  //     newsLetter: receibenewsLetter,
-  //     id: 1 + Math.floor(Math.random() * 999),
-  //     userAdmin: true,
-  //     image: image,
-  //     date: date,
-  //   };
-
-
-
-  //   console.log(`Antes del try ${userData}`);
-
-  //   try {
-  //     console.log(`Después del try ${userData}`);
-
-  //     const response = await axios.post(
-  //       "https://pfvideojuegos-back-production.up.railway.app/user",
-  //       {
-  //         user: userData.user,
-  //         password: userData.password,
-  //         fullname: userData.fullname,
-  //         email: userData.email,
-  //         date: userData.date,
-  //         phone: userData.phone,
-  //         tac: userData.tac,
-  //         newsLetter: userData.newsLetter,
-  //         id: userData.id,
-  //         userAdmin: userData.userAdmin,
-  //         image: userData.image,
-  //       }
-  //     );
-  //     console.log(`Respuesta del servidor:`, response.data);
-      
-      
-  //     const emailResponse = await axios.post(
-  //       "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
-
-  //       {
-  //         correo: userData.email,
-  //         user: userData.user,
-  //         fullname: userData.fullname,
-  //       }
-  //     );
-  //     console.log(`Respuesta del servidor:`, emailResponse.data);
-
-  //     Alert.alert("User Created!", "", [
-  //       {
-  //         text: "Go to login",
-  //         onPress: () => navigation.navigate("RenderLogin", { name: "RenderLogin" }),
-  //       },
-  //     ]);
-
-  //     // Mostrar el componente Purchase después de un registro exitoso
-  //     setShowPurchase(true);
-  //   } catch (error) {
-  //     console.log("Error en el backend:", error.response.data.message);
-  //     Alert.alert("Auch...Something went wrong", error.response.data.message);
-  //   }
-  // };
-
   const onSubmit = async (values) => {
     const userData = {
       ...values,
       tac: acceptTac,
       newsLetter: receibenewsLetter,
       id: 1 + Math.floor(Math.random() * 999),
-      userAdmin: false,
+      userAdmin: true,
       image: image,
       date: date,
     };
-  
+
+
+
     console.log(`Antes del try ${userData}`);
-  
+
     try {
       console.log(`Después del try ${userData}`);
-  
+
       const response = await axios.post(
         "https://pfvideojuegos-back-production.up.railway.app/user",
         {
@@ -232,37 +172,27 @@ const Register = ({ navigation }) => {
           image: userData.image,
         }
       );
-  
       console.log(`Respuesta del servidor:`, response.data);
-  
-      let emailAlertMessage = "Confirmation email has been sent successfully.";
       
-      try {
-        // Intentar enviar el correo solo si el primer POST fue exitoso
-        const emailResponse = await axios.post(
-          "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
-          {
-            correo: userData.email,
-            user: userData.user,
-            fullname: userData.fullname,
-          }
-        );
-  
-        console.log(`Respuesta del servidor (correo):`, emailResponse.data);
-      } catch (emailError) {
-        console.log("Error en el envío del correo:", emailError);
-        emailAlertMessage = "Confirmation email could not be sent.";
-      }
-  
+      
+      const emailResponse = await axios.post(
+        "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
+
+        {
+          correo: userData.email,
+          user: userData.user,
+          fullname: userData.fullname,
+        }
+      );
+      console.log(`Respuesta del servidor:`, emailResponse.data);
+
       Alert.alert("User Created!", "", [
         {
           text: "Go to login",
           onPress: () => navigation.navigate("RenderLogin", { name: "RenderLogin" }),
         },
       ]);
-  
-      Alert.alert("User Created!", emailAlertMessage);
-  
+
       // Mostrar el componente Purchase después de un registro exitoso
       setShowPurchase(true);
     } catch (error) {
@@ -270,6 +200,77 @@ const Register = ({ navigation }) => {
       Alert.alert("Auch...Something went wrong", error.response.data.message);
     }
   };
+
+  // const onSubmit = async (values) => {
+  //   const userData = {
+  //     ...values,
+  //     tac: acceptTac,
+  //     newsLetter: receibenewsLetter,
+  //     id: 1 + Math.floor(Math.random() * 999),
+  //     userAdmin: false,
+  //     image: image,
+  //     date: date,
+  //   };
+  
+  //   console.log(`Antes del try ${userData}`);
+  
+  //   try {
+  //     console.log(`Después del try ${userData}`);
+  
+  //     const response = await axios.post(
+  //       "https://pfvideojuegos-back-production.up.railway.app/user",
+  //       {
+  //         user: userData.user,
+  //         password: userData.password,
+  //         fullname: userData.fullname,
+  //         email: userData.email,
+  //         date: userData.date,
+  //         phone: userData.phone,
+  //         tac: userData.tac,
+  //         newsLetter: userData.newsLetter,
+  //         id: userData.id,
+  //         userAdmin: userData.userAdmin,
+  //         image: userData.image,
+  //       }
+  //     );
+  
+  //     console.log(`Respuesta del servidor:`, response.data);
+  
+  //     let emailAlertMessage = "Confirmation email has been sent successfully.";
+      
+  //     try {
+  //       // Intentar enviar el correo solo si el primer POST fue exitoso
+  //       const emailResponse = await axios.post(
+  //         "https://pfvideojuegos-back-production.up.railway.app/correo-registro",
+  //         {
+  //           correo: userData.email,
+  //           user: userData.user,
+  //           fullname: userData.fullname,
+  //         }
+  //       );
+  
+  //       console.log(`Respuesta del servidor (correo):`, emailResponse.data);
+  //     } catch (emailError) {
+  //       console.log("Error en el envío del correo:", emailError);
+  //       emailAlertMessage = "Confirmation email could not be sent.";
+  //     }
+  
+  //     Alert.alert("User Created!", "", [
+  //       {
+  //         text: "Go to login",
+  //         onPress: () => navigation.navigate("RenderLogin", { name: "RenderLogin" }),
+  //       },
+  //     ]);
+  
+  //     Alert.alert("User Created!", emailAlertMessage);
+  
+  //     // Mostrar el componente Purchase después de un registro exitoso
+  //     setShowPurchase(true);
+  //   } catch (error) {
+  //     console.log("Error en el backend:", error.response.data.message);
+  //     Alert.alert("Auch...Something went wrong", error.response.data.message);
+  //   }
+  // };
 
   const handleDateChange = (event, selectedDate) => {
     setShowPicker(false);
@@ -317,9 +318,10 @@ const Register = ({ navigation }) => {
           } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
             errors.email = "Please enter a valid email address";
           }
-
           if (!values.phone) {
             errors.phone = "Please enter your phone number";
+          } else if (!/^\d{10}$/.test(values.phone)) {
+            errors.phone = "Please enter a valid 10-digit phone number";
           }
 
           return errors;
@@ -464,6 +466,9 @@ const Register = ({ navigation }) => {
                           I accept the Terms and Conditions
                         </Text>
                       </TouchableOpacity>
+                      {!errors.acceptTac === true && (
+                    <Text style={styles.error}>{errors.acceptTac}</Text>
+                  )}
                     </View>
                   </View>
 
