@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 
 const Loading = () => {
   return (
@@ -8,20 +8,29 @@ const Loading = () => {
         source={require("../../../assets/Loading.gif")}
         style={styles.image}
       />
+      <Text style={styles.text}>Loading...</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      },
-      image: {
-        width: 100, // Ajusta el ancho del GIF
-        height: 100, // Ajusta la altura del GIF
-      },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    width: 200, // Ajusta el ancho del GIF
+    height: 200, // Ajusta la altura del GIF
+  },
+  text: {
+    color: '#1B063E',
+    textAlign: "right", // Alinea el texto a la derecha
+    fontSize: 24, // Tamaño de la fuente más grande
+    fontWeight: "bold", // Texto en negrita
+    marginTop: 10, // Espacio arriba del texto para separarlo un poco de la imagen
+    marginRight: -30, // Espacio a la derecha del texto
+  },
 });
 
 export default Loading;

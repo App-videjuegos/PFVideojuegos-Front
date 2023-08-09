@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllReviews } from "../../../../redux/reviewActions";
 import { convertirFecha } from "../../../helpers/InvertDate";
 import { useNavigation } from "@react-navigation/native";
+import Loading from "../../../helpers/Loading";
 
 const Comments = () => {
   const navigation = useNavigation(); // Correctly using useNavigation hook

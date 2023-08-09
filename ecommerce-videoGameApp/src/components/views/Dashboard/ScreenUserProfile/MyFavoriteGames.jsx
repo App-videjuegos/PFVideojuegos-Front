@@ -11,7 +11,15 @@ const MyFavoriteGames = () => {
   const favorites = useSelector((state) => state.favoriteState.favorites);
   const videoGames = useSelector((state) => state.videogamesState.videoGames);
   const [isLoading, setIsLoading] = useState(true);
+  
+
   const dispatch = useDispatch();
+
+
+  const [reloadCount, setReloadCount] = useState(0);
+  const handleReloadButton = () => {
+    setReloadCount(prevCount => prevCount + 1);
+  };
 
   console.log("Favorites:", favorites);
   console.log(
@@ -28,7 +36,7 @@ const MyFavoriteGames = () => {
           setIsLoading(false);
         });
     }
-  }, [dispatch, isLogged.id]);
+  }, [dispatch, isLogged.id, reloadCount]);
 
   // Calcula si hay favoritos o no basándote en el estado de Redux 'favorites'
   const showFavorites = favorites.length > 0;
@@ -87,7 +95,7 @@ const MyFavoriteGames = () => {
         <View style={styles.cardsContainer}>
           
           {favoriteGamesToShow.map((game) => (
-            <Card key={game.id} videoG={game} showButtons={true} />
+            <Card key={game.id} videoG={game} showButtons={true} handleReloadButton={handleReloadButton} />
           ))}
         </View>
       ) : (

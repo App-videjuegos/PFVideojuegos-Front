@@ -12,10 +12,12 @@ import {
 import Card from '../../utils/Card/Card';
 import { loadItemAsyncStorage } from '../../helpers/functionsAsyncStorage';
 import { checkLogedUser } from '../../../redux/userActions';
+import Loading from '../../helpers/Loading';
 
 const Landing = ({ navigation }) => {
   const { isDarkMode, StringsDark } = useContext(ThemeContext);
   const { StringsLanguaje, locale } = useContext(LanguajeContext);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
@@ -34,6 +36,8 @@ const Landing = ({ navigation }) => {
     dispatch(getvideoGames());
     dispatch(applyPriceSortAsc());
     dispatch(applyRatingSortDesc());
+    setIsLoading(false);
+
   }, []);
 
   const videoGames = useSelector((state) => state.videogamesState.videoGames);
@@ -99,6 +103,9 @@ const Landing = ({ navigation }) => {
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: StringsDark.menuDrawner_c }]}>
+      {isLoading ? (
+        <Loading />
+      ) : (
       <View style={styles.subContainer}>
       <StatusBar backgroundColor={StringsDark.status_bar} barStyle="light-content" />
 
@@ -173,6 +180,7 @@ const Landing = ({ navigation }) => {
         )}
       </View>
           </View>
+          )}
     </ScrollView>
   );
 };

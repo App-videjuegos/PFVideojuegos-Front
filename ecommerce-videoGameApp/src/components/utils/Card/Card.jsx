@@ -66,6 +66,9 @@ const handleToggleFavorite = () => {
   dispatch(toggleFavorite(favoriteData.userId, favoriteData.videogameId, favoriteData.isFav))
     .then(() => {
       setIsCurrentlyFavorite(!isCurrentlyFavorite); // Cambiamos el estado local directamente
+      if (props.handleReloadButton) {
+        props.handleReloadButton(); // Llama a la función handleReloadButton desde las props
+      }
     })
     .catch((error) => {
       // Handle error if needed
