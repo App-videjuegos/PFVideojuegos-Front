@@ -20,6 +20,7 @@ import { convertirFecha } from "../../../helpers/InvertDate";
 // import imageUser from "../../../../../assets/imageUser.png";
 import Reload from "../../../utils/theme/reload";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Loading from "../../../helpers/Loading";
 
 import {
   color_gris_c,
@@ -36,15 +37,15 @@ import {
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { checkLogedUser, getUserByName, updateUser } from "../../../../redux/userActions";
-import { loadItemAsyncStorage } from "../../../helpers/functionsAsyncStorage";
+import { getUserByName, updateUser } from "../../../../redux/userActions";
+import Loadingg from "../../../helpers/Loading";
 
 //Dark Mode:
 
 const Profile = ({ navigation }) => {
   const loged = useSelector((state) => state.usersState.isLogged);
-  const [acceptTac, setAcceptTac] = useState(false);
-  const [receibenewsLetter, setReceivenewsLetter] = useState(loged.tac);
+  const [acceptTac, setAcceptTac] = useState(true);
+  const [receibenewsLetter, setReceivenewsLetter] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [dataUser, setDataUser] = useState("");
   const dispatch = useDispatch();
@@ -83,14 +84,6 @@ const Profile = ({ navigation }) => {
       setImage(loged.image);
     }, 1000);
   }, []);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const logedData = await loadItemAsyncStorage("logedGameStack");
-  //     if (logedData.user && logedData.deleted=== false) dispatch(checkLogedUser(logedData));
-  //   }
-  //   fetchData();
-  // }, [loged]);
 
   console.log(dataUserdb);
 
@@ -177,18 +170,7 @@ const Profile = ({ navigation }) => {
 
       // Supongo que updateUser es una función que realiza una solicitud PUT al backend
       // pero aquí no se muestra cómo se implementa updateUser, asegúrate de que esté correctamente implementada
-      try{
-      const response = await updateUser(objupdatedUser,navigation);
-      Alert.alert("Data update!", "", [
-        {
-          text: "Ok",
-          onPress: () => dispatch(checkLogedUser()),
-        },
-      ]);
-    }catch(error) {
-      Alert.alert("Something went wrong", error.response.data.message );
-    }
-  
+      await updateUser(objupdatedUser);
 
       // Si la función updateUser es asíncrona, asegúrate de esperar su resultado con "await" o usar ".then()"
       // const response = await updateUser(objupdatedUser);
@@ -198,7 +180,7 @@ const Profile = ({ navigation }) => {
 
   };
   if (loading) {
-    return <Reload />;
+    return <Loadingg />;
   }
   if (!dataUserdb.length)
     return (
@@ -401,7 +383,7 @@ const Profile = ({ navigation }) => {
                 </View>
 
                 <View style={styles.boxboxcontainercheckbox}>
-                  {/* {!loged.tac && <View style={styles.checkboxSection}>
+                  {!loged.tac && <View style={styles.checkboxSection}>
                     <Checkbox
                       style={styles.checkbox}
                       value={acceptTac}
@@ -416,7 +398,7 @@ const Profile = ({ navigation }) => {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                  </View>} */}
+                  </View>}
 
                   <View style={styles.checkboxSection}>
                     <Checkbox

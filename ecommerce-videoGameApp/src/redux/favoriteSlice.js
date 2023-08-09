@@ -11,9 +11,11 @@ const favoriteSlice = createSlice({
 
 
     toggleFavoriteSuccess: (state, action) => {
-      const { videogameId, isFav } = action.payload;
-      // Actualizamos el estado local con la información del juego favorito
-      state.favorites[videogameId] = isFav;
+      const { videogameId, isFav, userId } = action.payload;
+      const index = state.favorites.findIndex((favorite) => favorite.videogameId === videogameId);
+      if (index !== -1) {
+        state.favorites[index].isFav = isFav;
+      }
     },
     setFavorites: (state, action) => {
         state.favorites = action.payload;

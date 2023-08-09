@@ -34,6 +34,7 @@ const Comments = () => {
 
   // Filtrar las reviews para mostrar solo las que coincidan con el usuario conectado
   const userReviews = reviews.filter((review) => review.user === isLogged.user);
+  const showComments = userReviews.length > 0;
 
   // Crear un diccionario para buscar la información del juego por su id
   const videoGameDict = {};
@@ -60,9 +61,11 @@ const Comments = () => {
 
     if (!gameInfo) {
       return (
-        <View>
-          <Text>No data available.</Text>
-        </View>
+        <TouchableOpacity onPress={() => handleReviewPress(item.videogameId)}>
+          <View style={styles.reviewCard}>
+            <Text style={styles.deletedGameText}>You cannot see the comment of a game that was deleted</Text>
+          </View>
+        </TouchableOpacity>
       );
     }
 
@@ -83,7 +86,6 @@ const Comments = () => {
             </Text>
             <View style={styles.ratingContainer}>
               <Text style={styles.ratingText}>Rating: {item.rating}</Text>
-              {/* Puedes agregar aquí el componente de rating que desees */}
             </View>
           </View>
         </View>
@@ -94,17 +96,58 @@ const Comments = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <FlatList
-          data={userReviews}
-          renderItem={renderReviewCard}
-          keyExtractor={(item) => item.id.toString()}
-        />
+      <View style={styles.headingContainer}>
+        <Text style={styles.heading}>My reviews</Text>
+      </View>
+        {showComments ? (
+          
+          <FlatList
+            data={userReviews}
+            renderItem={renderReviewCard}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        ) : (
+          <View style={styles.noCommentsContainer}>
+            <Text style={styles.noCommentsText}>No comments found.</Text>
+          </View>
+        )}
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  headingContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#622EDA",
+    borderRadius: 10,
+    width: 200,
+    height: 50,
+    marginBottom: 10,
+    marginLeft: 80,
+
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+  },
+  noCommentsContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 100,
+    width: 300,
+    backgroundColor: '#622EDA',
+    textDecorationColor: '#FAFAFA',
+    borderRadius: 10,
+    marginLeft: 35,
+  },
+  noCommentsText: {
+    color: "#FFFFFF", 
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   container: {
     flex: 1,
   },
@@ -154,6 +197,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     maxWidth: 200, // Establecemos un ancho máximo para el texto
   },
+  deletedGameText: {
+    textAlign: "center",
+    fontSize: 18,
+    color: "#FAFAFA",
+  }
 });
 
 export default Comments;

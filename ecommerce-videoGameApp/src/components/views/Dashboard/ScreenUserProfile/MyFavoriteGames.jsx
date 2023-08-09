@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, StyleSheet, ScrollView, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFavorites } from "../../../../redux/favoriteActions";
 import Card from "../../../utils/Card/Card";
+import Loading from '../../../helpers/Loading'
+
 
 const MyFavoriteGames = () => {
   const isLogged = useSelector((state) => state.usersState.isLogged);
   const favorites = useSelector((state) => state.favoriteState.favorites);
   const videoGames = useSelector((state) => state.videogamesState.videoGames);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
   console.log("Favorites:", favorites);
@@ -19,17 +22,28 @@ const MyFavoriteGames = () => {
 
   useEffect(() => {
     if (isLogged.id) {
-      dispatch(fetchFavorites(isLogged.id));
+      setIsLoading(true);
+      dispatch(fetchFavorites(isLogged.id))
+        .then(() => {
+          setIsLoading(false);
+        });
     }
   }, [dispatch, isLogged.id]);
 
-  const favoriteGameIds = useSelector((state) =>
-    state.favoriteState.favorites.map((favorite) => favorite.videogameId)
-  );
+  // Calcula si hay favoritos o no basándote en el estado de Redux 'favorites'
+  const showFavorites = favorites.length > 0;
+
+  const favoriteGameIds = favorites
+    .filter((favorite) => favorite.isFav)
+    .map((favorite) => favorite.videogameId);
 
   const favoriteGames = videoGames.filter((game) =>
     favoriteGameIds.includes(game.id)
   );
+
+  const favoriteGamesToShow = favoriteGames.filter((game) =>
+  favorites.some((favorite) => favorite.videogameId === game.id && favorite.isFav)
+);
 
   // Componente Card interno para reutilizar estilos
   const FavoriteCard = ({ videoG }) => {
@@ -39,13 +53,16 @@ const MyFavoriteGames = () => {
     }
 
     if (!gameInfo) {
-      // Si gameInfo no existe, el juego no está disponible en videoGames
-      // Puedes devolver null o cualquier otro componente vacío
-      return  null;
+      (
+        <View style={styles.cardContainer}>
+          <Text>No data available.</Text>
+        </View>
+      );
     }
 
     return (
       <View style={styles.container}>
+        
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: videoG.image }} />
         </View>
@@ -60,18 +77,57 @@ const MyFavoriteGames = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      <Text>Mis Juegos Favoritos</Text>
-      {/* Renderizar la lista de favoritos aquí */}
-      <View style={styles.cardsContainer}>
-        {favoriteGames.map((game) => (
-          <Card key={game.id} videoG={game} showButtons={false} />
-        ))}
+      <View style={styles.headingContainer}>
+        <Text style={styles.heading}>My favourites</Text>
       </View>
+      {isLoading ? (
+        <Loading />
+      ) : favoriteGamesToShow.length > 0 ? (
+        
+        <View style={styles.cardsContainer}>
+          
+          {favoriteGamesToShow.map((game) => (
+            <Card key={game.id} videoG={game} showButtons={true} />
+          ))}
+        </View>
+      ) : (
+        <View style={styles.noFavoritesContainer}>
+          <Text style={styles.noFavoritesText}>No favorites found.</Text>
+        </View>
+      )}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  headingContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#622EDA",
+    borderRadius: 10,
+    width: 200,
+    height: 50,
+    marginBottom: 10,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+  },
+  noFavoritesContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 100,
+    width: 300,
+    backgroundColor: '#622EDA',
+    borderRadius: 10,
+    textDecorationColor: '#FAFAFA',
+  },
+  noFavoritesText: {
+    color: "#FFFFFF", 
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   scrollViewContent: {
     flexGrow: 1,
     alignItems: "center", // Centra las tarjetas horizontalmente
@@ -134,6 +190,7 @@ const styles = StyleSheet.create({
     height: 28,
     color: "#FFFFFF",
   },
+  
   // Otros estilos necesarios
 });
 

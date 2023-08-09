@@ -1,26 +1,26 @@
 import axios from "axios";
 import { toggleFavoriteSuccess, setFavorites } from "./favoriteSlice"; // Asegúrate de importar la acción correcta
 
-export const toggleFavorite = (videogameId, userId, isFav) => {
-    return async (dispatch) => {
-      try {
-        const data = {
-          videogameId,
-          userId,
-          isFav,
-        };
-  
-        // Realizamos la petición POST a la API para agregar/quitar el juego de favoritos
-        await axios.post("https://pfvideojuegos-back-production.up.railway.app/favorites", data);
-  
-        // Si la petición fue exitosa, actualizamos el estado local
-        dispatch(toggleFavoriteSuccess(videogameId, isFav)); // Utiliza la acción importada correctamente
-      } catch (error) {
-        // Manejo de errores
-        console.error("Error al agregar/quitar favorito:", error);
-      }
-    };
+export const toggleFavorite = (userId, videogameId, isFav) => {
+  return async (dispatch) => {
+    try {
+      const data = {
+        userId,
+        videogameId,
+        isFav,
+      };
+
+      // Realizamos la petición POST a la API para agregar/quitar el juego de favoritos
+      await axios.post("https://pfvideojuegos-back-production.up.railway.app/favorites", data);
+
+      // Si la petición fue exitosa, actualizamos el estado local
+      dispatch(toggleFavoriteSuccess(userId, videogameId, isFav)); // Utiliza la acción importada correctamente
+    } catch (error) {
+      // Manejo de errores
+      console.error("Error al agregar/quitar favorito:", error);
+    }
   };
+};
 
 export const toggleFavoriteSucces = (videogameId, isFav) => {
   return {

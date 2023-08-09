@@ -34,45 +34,47 @@ const Card = (props) => {
   {
     /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
   }
-  const [isFavorite, setIsFavorite] = useState(false); // Estado para controlar si el juego es favorito o no
+  const favorites = useSelector((state) => state.favoriteState.favorites);
   const heartRef = useRef(null); // Referencia para la animación del corazón
   const cartRef = useRef(null); // Referencia para la animación del corazón
   const isLogged = useSelector((state) => state.usersState.isLogged);
+
  // Obtener la lista de favoritos del estado global
- const favorites = useSelector((state) => state.favoriteState.favorites);
- const { StringsLanguaje, locale } = useContext(LanguajeContext);
  // Verificar si el juego actual está en la lista de favoritos
- useEffect(() => {
-   const favoriteGameIds = favorites.map((favorite) => favorite.videogameId);
-   const isFav = favoriteGameIds.includes(videoG.id);
-   setIsFavorite(isFav);
- }, [favorites, videoG.id]);
 
 
-  const handleToggleFavorite = () => {
-    if (isLogged.id === undefined) {
-      // Mostrar una alerta si el usuario no está logueado
-      Alert.alert("Login Required", "Please log in to add this game to favorites.");
-      console.log("No se puede agregar a favoritos: Usuario no logueado.");
-      return;
-    }
+ const [isCurrentlyFavorite, setIsCurrentlyFavorite] = useState(
+  favorites.some((favorite) => favorite.videogameId === videoG.id && favorite.isFav)
+);
 
-    setIsFavorite((prevState) => !prevState); // Cambiar el estado de favorito
-    heartRef.current?.rubberBand(500);
-    console.log("Agrego a favorito:", !isFavorite);
-    console.log("ID del juego:", videoG.id);
-    console.log("ID del usuario:", isLogged.id);
 
-    // Enviar información a la API para agregar/quitar el juego de favoritos
-    const data = {
-      videogameId: videoG.id,
-      userId: isLogged.id,
-      isFav: !isFavorite,
-    };
-    dispatch(toggleFavorite(data.videogameId, data.userId, data.isFav));
+const handleToggleFavorite = () => {
+  if (!isLogged.id) {
+    Alert.alert("Login Required", "Please log in to add this game to favorites.");
+    return;
+  }
+
+  const newIsFav = !isCurrentlyFavorite;
+  const favoriteData = {
+    videogameId: videoG.id,
+    userId: isLogged.id,
+    isFav: newIsFav,
   };
 
+  console.log("Dispatching toggleFavorite with data:", favoriteData);
 
+  dispatch(toggleFavorite(favoriteData.userId, favoriteData.videogameId, favoriteData.isFav))
+    .then(() => {
+      setIsCurrentlyFavorite(!isCurrentlyFavorite); // Cambiamos el estado local directamente
+    })
+    .catch((error) => {
+      // Handle error if needed
+      console.error("Error toggling favorite:", error);
+    });
+};
+
+
+  const { StringsLanguaje, locale } = useContext(LanguajeContext);
   {
     /* Botón de favoritos -> NO BORRAR COMENTARIOS POR EL AMOR DE DIOS. */
   }
@@ -153,12 +155,12 @@ const Card = (props) => {
               <View style={styles.heart}>
                 <TouchableOpacity onPress={handleToggleFavorite}>
                   <Animatable.View ref={heartRef}>
-                    <MaterialCommunityIcons
-                      style={styles.heartIcon}
-                      name={isFavorite ? "heart" : "heart-outline"}
-                      size={28}
-                      color={isFavorite ? "#622EDA" : "#595959"}
-                    />
+                  <MaterialCommunityIcons
+                style={styles.heartIcon}
+                name={isCurrentlyFavorite ? "heart" : "heart-outline"}
+                size={28}
+                color={isCurrentlyFavorite ? "#622EDA" : "#595959"}
+              />
                   </Animatable.View>
                 </TouchableOpacity>
               </View>

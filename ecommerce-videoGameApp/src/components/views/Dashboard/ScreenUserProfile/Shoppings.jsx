@@ -14,6 +14,7 @@ import { getAllSalesUser } from "../../../../redux/salesActions";
 
 import PurchaseCard from "./PurchaseCard"; // Importa el nuevo componente
 import PurchaseDetails from "./PurchaseDetails"; // Importa el nuevo componente
+import Loading from "../../../helpers/Loading";
 
 const Shoppings = () => {
   const dispatch = useDispatch();
@@ -37,15 +38,6 @@ const Shoppings = () => {
     setShowPurchaseDetails(true);
     setSelectedPurchaseDetails(purchase);
   };
-
-  if (isLoading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#000" />
-      </View>
-    );
-  }
-
   // Este ordena las compras por fecha
   let sortedUserSales = [];
 
@@ -62,51 +54,87 @@ const Shoppings = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>My Shoppings</Text>
-
-      {!userSales && (
-        <Text style={styles.heading}>You don't have any purchase yet.</Text>
-      )}
-
-      {sortedUserSales && (
-        <FlatList
-          data={sortedUserSales}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleShowDetails(item)}>
-              <PurchaseCard videoG={item} />
-            </TouchableOpacity>
+      <View style={styles.headingContainer}>
+        <Text style={styles.heading}>My Shoppings</Text>
+      </View>
+      {isLoading ? (
+        // Render the loading indicator if isLoading is true
+        <Loading />
+      ) : (
+        // Render your content once data is fetched
+        <>
+          {!userSales && (
+            <View style={styles.noFavoritesContainer}>
+              <Text style={styles.noFavoritesText}>No purchases found</Text>
+            </View>
           )}
-        />
-      )}
-      {/* Modal para detalles de la compra */}
 
-      {selectedPurchaseDetails && (
-        <PurchaseDetails
-          visible={showPurchaseDetails}
-          closeModal={() => setShowPurchaseDetails(false)}
-          purchaseDetails={selectedPurchaseDetails}
-        />
+          {sortedUserSales && (
+            <FlatList
+              data={sortedUserSales}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleShowDetails(item)}>
+                  <PurchaseCard videoG={item} />
+                </TouchableOpacity>
+              )}
+            />
+          )}
+
+          {selectedPurchaseDetails && (
+            <PurchaseDetails
+              visible={showPurchaseDetails}
+              closeModal={() => setShowPurchaseDetails(false)}
+              purchaseDetails={selectedPurchaseDetails}
+            />
+          )}
+        </>
       )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  noFavoritesContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 100,
+    width: 300,
+    backgroundColor: '#622EDA',
+    borderRadius: 10,
+    textDecorationColor: '#FAFAFA',
+    marginLeft: 35,
+
+  },
+  noFavoritesText: {
+    color: "#FFFFFF", 
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   container: {
     flex: 1,
     padding: 10,
     backgroundColor: "#F5F5F5",
   },
-  heading: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  headingContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#622EDA",
+    borderRadius: 10,
+    width: 200,
+    height: 50,
+    marginLeft: 80,
+    marginBottom: 10,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
 });
 
