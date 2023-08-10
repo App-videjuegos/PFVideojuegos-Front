@@ -127,7 +127,7 @@ const Cart = ({ navigation }) => {
   // console.log('logginUser', Carrito);
 
   const handlePasarellaPress = () => {
-    const proceedWithPurchase = () => {
+
       console.log("isLogged,", isLogged);
       if (isLogged) {
         //  console.log (" me dejo pasar a pasarela sin login?")
@@ -139,8 +139,7 @@ const Cart = ({ navigation }) => {
             quantity: el.value.amount,
           };
         });
-        // console.log("que hay en fyll name",logginUser.fullname )
-        // const items = [{ videogameId: 3498, videogameName: "Grand Theft Auto V", unitPrice: 20, quantity: 2 }]
+        
         navigation.navigate("Pasarella", {
           Cart: itemsCart,
           tot: total,
@@ -148,28 +147,24 @@ const Cart = ({ navigation }) => {
           userName: logginUser.fullname,
         });
       } else {
-        alert(StringsLanguaje.CartValidate);
+
+        Alert.alert(
+          StringsLanguaje.warning,
+          StringsLanguaje.CartValidate,
+          [
+            // { text: "OK", onPress: () => console.log("OK Pressed") }
+          ],
+          {
+            cancelable: true, // Permite cerrar el cuadro de alerta al tocar fuera de él (predeterminado: true)
+          }
+        );
+        // alert();
 
         navigation.navigate("RenderLogin");
       }
-    };
+    // };
 
-    Alert.alert(
-      `${StringsLanguaje.Checkout}`,
-      "",
-      [
-        {
-          text: `${StringsLanguaje.optCancel}`,
-          onPress: () => console.log("Cancel Pressed"),
-          style: "Cancel",
-        },
-        {
-          text: "OK",
-          onPress: proceedWithPurchase,
-        },
-      ],
-      { cancelable: false }
-    );
+    
   };
 
   const getAllItems = () => {
