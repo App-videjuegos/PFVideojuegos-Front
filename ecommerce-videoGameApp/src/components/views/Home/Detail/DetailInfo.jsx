@@ -37,10 +37,10 @@ const DetailInfo = (props) => {
     new Date().toISOString().slice(0, 10)
   );
   const [recommendation, setRecommendation] = useState(true);
-  const [hashtags, setHashtags] = useState([""]);
+  // const [hashtags, setHashtags] = useState([""]);
   const [errorTitle, setErrorTitle] = useState(false);
   const [errorComment, setErrorComment] = useState(false);
-  const [errorHashtag, setErrorHashtag] = useState(false);
+  // const [errorHashtag, setErrorHashtag] = useState(false);
   const [comments, setComments] = useState([]);
 
   // Obtenemos el estado isLogged para verificar si el usuario está logueado
@@ -163,37 +163,37 @@ const DetailInfo = (props) => {
     setRecommendation((prevRecommendation) => !prevRecommendation);
   };
 
-  const isValidHashtag = (text) => {
-    // Expresión regular para validar el hashtag
-    const hashtagRegex = /^#[A-Za-z]+$/;
-    return hashtagRegex.test(text);
-  };
+  // const isValidHashtag = (text) => {
+  //   // Expresión regular para validar el hashtag
+  //   const hashtagRegex = /^#[A-Za-z]+$/;
+  //   return hashtagRegex.test(text);
+  // };
 
-  const handleHashtagChange = (index, text) => {
-    if (text === "" || /^#[A-Za-z]*$/.test(text)) {
-      setHashtags((prevHashtags) => {
-        const updatedHashtags = [...prevHashtags];
-        updatedHashtags[index] = text;
-        return updatedHashtags;
-      });
-      setErrorHashtag(false);
-    } else {
-      setErrorHashtag(true);
-    }
-  };
+  // const handleHashtagChange = (index, text) => {
+  //   if (text === "" || /^#[A-Za-z]*$/.test(text)) {
+  //     setHashtags((prevHashtags) => {
+  //       const updatedHashtags = [...prevHashtags];
+  //       updatedHashtags[index] = text;
+  //       return updatedHashtags;
+  //     });
+  //     setErrorHashtag(false);
+  //   } else {
+  //     setErrorHashtag(true);
+  //   }
+  // };
 
-  const addHashtagInput = () => {
-    setHashtags([...hashtags, ""]);
-  };
+  // const addHashtagInput = () => {
+  //   setHashtags([...hashtags, ""]);
+  // };
 
-  const removeHashtagInput = (index) => {
-    setHashtags((prevHashtags) => {
-      const updatedHashtags = [...prevHashtags];
-      updatedHashtags.splice(index, 1);
-      return updatedHashtags;
-    });
-    setErrorHashtag(false);
-  };
+  // const removeHashtagInput = (index) => {
+  //   setHashtags((prevHashtags) => {
+  //     const updatedHashtags = [...prevHashtags];
+  //     updatedHashtags.splice(index, 1);
+  //     return updatedHashtags;
+  //   });
+  //   setErrorHashtag(false);
+  // };
 
   const validateForm = () => {
     let valid = true;
@@ -210,13 +210,13 @@ const DetailInfo = (props) => {
 
   const submitComment = () => {
     if (isLogged && token) {
-      if (validateForm() && !errorHashtag) {
+      if (validateForm()) {
         // Generate a random playtime between 1 and 3000 hours
         const randomPlaytime = Math.floor(Math.random() * 3000) + 1;
-        // Modify this line to remove double hashtags
-        const formattedHashtags = hashtags
-          .filter((tag) => tag.trim().startsWith("#"))
-          .map((tag) => tag.trim());
+        // // Modify this line to remove double hashtags
+        // const formattedHashtags = hashtags
+        //   .filter((tag) => tag.trim().startsWith("#"))
+        //   .map((tag) => tag.trim());
 
         const generateRandomToken = (length) => {
           const characters =
@@ -244,7 +244,7 @@ const DetailInfo = (props) => {
           comment: comment,
           reviewDate: reviewDate,
           recommendation: recommendation,
-          hashtags: formattedHashtags,
+          // hashtags: formattedHashtags,
           playtime: randomPlaytime,
           token: generateRandomToken(10), // Puedes ajustar la longitud según tus necesidades
           user: isLogged.user, // Agrega el nombre de usuario al objeto del comentario
@@ -260,14 +260,15 @@ const DetailInfo = (props) => {
         setComment("");
         setReviewDate(new Date().toISOString().slice(0, 10));
         setRecommendation(true);
-        setHashtags([""]);
+        // setHashtags([""]);
         setErrorTitle(false);
         setErrorComment(false);
-        setErrorHashtag(false);
+        // setErrorHashtag(false);
         setTimeout(afterSubmitComment, 1000);
-      } else {
-        setErrorHashtag(true);
       }
+      //  else {
+      //   setErrorHashtag(true);
+      // }
     } else {
       console.log("User not logged in. Unable to submit review.");
     }
@@ -288,6 +289,16 @@ const DetailInfo = (props) => {
   const objString = JSON.stringify(objeto);
 
   const key = "cart" + props.propInfo.id;
+
+  const processUsername = (username) => {
+    if (username && username.includes('@')) {
+      const processedUsername = username.replace(/@.*$/, ''); // Elimina todo después del símbolo @
+      return processedUsername;
+    }
+    return username;
+  };
+
+
 
   // console.log("esto es lo q tengo en OBJ",objeto)
   // console.log("esto es lo q tengo en key",key)
@@ -420,33 +431,33 @@ const DetailInfo = (props) => {
                 >
                   <View style={styles.commentTitleContainer}>
                     <Text style={styles.commentTitle}>{comment.title}</Text>
-                    <Text style={styles.commentDate}>
-                      {convertirFecha(comment.reviewDate)}
-                    </Text>
                   </View>
                   <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>By:</Text>{" "}
-                    {comment.user}
+                    <Text style={styles.commentUser}>{processUsername(comment.user)}</Text>
                   </Text>
-                  <Text style={styles.commentDetailsBold}>Comment:</Text>
+                  <Text style={styles.commentDate}>
+                    {convertirFecha(comment.reviewDate)}
+                  </Text>
+                  <Text style={styles.commentDetailsBoldComment}>Comment:</Text>
                   <Text style={styles.commentText}>{comment.comment}</Text>
                   <Text style={styles.commentDetails}>
-                    <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
-                    {comment.playtime} hours -
+                    {/* <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
+                    {comment.playtime} hours - */}
                     <Text style={styles.commentDetailsBold}>
                       {" "}
                       Recommendation:
                     </Text>{" "}
                     {comment.recommendation ? "👍" : "👎"}
                   </Text>
-                  <Text style={styles.commentDetails}>
+                  {/* <Text style={styles.commentDetails}>
                     <Text style={styles.commentDetailsBold}>Rating:</Text>{" "}
                     {comment.rating}
-                  </Text>
-                  <Text style={styles.commentDetails}>
-                    <Text style={styles.commentDetailsBold}>Hashtags:</Text>{" "}
+                  </Text> */}
+                  {/* <Text style={styles.commentDetails}>
+                     <Text style={styles.commentDetailsBold}>Hashtags:</Text>{" "} 
                     {comment.hashtags.map((tag) => `${tag}`).join(", ")}
-                  </Text>
+                  </Text> */}
                 </View>
               ))
             ) : (
@@ -511,7 +522,7 @@ const DetailInfo = (props) => {
           {errorComment && (
             <Text style={styles.errorText}>Complete the comment</Text>
           )}
-          {hashtags.map((tag, index) => (
+          {/* {hashtags.map((tag, index) => (
             <View key={index} style={styles.hashtagContainer}>
               <TextInput
                 style={[
@@ -531,14 +542,14 @@ const DetailInfo = (props) => {
                 </View>
               </TouchableOpacity>
             </View>
-          ))}
-          {errorHashtag && (
+          ))} */}
+          {/* {errorHashtag && (
             <Text style={styles.errorText}>
               Hashtag is not valid. It should start with # and contain only
               letters (A/a-Z/z).
             </Text>
-          )}
-          <TouchableOpacity onPress={addHashtagInput}>
+          )} */}
+          {/* <TouchableOpacity onPress={addHashtagInput}>
             <View
               style={[
                 styles.button,
@@ -552,7 +563,7 @@ const DetailInfo = (props) => {
                 Add a hashtag
               </Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity onPress={submitComment}>
             <View
               style={[
@@ -562,7 +573,9 @@ const DetailInfo = (props) => {
             >
               <Text
                 style={[styles.buttonText, { color: StringsDark.boton_texto }]}
-              >Submit</Text>
+              >
+                Submit
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -655,29 +668,50 @@ const styles = StyleSheet.create({
     marginTop: 15, // Agregamos un margen superior para separar el primer comentario del borde superior
   },
   commentTitleContainer: {
-    flexDirection: "row", // Alineamos el título y la fecha en una fila
-    justifyContent: "space-between", // Espacio entre los elementos de la fila
-    alignItems: "center", // Alineamos verticalmente los elementos en el centro
+    flexDirection: "row",
+    justifyContent: "center", // Centramos horizontalmente
+    alignItems: "center", // Centramos verticalmente
     marginBottom: 5,
   },
   commentTitle: {
-    color: "#1B063E",
     fontWeight: "bold",
-    fontSize: 16,
-  },
-  commentDate: {
-    color: "#1B063E",
+    fontSize: 20,
+    color: "#3F16A7",
   },
   commentText: {
-    fontSize: 14,
+    fontSize: 16,
     marginBottom: 5,
+    textAlign: "center", // Centramos el texto del comentario
+    top: -20,
   },
   commentDetails: {
-    fontSize: 14,
+    flexDirection: "row", // Alineamos los elementos en una fila
+    justifyContent: "space-between", // Espacio entre los elementos
+    alignItems: "center", // Centramos verticalmente
+    fontSize: 16,
     marginBottom: 2,
   },
   commentDetailsBold: {
     fontWeight: "bold",
+    color: "#3F16A7",
+    fontSize: 16,
+  },
+  commentDetailsBoldComment: {
+    fontWeight: "bold",
+    color: "#3F16A7",
+    alignItems: "center", // Centramos verticalmente
+    textAlign: "center", // Centramos el texto del comentario
+    fontSize: 16,
+    top: -20,
+  },
+  commentUser: {
+    textAlign: "left", // Alineamos el usuario a la izquierda
+    flex: 1, // Se expande para ocupar el espacio disponible
+  },
+  commentDate: {
+    textAlign: "right", // Alineamos la fecha a la derecha
+    flexDirection: "row",
+    top: -26,
   },
   textRating: {
     fontSize: 20,
@@ -704,70 +738,69 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   comment: {
-    backgroundColor: "#EEE",
+    backgroundColor: "#987BDC",
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
-  },
-  commentTitle: {
-    color: "#1B063E",
-    fontWeight: "bold",
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  commentText: {
-    fontSize: 14,
-    marginBottom: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   commentInput: {
     borderWidth: 1,
-    borderColor: "#999",
+    borderColor: "#987BDC",
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
   },
   recommendationContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "center", // Centramos horizontalmente
+    alignItems: "center", // Centramos verticalmente
     marginVertical: 10,
-    alignItems: "center",
   },
   recommendationText: {
     fontSize: 18,
     fontWeight: "bold",
+    textAlign: "center", // Centramos el texto de recomendación
   },
   recommendationIcon: {
     fontSize: 24,
   },
-  hashtagContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between", // Alineación horizontal con espacio entre los elementos
-  },
-  hashtagInput: {
-    borderWidth: 1,
-    borderColor: "#999",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 5,
-    flex: 1,
-  },
-  removeHashtagText: {
-    color: "red",
-    textAlign: "center",
-  },
-  removeHashtagButton: {
-    color: "red",
-    textAlign: "center",
-  },
-  addHashtagButton: {
-    // backgroundColor: "#622EDA",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 5,
-    marginBottom: 15,
-  },
+  // hashtagContainer: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   justifyContent: "space-between", // Alineación horizontal con espacio entre los elementos
+  // },
+  // hashtagInput: {
+  //   borderWidth: 1,
+  //   borderColor: "#999",
+  //   borderRadius: 5,
+  //   padding: 10,
+  //   marginBottom: 5,
+  //   flex: 1,
+  // },
+  // removeHashtagText: {
+  //   color: "red",
+  //   textAlign: "center",
+  // },
+  // removeHashtagButton: {
+  //   color: "red",
+  //   textAlign: "center",
+  // },
+  // addHashtagButton: {
+  //   // backgroundColor: "#622EDA",
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   marginTop: 5,
+  //   marginBottom: 15,
+  // },
   wideInput: {
     width: "100%",
   },

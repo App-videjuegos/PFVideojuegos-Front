@@ -395,6 +395,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     padding: 8,
+    
   },
 
   containerLogin: {
@@ -406,6 +407,8 @@ const styles = StyleSheet.create({
     backgroundColor: color_gris_c,
     alignItems: "center",
     padding: 10,
+    
+
   },
 
   title: {
