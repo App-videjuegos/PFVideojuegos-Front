@@ -248,7 +248,7 @@ const Cart = ({ navigation }) => {
           Total
         </Text>
         <Text style={[styles.cartTotalPrice, { color: StringsDark.text }]}>
-          U$S {total.toFixed(2)}
+        US$ {total.toFixed(2)}
         </Text>
       </View>
       <TouchableOpacity
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   chkOutCart: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "blue",
+    // backgroundColor: "blue",
     padding: 10,
     borderRadius: 10,
     marginTop: 5,

@@ -110,15 +110,15 @@ const MenuItems = ({ navigation }) => {
       {/* Botones para cambiar el modoDark o Idioma */}
       <ChangeButtonContext
         name={
-          "DarkMode"
-          // StringsLanguaje.DarkMode
+          // "DarkMode"
+          StringsLanguaje.DarkMode
         }
         tipo={"theme"}
       />
       <ChangeButtonContext
         name={
-          "Language Change"
-          // StringsLanguaje.Languaje
+          // "Language Change"
+          StringsLanguaje.Languaje
         }
         tipo={"Languaje"}
       />
