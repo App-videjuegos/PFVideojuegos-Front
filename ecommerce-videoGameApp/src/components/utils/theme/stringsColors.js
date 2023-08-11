@@ -56,6 +56,11 @@ export const strings = {
     cart_pay:color_celeste,
      rayita_modal: color_morado_sc1,
      tit_modal: color_morado_sc2,
+
+
+
+     titmodalSale: color_morado_c,
+     saleApro:color_verde,
   },
   dark: {//combinacion de colores modo Dark
     Titulo_Screen:color_blanco,
@@ -88,5 +93,10 @@ export const strings = {
     cart_pay:color_morado_sc2,
     rayita_modal: color_gris_c,
     tit_modal: color_morado_sc1,
+
+
+
+    titmodalSale: color_gris_c,
+    saleApro:color_verde,
   },
 };
