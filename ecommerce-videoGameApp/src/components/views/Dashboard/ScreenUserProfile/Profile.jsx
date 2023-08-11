@@ -47,12 +47,12 @@ import { ThemeContext } from "../../../utils/theme/ThemeProvider";
 const Profile = ({ navigation }) => {
   const loged = useSelector((state) => state.usersState.isLogged);
   const [acceptTac, setAcceptTac] = useState(true);
-  const [receibenewsLetter, setReceivenewsLetter] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [dataUser, setDataUser] = useState("");
   const dispatch = useDispatch();
   const dataUserdb = useSelector((state) => state.usersState.dataUser);
   const [loading, setLoading] = useState(true);
+  const [receibenewsLetter, setReceivenewsLetter] = useState(dataUser.newsLetter);
   const [modalVisible, setModalVisible] = useState(false);
   const { StringsDark, isDarkMode } = useContext(ThemeContext);
 
@@ -139,7 +139,7 @@ const Profile = ({ navigation }) => {
       ...values,
       tac: acceptTac,
       newsLetter: receibenewsLetter,
-      userAdmin: true,
+      userAdmin: loged.userAdmin,
       image: image,
     };
 
@@ -388,7 +388,7 @@ try{
                   <TextInput
                     style={[styles.input]}
                     value={values.phone}
-                    placeholder={dataUserdb[0].phone}
+                    placeholder={dataUserdb[0].phone?dataUserdb[0].phone:"Phone"}
                     onChangeText={handleChange("phone")}
                     onBlur={handleBlur("phone")}
                   />
