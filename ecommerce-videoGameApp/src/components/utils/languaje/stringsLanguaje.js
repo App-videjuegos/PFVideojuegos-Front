@@ -105,6 +105,10 @@ export const strings = {
     stockOut: 'Sorry, quantity cannot exceed stock',
     stockOut2: 'Sorry, the Video Game is out of stock',
     warning:'Warning',
+
+
+    saleDet: 'Sale Detail',
+    datePurche:'Date of Purchase',
   },
   es: {
     Welcome: 'Bienvenido',
@@ -204,7 +208,7 @@ export const strings = {
     prod_det:'Detalle del producto',
     title:'Nombre',
     price:'Precio',
-    qtty:' Cantidad',
+    qtty:'Cantidad',
     clse:'Cerrar',
     proc_pay:'Procesador de Pago',
     dollar:'Dolar',
@@ -212,6 +216,12 @@ export const strings = {
     stockOut: 'Lo sentimos, la cantidad no puede exceder las existencias',
     stockOut2: 'Lo sentimos, el Video Juego no tiene stock',
     warning:'Advertencia',
+
+
+
+
+    saleDet: 'Detalle de venta',
+    datePurche:'Fecha de Compra',
   }
 };
 
