@@ -424,42 +424,46 @@ const DetailInfo = (props) => {
           </TouchableOpacity> */}
           <View style={styles.commentsListContainer}>
             {commentsForCurrentVideogame.length > 0 ? (
-              commentsForCurrentVideogame.map((comment) => (
-                <View
-                  key={comment.id}
-                  style={[styles.comment, styles.commentContainer]}
-                >
-                  <View style={styles.commentTitleContainer}>
-                    <Text style={styles.commentTitle}>{comment.title}</Text>
-                  </View>
-                  <Text style={styles.commentDetails}>
-                    <Text style={styles.commentDetailsBold}>By:</Text>{" "}
-                    <Text style={styles.commentUser}>{processUsername(comment.user)}</Text>
-                  </Text>
-                  <Text style={styles.commentDate}>
-                    {convertirFecha(comment.reviewDate)}
-                  </Text>
-                  <Text style={styles.commentDetailsBoldComment}>Comment:</Text>
-                  <Text style={styles.commentText}>{comment.comment}</Text>
-                  <Text style={styles.commentDetails}>
-                    {/* <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
-                    {comment.playtime} hours - */}
-                    <Text style={styles.commentDetailsBold}>
-                      {" "}
-                      Recommendation:
-                    </Text>{" "}
-                    {comment.recommendation ? "👍" : "👎"}
-                  </Text>
-                  {/* <Text style={styles.commentDetails}>
-                    <Text style={styles.commentDetailsBold}>Rating:</Text>{" "}
-                    {comment.rating}
-                  </Text> */}
-                  {/* <Text style={styles.commentDetails}>
-                     <Text style={styles.commentDetailsBold}>Hashtags:</Text>{" "} 
-                    {comment.hashtags.map((tag) => `${tag}`).join(", ")}
-                  </Text> */}
-                </View>
-              ))
+              commentsForCurrentVideogame.map((comment) => {
+                if(!comment.deleted){
+                  return(
+                    <View
+                      key={comment.id}
+                      style={[styles.comment, styles.commentContainer]}
+                    >
+                      <View style={styles.commentTitleContainer}>
+                        <Text style={styles.commentTitle}>{comment.title}</Text>
+                      </View>
+                      <Text style={styles.commentDetails}>
+                        <Text style={styles.commentDetailsBold}>By:</Text>{" "}
+                        <Text style={styles.commentUser}>{processUsername(comment.user)}</Text>
+                      </Text>
+                      <Text style={styles.commentDate}>
+                        {convertirFecha(comment.reviewDate)}
+                      </Text>
+                      <Text style={styles.commentDetailsBoldComment}>Comment:</Text>
+                      <Text style={styles.commentText}>{comment.comment}</Text>
+                      <Text style={styles.commentDetails}>
+                        {/* <Text style={styles.commentDetailsBold}>Playtime:</Text>{" "}
+                        {comment.playtime} hours - */}
+                        <Text style={styles.commentDetailsBold}>
+                          {" "}
+                          Recommendation:
+                        </Text>{" "}
+                        {comment.recommendation ? "👍" : "👎"}
+                      </Text>
+                      {/* <Text style={styles.commentDetails}>
+                        <Text style={styles.commentDetailsBold}>Rating:</Text>{" "}
+                        {comment.rating}
+                      </Text> */}
+                      {/* <Text style={styles.commentDetails}>
+                         <Text style={styles.commentDetailsBold}>Hashtags:</Text>{" "} 
+                        {comment.hashtags.map((tag) => `${tag}`).join(", ")}
+                      </Text> */}
+                    </View>
+              )
+                }else null
+              })
             ) : (
               <Text>There are no comments available.</Text>
             )}

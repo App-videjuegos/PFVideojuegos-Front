@@ -6,41 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/icono.png",
     "userInterfaceStyle": "light",
-    "scheme": "com.gameStack.gamsestack",
-    "splash": {
-      "image": "./assets/logoLigth.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.gameStack.gamsestack"
-    },
-    "android": {
-      "package": "com.gameStack.gamsestack",
-      "versionCode": 2
-    },
-    "web": {
-      "favicon": "./assets/icono.png"
-    },
-    "fonts": {
-      "Poppins-Black": "./assets/fonts/Poppins-Black.ttf",
-      "Poppins-Bold": "./assets/fonts/Poppins-Bold.ttf",
-      "Poppins-Italic": "./assets/fonts/Poppins-Italic.ttf",
-      "Poppins-Light": "./assets/fonts/Poppins-Light.ttf",
-      "Poppins-Medium": "./assets/fonts/Poppins-Medium.ttf",
-      "Poppins-Regular": "./assets/fonts/Poppins-Regular.ttf"
-    },
-    "plugins": [
-      "expo-localization"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "845def10-19e5-4fb3-a4bf-402d9abcdfd0"
-      }
-    }
+    "scheme": "com.gamestack.gamestack" 
   }
 }
