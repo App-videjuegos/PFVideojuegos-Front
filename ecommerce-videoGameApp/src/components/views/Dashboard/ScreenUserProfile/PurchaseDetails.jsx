@@ -112,7 +112,7 @@ const PurchaseDetails = ({ visible, closeModal, purchaseDetails }) => {
                   <View style={styles.salesStatus}>
                     <Text style={[styles.NameDetails, {color: StringsDark.titmodalSale}]}>Sales Status:</Text>
 
-                    <Text style={{ color: "#00D37B", fontSize: 20 }}>
+                    <Text style={{ color:StringsDark.saleApro, fontSize: 20 }}>
                       {salesStatus}
                     </Text>
                   </View>

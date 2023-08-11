@@ -97,7 +97,7 @@ export const strings = {
     prod_det:'Products Detail',
     title:'Name',
     price:'Price',
-    qtty:' Quantity',
+    qtty:'Quantity',
     clse:'Close', 
     proc_pay:'Payment Processor',
     dollar:'Dollar',
@@ -109,6 +109,7 @@ export const strings = {
 
     saleDet: 'Sale Detail',
     datePurche:'Date of Purchase',
+    msgNpPurchaseFoun: 'No purchases found',
   },
   es: {
     Welcome: 'Bienvenido',
@@ -222,6 +223,7 @@ export const strings = {
 
     saleDet: 'Detalle de venta',
     datePurche:'Fecha de Compra',
+    msgNpPurchaseFoun: 'No se han encontrado compras',
   }
 };
 

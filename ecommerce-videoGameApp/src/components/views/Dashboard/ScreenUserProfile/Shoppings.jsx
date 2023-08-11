@@ -16,6 +16,7 @@ import PurchaseCard from "./PurchaseCard"; // Importa el nuevo componente
 import PurchaseDetails from "./PurchaseDetails"; // Importa el nuevo componente
 import Loading from "../../../helpers/Loading";
 import { ThemeContext } from "../../../utils/theme/ThemeProvider";
+import { LanguajeContext } from "../../../utils/languaje/languajeProvider";
 
 const Shoppings = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Shoppings = () => {
   const userSales = useSelector((state) => state.salesState.allSlsUsr);
   const isLoading = useSelector((state) => state.salesState.loading);
   const { StringsDark, isDarkMode } = useContext(ThemeContext);
+  const { StringsLanguaje, locale } = useContext(LanguajeContext);
 
   useEffect(() => {
     dispatch(getAllSalesUser(loged.id));
@@ -60,7 +62,7 @@ const Shoppings = () => {
       { backgroundColor: StringsDark.Titulo_Screen_fondo },
     ]}>
       <View style={styles.headingContainer}>
-        <Text style={styles.heading}>My Shoppings</Text>
+        <Text style={styles.heading}>{StringsLanguaje.MyShoppings}</Text>
       </View>
       {isLoading ? (
         // Render the loading indicator if isLoading is true
@@ -70,7 +72,7 @@ const Shoppings = () => {
         <>
           {!userSales && (
             <View style={styles.noFavoritesContainer}>
-              <Text style={styles.noFavoritesText}>No purchases found</Text>
+              <Text style={styles.noFavoritesText}>{StringsLanguaje.msgNpPurchaseFoun}</Text>
             </View>
           )}
 
